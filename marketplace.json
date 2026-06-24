@@ -1,0 +1,4 @@
+{
+  "see": ".claude-plugin/marketplace.json",
+  "note": "Claude Code marketplace catalog lives under .claude-plugin/marketplace.json."
+}
