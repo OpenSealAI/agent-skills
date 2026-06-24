@@ -56,7 +56,9 @@ npx -y @socialseal/cli video extract \
 
 Alternative identifiers include `--video-id`, `--video-uid`, or `--platform-video-id`. Use the CLI help to choose the correct one.
 
-MCP equivalent: `socialseal_call_tool` with `function: "tracked-video-extract"` and a body of `{ "ensureAnalysis": true, "includeAssets": true, "items": [{ "videoUid": "<video-uid>" }] }`. Attribution: keep `search_result_id`/`video_uid` for every example and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
+MCP equivalent: `socialseal_call_tool` with `function: "tracked-video-extract"` and a body of `{ "ensureAnalysis": true, "includeAssets": true, "items": [{ "videoUid": "<video-uid>" }] }`. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
+
+Evidence note: surfaced exemplars are anecdotal evidence for creative direction, not proof a pattern will perform. A pattern needs multiple exemplars or an explicit reason; frame adaptations as hypotheses to test. See `references/evidence-and-confidence.md`.
 
 ## Workflow
 
@@ -72,8 +74,8 @@ MCP equivalent: `socialseal_call_tool` with `function: "tracked-video-extract"` 
 
 Create a content-pattern matrix:
 
-- keyword/topic
-- example URL or row reference
+- keyword/topic (as `"keyword" [market, platform]`)
+- example (video title/URL, `@handle`)
 - account/entity type
 - format
 - hook/first-frame pattern
@@ -92,12 +94,12 @@ Do:
 - inspect visuals/captions where possible before making format claims
 - identify account type: owned, creator, media, affiliate/partner, competitor
 - adapt the mechanism, not the wording
-- preserve URL/row references for traceability
+- cite examples by title/URL and `@handle`; keep `video_uid` as a traceability note
 
 Don't:
 
 - copy hooks verbatim unless the user explicitly asks for close variants
-- infer a pattern from one example
+- infer a pattern from one example, or present an exemplar as proof it will work
 - confuse account size with format quality
 - use ad-style labels; describe social-native content jobs
 

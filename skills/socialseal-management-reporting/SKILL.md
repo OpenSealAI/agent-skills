@@ -32,7 +32,7 @@ Management reporting is not the full analysis. It is the decision layer: what ch
 
 1. **Write the headline first.** One sentence with the overall state and decision implication.
 2. **Select 3-5 metrics.** Discoverability, keyword coverage, SOV, owned/creator split, or priority topic movement.
-3. **Translate to business language.** Define terms briefly; avoid internal tool jargon.
+3. **Translate to business language.** Define terms briefly; avoid internal tool jargon and internal IDs. Cite examples by video title/URL, `@handle`, and `"keyword" [market, platform]`.
 4. **Use examples sparingly.** 2-3 examples that show the pattern, not a dump of links.
 5. **State decisions and risks.** Budget, production capacity, market focus, tracking gaps, or approval needs.
 6. **List next priorities.** What the team will do before the next report.
@@ -64,7 +64,7 @@ Don't:
 ## Troubleshooting
 
 - If the summary is too long, move method and detail to appendix.
-- If stakeholders may question the data, add a one-line scope note near the metrics.
+- If stakeholders may question the data, add a one-line scope note near the metrics: the figures are exact observations of tracked social search, scoped to high-ranking videos for the tracked queries (not whole-market demand). See `references/evidence-and-confidence.md`.
 - If no decision follows, the report is probably still analysis, not management reporting.
 
 ## Verification Checklist

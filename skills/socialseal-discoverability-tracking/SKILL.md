@@ -48,7 +48,9 @@ npx -y @socialseal/cli data export-search-results --group-ids <group-id> --works
 npx -y @socialseal/cli data group-completeness --help
 ```
 
-MCP-first: the same exports run via `socialseal_export_report` (`reportType: "search_results_enriched"`) and `socialseal_export_tracking_data`; check completeness with the `group-management` `completeness` action through `socialseal_call_tool`. See `references/mcp-and-cli-usage.md`. Compare like with like using `search_timestamp` and the timestamp rules in `references/socialseal-data-contract.md`.
+MCP-first: the same exports run via `socialseal_export_report` (`reportType: "search_results_enriched"`) and `socialseal_export_tracking_data`; check completeness with the `group-management` `completeness` action through `socialseal_call_tool`. See `references/mcp-and-cli-usage.md`. Compare like with like using `search_timestamp` and the timestamp rules in `references/socialseal-data-contract.md`. Cite anomalies and movement by group name and `"keyword" [market, platform]`, not numeric ids.
+
+Real change vs measurement: a genuine measurement is exact, so true movement reflects a changing search reality, not noise; do not dismiss it. A data failure (empty export, missing identifiers, keyword-set change) is different and must be ruled out first. See `references/evidence-and-confidence.md`.
 
 ## Output
 

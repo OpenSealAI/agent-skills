@@ -23,7 +23,7 @@ metadata:
 
 Video concepting is the ideation step that frames an opportunity into shootable routes and, crucially, into the scope or `retrievalPrompt` that drives the blueprint engine. A good concept names the search gap, picks a lens, and specifies the exemplar direction so `socialseal-blueprint-builder` can ground it in real videos.
 
-See `references/production-pipeline.md` and `references/content-lenses.md`. Concepting precedes reference-video analysis and blueprint generation; it does not replace them.
+See `references/production-pipeline.md` and `references/content-lenses.md`. Concepting precedes reference-video analysis and blueprint generation; it does not replace them. Concepts are hypotheses to ground in real surfacing videos and then test, not proven winners; see `references/evidence-and-confidence.md`.
 
 ## When to Use
 

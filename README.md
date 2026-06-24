@@ -31,9 +31,13 @@ This repo does not automate posting, scheduling, inbox/comment/DM management, ac
 - **CLI mode:** the public `@socialseal/cli` mirrors the same surface via `tools list` / `tools schema` / `tools call` plus first-class `data export-*` commands.
 - **File mode:** use user-provided SocialSeal exports.
 
-Always inspect the live registry/schema before mutating calls. See [references/mcp-and-cli-usage.md](references/mcp-and-cli-usage.md) and [references/production-pipeline.md](references/production-pipeline.md).
+Always inspect the live registry/schema before mutating calls. See [references/mcp-and-cli-usage.md](references/mcp-and-cli-usage.md) and [references/production-pipeline.md](references/production-pipeline.md). For how to cite evidence in human-readable terms and how confident to be about it, see [references/socialseal-data-contract.md](references/socialseal-data-contract.md) and [references/evidence-and-confidence.md](references/evidence-and-confidence.md); for the strategy concepts the skills assume, see [references/strategy-foundations.md](references/strategy-foundations.md).
 
 ## Skill taxonomy
+
+### Orchestration
+- `socialseal-orchestrator` (lightweight entry point: checks foundations, routes to the right skill)
+- `socialseal-strategy-readiness` (diagnoses strategy + setup readiness and guides the user to define what is missing)
 
 ### Strategy
 - `socialseal-workspace-setup`

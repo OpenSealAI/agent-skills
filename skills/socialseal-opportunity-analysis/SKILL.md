@@ -63,7 +63,9 @@ npx -y @socialseal/cli data export-group-evidence \
 
 MCP-first: there is no `export-group-evidence`/`export-search-results` MCP tool. Reach enriched ranked rows via `socialseal_export_report` (`reportType: "search_results_enriched"`, `payload: { "groupIds": [<group-id>] }`) or `socialseal_export_tracking_data`. See `references/mcp-and-cli-usage.md`.
 
-Attribution: cite specific surfaced results by `search_result_id` and `video_uid` with their `keyword` and `rank`, and respect the timestamp rules (no platform-age claims when `published_at` is blank). See `references/socialseal-data-contract.md`.
+Attribution: cite surfaced results in human-readable terms, the `"keyword" [market, platform]`, the video title or `video_url`, and `@author_handle`, with where it ranked. Keep `video_uid`/`search_result_id` only as an internal traceability note, and respect the timestamp rules (no platform-age claims when `published_at` is blank). See `references/socialseal-data-contract.md`.
+
+Evidence tiers: discoverability, coverage, and share of voice are hard observations, not estimates; report them plainly. But every figure is computed over a biased sample (only high-ranking videos for the tracked queries), so it describes "what surfaces for these queries," not total market demand. See `references/evidence-and-confidence.md`.
 
 ## Workflow
 
@@ -74,7 +76,7 @@ Attribution: cite specific surfaced results by `search_result_id` and `video_uid
 5. **Find gaps.** A strong opportunity usually has search intent, relevant surfaced content, weak/absent owned presence, and a content job the brand can answer.
 6. **Classify content jobs.** Use practical tags such as teach, walkthrough, compare, plan, reassure, show mood, show detail, or answer first-timer questions.
 7. **Prioritize.** Rank by relevance, search intent strength, competitive/creator activity, expected business usefulness, and production feasibility.
-8. **Select evidence.** For each recommendation, include metrics plus 1-3 examples that show what currently surfaces.
+8. **Select evidence.** For each recommendation, include metrics plus 1-3 examples that show what currently surfaces, cited by video title/URL and `@handle`. Label each recommendation's confidence basis (measured / scoped statistic / indicative pattern).
 
 ## Output
 
@@ -87,8 +89,8 @@ Create an opportunity table with:
 - content job
 - why this matters
 - recommended content direction
-- evidence examples or export row references
-- caveat/confidence
+- evidence examples (video title/URL, `@handle`, `"keyword" [market, platform]`)
+- caveat/confidence (measured / scoped statistic / indicative pattern)
 
 Also include a short action summary: what to brief, what to track, what to inspect further, and what not to pursue.
 
@@ -98,15 +100,15 @@ Do:
 
 - use percentages and denominators
 - distinguish “no brand presence” from “no meaningful search demand”
-- cite example URLs or row IDs when available
+- cite examples by video title/URL, `@handle`, and `"keyword" [market, platform]`
 - keep recommendations shootable or operationally actionable
 
 Don't:
 
 - call every zero a whitespace opportunity
 - recommend topics outside the brand’s plausible scope
-- claim total market demand from sampled social-search results
-- present internal IDs or raw exports as the final deliverable
+- claim total market demand from sampled social-search results (selection bias)
+- make the user read internal IDs or raw exports as the deliverable
 
 ## Troubleshooting
 

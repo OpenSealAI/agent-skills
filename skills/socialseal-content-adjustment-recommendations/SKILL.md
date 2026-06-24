@@ -43,13 +43,13 @@ This skill turns measurement into decisions. It should not summarize the readout
 A recommendation table:
 
 - action type
-- finding/evidence
+- finding/evidence (cite by video title/URL, `@handle`, `"keyword" [market, platform]`)
 - recommended change
 - owner/workstream
 - expected signal
 - tracking group/keyword
 - priority
-- caveat
+- caveat / confidence basis (measured / scoped statistic / indicative pattern; see `references/evidence-and-confidence.md`)
 
 ## Do / Don't
 

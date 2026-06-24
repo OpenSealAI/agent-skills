@@ -55,9 +55,9 @@ A plan that can be pasted into a sheet or project tracker:
 - owner
 - status
 - measurement/tracking group
-- evidence reference
+- evidence reference (video title/URL, `@handle`, `"keyword" [market, platform]`)
 
-Use `templates/social-plan-template.md` if available.
+Use `templates/social-plan-template.md` if available. Evidence backs the search demand and the gap (hard, scoped measurements); the creative direction is an indicative bet to test. See `references/evidence-and-confidence.md`.
 
 ## Do / Don't
 

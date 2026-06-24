@@ -49,7 +49,9 @@ npx -y @socialseal/cli data export-search-results \
 
 MCP-first: use `socialseal_export_report` (`reportType: "search_results_enriched"`) or `socialseal_export_tracking_data`; there is no group-evidence MCP tool. See `references/mcp-and-cli-usage.md`.
 
-Attribution: cite movement with `search_result_id`/`video_uid`, `keyword`, and `rank`; use `first_seen_at`/`last_seen_at` for resurfacing language and never infer platform age when `published_at` is blank. See `references/socialseal-data-contract.md`.
+Attribution: cite movement in human-readable terms, the `"keyword" [market, platform]`, the video title/URL, `@author_handle`, and where it ranked; keep `video_uid`/`search_result_id` as an internal traceability note. Use `first_seen_at`/`last_seen_at` for resurfacing language and never infer platform age when `published_at` is blank. See `references/socialseal-data-contract.md`.
+
+Evidence tiers: movement in discoverability/coverage/SOV is a hard observation, not a noisy estimate; attribute day-to-day change to a shifting search reality, not measurement error. But the figures are scoped to high-ranking videos for the tracked queries, so do not generalize past that scope. See `references/evidence-and-confidence.md`.
 
 ## Workflow
 
@@ -82,8 +84,10 @@ Do:
 
 Don't:
 
-- lead with raw row counts
+- lead with raw row counts or internal IDs
 - claim causality from timing alone
+- treat a hard measurement's day-to-day variation as noise
+- generalize a scoped statistic to the whole platform/market
 - hide export freshness or scope
 - overload management audiences with every table
 

@@ -95,8 +95,10 @@ npx -y @socialseal/cli tools call --function vnext-blueprints-shots-read --works
 ## Output
 
 - `blueprintId` and `version`, with `status`
-- `best_practices[]` each tied to `evidence[]` (exemplar `video_uid`s)
+- `best_practices[]` each tied to `evidence[]`; when surfacing a practice to a person, cite the exemplar by video title/URL and `@handle` and keep the `video_uid` as a traceability note
 - selected exemplars with scores and matched keywords
+
+A compiled blueprint raises confidence because its practices are grounded in multiple surfacing exemplars, but it is still an indicative pattern, not proof a given execution will perform. Frame downstream bets as testable. See `references/evidence-and-confidence.md`.
 - shot panels (`panelId`, shot label, kind) and pinned shot assets
 - a clear `missing_data` note and remediation when applicable
 

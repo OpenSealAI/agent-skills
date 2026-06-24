@@ -55,7 +55,7 @@ Good to have:
 3. **Refine selection.** Pin must-include exemplars (`pinnedVideoUids`), drop off-scope or off-market ones (`excludedVideoUids`), and set `promotedCandidateTarget` for how many exemplars to promote. For semantic exploration, set `retrievalPrompt`.
 4. **Analyze Video DNA.** For promoted exemplars that need detail, call `tracked-video-extract` with `ensureAnalysis: true` to resolve hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, and signed frame/asset URLs. For a one-off public video, use `extract-url` with `allowUntracked: true`.
 5. **Cluster if needed.** Use `vnext-cluster-videos` to group exemplars into repeated mechanisms when the set is large.
-6. **Record evidence.** Capture `video_uid` (and `search_result_id` where it came from a ranked row) for every exemplar, plus the analyzed DNA. This is what the blueprint will cite.
+6. **Record evidence.** For every exemplar capture the human-readable citation (video title/URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) as an internal traceability note for tool calls and blueprint joins. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
 
 ## Tool Calls (MCP-first)
 
@@ -124,7 +124,7 @@ npx -y @socialseal/cli video extract --url <public-video-url> --allow-untracked 
 
 ## Output
 
-- a list of selected exemplars with `video_uid` (and `search_result_id`/keyword where applicable), score, and source
+- a list of selected exemplars cited by video title/URL, `@handle`, and the `"keyword" [market, platform]` (with `video_uid`/`search_result_id` kept as a traceability note), plus score and source
 - Video DNA per exemplar: hook, first frame, structure, hero/supporting shots, useful details or mood cues, production qualities, caption/CTA style, account type
 - format and lens labels (aspirational vs utility/practical) with the evidence behind each
 - a note on which exemplars are analyzed vs metadata-only
@@ -134,12 +134,12 @@ npx -y @socialseal/cli video extract --url <public-video-url> --allow-untracked 
 Do:
 - preview before generating; refine with pins and exclusions
 - inspect actual analysis/frames before claiming a visual or format pattern
-- record `video_uid`/`search_result_id` for traceability into the blueprint
+- cite exemplars by title/URL and `@handle`; keep `video_uid`/`search_result_id` as a traceability note for the blueprint
 - separate owned, creator, media, affiliate, and competitor exemplars
 
 Don't:
 - hand-pick "good examples" from outside SocialSeal when scoped exemplars exist
-- infer a pattern from a single example without justification
+- infer a pattern from a single example, or present an exemplar as proof a hook will work
 - make platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md`)
 - copy hooks verbatim; capture the mechanism
 

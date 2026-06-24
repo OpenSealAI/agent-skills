@@ -76,7 +76,7 @@ npx -y @socialseal/cli tools call --function vnext-briefs-export --workspace-id 
 
 ## Manual Path (fallback)
 
-Use only when there is no SocialSeal access or the blueprint is `missing_data`. Label it as a hypothesis and request more evidence.
+Use only when there is no SocialSeal access or the blueprint is `missing_data`. Label it as a hypothesis and request more evidence. Even with a blueprint, hooks and hero shots drawn from exemplars are indicative creative bets to test, not proof; see `references/evidence-and-confidence.md`.
 
 1. Restate the viewer job.
 2. Choose the content lens (aspirational vs utility/practical). Do not frame as an ad.
@@ -97,7 +97,7 @@ Use only when there is no SocialSeal access or the blueprint is `missing_data`. 
 - Useful details / validators
 - Caption direction and CTA
 - What to avoid
-- Evidence references (blueprint `blueprintId` + exemplar `video_uid`s, or cited rows)
+- Evidence references: cite exemplars by video title/URL and `@handle` and the `"keyword" [market, platform]`; keep `blueprintId`/`video_uid` as a traceability note
 - Measurement note (tracking group / keyword)
 
 Use `templates/creator-brief-template.md` for the manual path.
