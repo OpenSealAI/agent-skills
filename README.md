@@ -1,13 +1,13 @@
 # SocialSeal Agent Skills
 
-[![skills.sh](https://skills.sh/b/socialseal/agent-skills)](https://skills.sh/socialseal/agent-skills)
+[![skills.sh](https://skills.sh/b/OpenSealAI/agent-skills)](https://skills.sh/OpenSealAI/agent-skills)
 
 Open-source Agent Skills for SocialSeal workflows: social-search strategy, creator/UGC production planning, and discoverability measurement.
 
 ## Install
 
 ```bash
-npx skills add socialseal/agent-skills
+npx skills add OpenSealAI/agent-skills
 ```
 
 For Claude Code plugin usage, add this repository or marketplace and install the `socialseal-agent-skills` plugin. The plugin manifest lives at `.claude-plugin/plugin.json`, and skills are direct children of `skills/` for Claude plugin compatibility.
