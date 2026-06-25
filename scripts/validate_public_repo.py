@@ -35,7 +35,7 @@ for p in root.glob('skills/*/SKILL.md'):
         errors.append(f'{p}: missing/long description')
     if not str(desc).startswith('Use this skill when'):
         errors.append(f'{p}: description should start with Use this skill when')
-expected=20
+expected=23
 found=len(list(root.glob('skills/*/SKILL.md')))
 if found != expected:
     errors.append(f'expected {expected} skills, found {found}')

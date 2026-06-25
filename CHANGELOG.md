@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+- Added three strategy skills that close gaps in creator sourcing and demand sensing (23 skills total): `socialseal-creator-discovery` (shortlist creator-shop partners by market, language, and destination/topic authority using enriched ranked search rows and rank-weighted surfacing instead of follower/vanity metrics), `socialseal-bilingual-demand-monitoring` (map the explicit local-language vs English search-demand split across language-clean tracking groups, bridge terms via search-journey `englishGloss`/`canonicalKeyword`, and catch micro-trends early), and `socialseal-predictive-demand-routing` (source early leading-indicator signals via periodic `search-journey-run` and `google-ai-search` runs plus rank/surfacing velocity to back campaign resource allocation and fast-track activity/tour onboarding).
+- Grounded the new skills in live-validated tool behavior: `search_results_enriched` exports for creator authority, async `search-journey-run` (poll `journey_run`) for keyword expansion with per-keyword language/gloss/score, and `get-google-ai-search-runs`/`get-google-ai-search-results` for numeric Google AI runs. Documented gotchas (row-level `language` can be blank; `creator_signatures`/`cluster_insights` require a precomputed `clusterRequest`; synchronous journeys can 504; numeric AI-run status uses the dedicated read function).
+- Bundled the cited references into each new skill directory so single-skill installs remain self-contained.
+
 ## 0.3.0
 
 - Added a lightweight always-on `socialseal-orchestrator` entry-point skill that checks foundations first and routes to the right skill in the right order, plus a `socialseal-strategy-readiness` skill that diagnoses strategy foundations (personas, pillars, brand voice, goals) and SocialSeal setup and guides the user to define what is missing using SocialSeal research (20 skills total).

@@ -1,7 +1,7 @@
 {
   "name": "socialseal-agent-skills",
   "description": "SocialSeal agent skills for social-search strategy, creator/UGC planning, and discoverability measurement.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": {
     "name": "SocialSeal contributors"
   },

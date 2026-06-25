@@ -18,6 +18,9 @@ Use export-file mode when the user provides CSV/JSON. The agent should inspect c
 2. Tracking group design
 3. Opportunity analysis
 4. Competitor/content analysis
+4a. Creator discovery (shortlist partners by search authority)
+4b. Bilingual demand monitoring (local-vs-English split, micro-trends)
+4c. Predictive demand routing (early signals for resource allocation and tour onboarding)
 5. Social plan builder
 6. Video concepting (define scope / retrievalPrompt)
 7. Reference video analysis (identify + analyze exemplars)
