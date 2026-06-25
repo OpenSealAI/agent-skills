@@ -6,17 +6,50 @@ Open-source Agent Skills for SocialSeal workflows: social-search strategy, creat
 
 ## Install
 
+### Claude Cowork and non-technical users
+
+Use the hosted SocialSeal remote MCP connector for live tools, then install this plugin for skills. This is the default path for Cowork because it does not require local Node.js, `npx`, terminal commands, or local config files.
+
+1. Open **Customize** -> **Connectors**.
+2. Click **+** -> **Add custom connector**.
+3. Fill in **Name**: `socialseal` and **Remote MCP server URL**: `https://mcp.socialseal.co/mcp`.
+4. Click **Add**/**Connect** and sign in to SocialSeal.
+5. Open the **Cowork** tab, then open **Customize** in the left sidebar.
+6. Go to the **Plugins** tab. Under **Personal plugins**, click **+** -> **Add marketplace** -> **Add from a repository**.
+7. Enter `OpenSealAI/agent-skills` and confirm.
+8. Click **Install** on **SocialSeal Agent Skills**.
+
+Skills then appear via `/` or the **+** button. If Claude says SocialSeal tools are unavailable, the connector is not connected or enabled for that conversation. Return to **Customize** -> **Connectors**, confirm `socialseal` (`https://mcp.socialseal.co/mcp`) is connected, and retry. If the connector is not available, use file mode with SocialSeal CSV/JSON exports.
+
+### Claude Code
+
+Install the skills plugin:
+
+```bash
+/plugin marketplace add OpenSealAI/agent-skills
+/plugin install socialseal-agent-skills@socialseal-skills
+```
+
+For local developer MCP usage, install the local stdio server separately. This is a developer fallback, not the default Cowork setup, and it requires Node.js and `npx`:
+
+```bash
+claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
+```
+
+### skills.sh (skills only)
+
 ```bash
 npx skills add OpenSealAI/agent-skills
 ```
 
-For Claude Code plugin usage, add this repository or marketplace and install the `socialseal-agent-skills` plugin. The plugin manifest lives at `.claude-plugin/plugin.json`, and skills are direct children of `skills/` for Claude plugin compatibility.
+The plugin manifest lives at `.claude-plugin/plugin.json` and is skills-only by default for Claude plugin compatibility. Live tools should use the hosted connector for Cowork or the local stdio MCP developer fallback for Claude Code.
 
 ## What this helps agents do
 
 - Set up SocialSeal workspace scope and measurement surfaces.
 - Design tracking groups, keyword sets, markets, platforms, and competitor scopes.
 - Analyze discoverability gaps and competitor/content patterns.
+- Shortlist creator-shop partners by search authority, monitor bilingual (local-vs-English) demand, and route resources to early demand signals.
 - Run the SocialSeal production engine: identify and analyze reference videos (Video DNA), compile best-practices blueprints, generate briefs from blueprints, and assemble Asset Studio rough cuts from a clip library.
 - Build social plans, creator briefs, video concepts, asset plans, and editor handoffs.
 - Read out posted content and campaign performance, track discoverability, and plan next actions.
@@ -27,7 +60,7 @@ This repo does not automate posting, scheduling, inbox/comment/DM management, ac
 
 ## Integration modes
 
-- **MCP mode (preferred):** the public `@socialseal/mcp-server` exposes stable meta-tools (`socialseal_list_available_tools`, `socialseal_get_tool_schema`, `socialseal_call_tool`, `socialseal_get_tool_status`, `socialseal_export_report`, `socialseal_export_tracking_data`). Backend function targets are invoked through `socialseal_call_tool`.
+- **MCP mode (preferred):** the hosted SocialSeal connector, or the local developer fallback `@socialseal/mcp-server`, exposes stable meta-tools (`socialseal_list_available_tools`, `socialseal_get_tool_schema`, `socialseal_call_tool`, `socialseal_get_tool_status`, `socialseal_export_report`, `socialseal_export_tracking_data`). Backend function targets are invoked through `socialseal_call_tool`.
 - **CLI mode:** the public `@socialseal/cli` mirrors the same surface via `tools list` / `tools schema` / `tools call` plus first-class `data export-*` commands.
 - **File mode:** use user-provided SocialSeal exports.
 
@@ -44,6 +77,9 @@ Always inspect the live registry/schema before mutating calls. See [references/m
 - `socialseal-tracking-group-design`
 - `socialseal-opportunity-analysis`
 - `socialseal-competitor-content-analysis`
+- `socialseal-creator-discovery` (shortlist creator-shop partners by market, language, and destination/topic authority from search evidence)
+- `socialseal-bilingual-demand-monitoring` (map the local-language vs English search-demand split and catch micro-trends early)
+- `socialseal-predictive-demand-routing` (source early demand signals to back resource allocation and fast-track activity/tour onboarding)
 - `socialseal-social-plan-builder`
 
 ### Production
