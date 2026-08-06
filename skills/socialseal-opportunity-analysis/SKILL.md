@@ -2,7 +2,8 @@
 name: socialseal-opportunity-analysis
 description: 'Use this skill when turning SocialSeal tracking exports, search journey
   results, or group evidence into opportunity analysis: discoverability gaps, keyword
-  priorities, content jobs, and recommended next actions grounded in SocialSeal data.'
+  priorities, share of voice, content jobs, and recommended next actions grounded in
+  SocialSeal data.'
 license: MIT
 metadata:
   socialseal:

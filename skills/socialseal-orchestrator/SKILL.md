@@ -56,6 +56,7 @@ Do not stall on a missing input. Name it, explain it in a sentence, propose a So
 - "Where is demand shifting?" / route budget and fast-track tour onboarding -> `socialseal-predictive-demand-routing`
 - Turn opportunities into a plan -> `socialseal-social-plan-builder`
 - Produce content (engine path): `socialseal-video-concepting` -> `socialseal-reference-video-analysis` -> `socialseal-blueprint-builder` -> `socialseal-creator-briefing` -> `socialseal-asset-planning` / `socialseal-generation-prompts` -> `socialseal-asset-studio-generation` -> `socialseal-capcut-export-prep`
+- "How do we compare with <competitor> on discoverability / share of voice?" / measure brand-vs-competitor visibility (snapshot or trend) -> `socialseal-discoverability-tracking`
 - "How did it do?" / movement -> `socialseal-performance-readout`, `socialseal-discoverability-tracking`
 - Decide next changes -> `socialseal-content-adjustment-recommendations`
 - Brief leadership -> `socialseal-management-reporting`
@@ -67,6 +68,8 @@ Strategy & setup -> opportunity/competitor analysis -> plan -> production engine
 
 ## Hard rules to carry into every routed task
 
+- After routing, load the routed skill's instructions and follow its workflow and output contract: the skill is already in context when the plugin is installed; if not, read it with `socialseal_read_skill` before doing the work. Do not improvise a deliverable shape the skill defines.
+- A brand-vs-competitor visibility question ("how do we compare with X on discoverability / share of voice?") is measurement, not content analysis — route it to `socialseal-discoverability-tracking` even though it names a competitor.
 - Cite evidence in human-readable terms: `"keyword" [market, platform]`, video title/URL, `@handle`, group name. Keep `video_uid`/`search_result_id` as internal traceability only. See `references/socialseal-data-contract.md`.
 - Be honest about evidence tiers: hard measurements are exact (not estimates), statistics carry selection bias (only high-ranking videos for tracked queries), and creative exemplars are anecdotal, not proof. See `references/evidence-and-confidence.md`.
 - Reuse one `opportunityKey` across blueprint, brief, and asset.

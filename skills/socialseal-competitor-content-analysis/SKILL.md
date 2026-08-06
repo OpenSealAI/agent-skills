@@ -23,6 +23,8 @@ SocialSeal can show which competitor, creator, or category videos surface for tr
 
 The deliverable is not “competitor posts are doing well.” The deliverable is a pattern library the brand can adapt.
 
+Measurement is a different job: if the request is to measure or compare visibility — discoverability, keyword coverage, share of voice, or rank statistics for a brand vs a competitor — route to `socialseal-discoverability-tracking`. This skill extracts content patterns (Video DNA); it does not produce visibility metrics.
+
 When the goal is to produce content (not just analysis), route into the production engine instead of stopping at a pattern matrix: use `socialseal-reference-video-analysis` to select and analyze exemplars and `socialseal-blueprint-builder` to compile a grounded blueprint. This skill is for the strategy-side pattern read; the engine turns those patterns into briefs and rough cuts. See `references/production-pipeline.md`.
 
 ## Inputs
@@ -98,6 +100,7 @@ Do:
 
 Don't:
 
+- answer discoverability / share-of-voice measurement questions with a pattern matrix; route those to `socialseal-discoverability-tracking`
 - copy hooks verbatim unless the user explicitly asks for close variants
 - infer a pattern from one example, or present an exemplar as proof it will work
 - confuse account size with format quality

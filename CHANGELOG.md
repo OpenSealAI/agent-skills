@@ -1,10 +1,17 @@
 # Changelog
 
+## 0.5.0
+
+- Made discoverability / share-of-voice measurement a first-class, findable workflow: rewrote `socialseal-discoverability-tracking` so it measures a brand-vs-competitor snapshot (keyword coverage, rank-weighted and views-weighted share of voice, best rank) as well as tracking over time. It now bundles `references/metrics-glossary.md`, defines the last-mile computation with a worked example, requires metric tables and a chart (via the `dataviz` skill), and leads ranked data access with `search_results_enriched`.
+- Fixed routing so visibility-measurement questions reach the right skill: `socialseal-orchestrator` now routes "how do we compare with <competitor> on discoverability / share of voice?" to `socialseal-discoverability-tracking`, instructs the agent to load the routed skill's instructions, and `socialseal-competitor-content-analysis` now guards against answering measurement questions with a content-pattern matrix.
+- Added "share of voice" to the `socialseal-opportunity-analysis` description so the skill is discoverable for visibility-gap work.
+
 ## 0.4.1
 
 - Fixed the Claude marketplace manifest so `OpenSealAI/agent-skills` syncs: the plugin `source` now uses the required `./` prefix (Claude rejected the previous `"."` at sync time with "Marketplace sync failed"), and the non-standard `displayName` field was removed for compatibility with older Claude clients. The plugin now appears in the marketplace as `socialseal-agent-skills`.
 
 ## 0.4.0
+
 
 - Added three strategy skills that close gaps in creator sourcing and demand sensing (23 skills total): `socialseal-creator-discovery` (shortlist creator-shop partners by market, language, and destination/topic authority using enriched ranked search rows and rank-weighted surfacing instead of follower/vanity metrics), `socialseal-bilingual-demand-monitoring` (map the explicit local-language vs English search-demand split across language-clean tracking groups, bridge terms via search-journey `englishGloss`/`canonicalKeyword`, and catch micro-trends early), and `socialseal-predictive-demand-routing` (source early leading-indicator signals via periodic `search-journey-run` and `google-ai-search` runs plus rank/surfacing velocity to back campaign resource allocation and fast-track activity/tour onboarding).
 - Grounded the new skills in live-validated tool behavior: `search_results_enriched` exports for creator authority, async `search-journey-run` (poll `journey_run`) for keyword expansion with per-keyword language/gloss/score, and `get-google-ai-search-runs`/`get-google-ai-search-results` for numeric Google AI runs. Documented gotchas (row-level `language` can be blank; `creator_signatures`/`cluster_insights` require a precomputed `clusterRequest`; synchronous journeys can 504; numeric AI-run status uses the dedicated read function).
