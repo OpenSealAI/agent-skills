@@ -17,7 +17,7 @@ Use the hosted SocialSeal remote MCP connector for live tools, then install this
 5. Open the **Cowork** tab, then open **Customize** in the left sidebar.
 6. Go to the **Plugins** tab. Under **Personal plugins**, click **+** -> **Add marketplace** -> **Add from a repository**.
 7. Enter `OpenSealAI/agent-skills` and confirm.
-8. Click **Install** on **SocialSeal Agent Skills**.
+8. Click **Install** on **socialseal-agent-skills**.
 
 Skills then appear via `/` or the **+** button. If Claude says SocialSeal tools are unavailable, the connector is not connected or enabled for that conversation. Return to **Customize** -> **Connectors**, confirm `socialseal` (`https://mcp.socialseal.co/mcp`) is connected, and retry. If the connector is not available, use file mode with SocialSeal CSV/JSON exports.
 

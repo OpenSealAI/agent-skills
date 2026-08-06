@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- Fixed the Claude marketplace manifest so `OpenSealAI/agent-skills` syncs: the plugin `source` now uses the required `./` prefix (Claude rejected the previous `"."` at sync time with "Marketplace sync failed"), and the non-standard `displayName` field was removed for compatibility with older Claude clients. The plugin now appears in the marketplace as `socialseal-agent-skills`.
+
 ## 0.4.0
 
 - Added three strategy skills that close gaps in creator sourcing and demand sensing (23 skills total): `socialseal-creator-discovery` (shortlist creator-shop partners by market, language, and destination/topic authority using enriched ranked search rows and rank-weighted surfacing instead of follower/vanity metrics), `socialseal-bilingual-demand-monitoring` (map the explicit local-language vs English search-demand split across language-clean tracking groups, bridge terms via search-journey `englishGloss`/`canonicalKeyword`, and catch micro-trends early), and `socialseal-predictive-demand-routing` (source early leading-indicator signals via periodic `search-journey-run` and `google-ai-search` runs plus rank/surfacing velocity to back campaign resource allocation and fast-track activity/tour onboarding).
