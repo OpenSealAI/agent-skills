@@ -1,8 +1,9 @@
 ---
 name: socialseal-content-adjustment-recommendations
-description: 'Use this skill when converting a SocialSeal readout into concrete content
-  changes: what to continue, adjust, add, pause, retest, or track differently based
-  on discoverability evidence.'
+description: 'Use this skill when the user asks what to change next after a SocialSeal
+  readout, which content to continue/adjust/add/pause/retest, why something is not
+  surfacing, or how to turn measurement into the next brief queue. Produce small,
+  owned, measurable changes tied to evidence and production constraints.'
 license: MIT
 metadata:
   socialseal:
@@ -80,4 +81,3 @@ Don't:
 - [ ] Measurement signal is defined.
 - [ ] Priorities reflect impact and feasibility.
 - [ ] Tracking fixes are not disguised as content strategy.
-

@@ -1,11 +1,11 @@
 ---
 name: socialseal-bilingual-demand-monitoring
 description: >-
-  Use this skill when monitoring search demand across a local language and English
-  for the same market, so micro-trends are caught early in whichever language they
-  start. Maps the explicit local-vs-English split using language-clean tracking
-  groups and per-keyword English glosses, compares discoverability movement across
-  the split over time, and flags emerging queries to track or brief.
+  Use this skill when the user asks what people search in a local language versus
+  English, whether a trend started in one language first, how translated/localized
+  queries differ, or how to monitor multilingual demand. Compare language-clean
+  SocialSeal surfaces, bridge terms with English glosses, and flag emerging queries
+  to track or brief.
 license: MIT
 metadata:
   socialseal:

@@ -4,17 +4,17 @@
     "name": "SocialSeal contributors"
   },
   "description": "Marketplace catalog for SocialSeal Agent Skills.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "metadata": {
     "description": "Marketplace catalog for SocialSeal Agent Skills.",
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "plugins": [
     {
       "name": "socialseal-agent-skills",
       "source": "./",
-      "description": "SocialSeal agent skills for social-search strategy, creator/UGC planning, and discoverability measurement.",
-      "version": "0.5.0",
+      "description": "SocialSeal agent skills for social-search strategy, evidence-grounded video/carousel production, creator/UGC planning, and discoverability measurement.",
+      "version": "0.6.0",
       "author": {
         "name": "SocialSeal contributors"
       },
@@ -26,6 +26,8 @@
         "social-search",
         "creator-content",
         "ugc",
+        "video-production",
+        "carousel-production",
         "discoverability",
         "measurement"
       ],
@@ -34,6 +36,8 @@
         "socialseal",
         "discoverability",
         "creator-content",
+        "video-production",
+        "carousel-production",
         "measurement"
       ]
     }

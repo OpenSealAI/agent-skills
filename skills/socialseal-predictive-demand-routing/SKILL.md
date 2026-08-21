@@ -1,11 +1,11 @@
 ---
 name: socialseal-predictive-demand-routing
 description: >-
-  Use this skill when sourcing early, forward-looking signals on shifting traveler
-  (or category) interest to back campaign resource allocation and fast-track
-  activity/tour onboarding. It runs periodic search journeys and Google AI runs,
-  tracks rank and surfacing velocity for destination/route/activity keywords over
-  time, and produces a routing recommendation with explicit selection-bias caveats.
+  Use this skill when the user asks what is trending, where demand is shifting, which
+  destination/route/activity is gaining interest, or where to allocate campaign,
+  creator, inventory, or onboarding resources next. Use repeated SocialSeal journeys,
+  AI runs, and rank/surfacing velocity as leading indicators—not forecasts—and make
+  scoped routing recommendations with confidence caveats.
 license: MIT
 metadata:
   socialseal:

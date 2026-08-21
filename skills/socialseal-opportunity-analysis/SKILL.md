@@ -1,9 +1,10 @@
 ---
 name: socialseal-opportunity-analysis
-description: 'Use this skill when turning SocialSeal tracking exports, search journey
-  results, or group evidence into opportunity analysis: discoverability gaps, keyword
-  priorities, share of voice, content jobs, and recommended next actions grounded in
-  SocialSeal data.'
+description: 'Use this skill when answering questions such as "what should we make content
+  about?", "what are people searching for or trying to answer?", "which queries or
+  topics should we prioritize?", and "where are the content gaps?" Turn SocialSeal
+  journeys, ranked results, tracking exports, or group evidence into keyword
+  priorities, audience jobs, discoverability gaps, and actionable opportunities.'
 license: MIT
 metadata:
   socialseal:
@@ -39,6 +40,10 @@ Good to have:
 - current content pillars
 - business priority or target audience
 - previous-period export for comparison
+
+If no relevant tracking group or export exists, do not invent an opportunity matrix.
+Route through `socialseal-workspace-setup` for either a focused one-off search journey
+or reusable group setup, then resume with the returned journey/ranked evidence.
 
 ## Data Access
 
@@ -78,6 +83,10 @@ Evidence tiers: discoverability, coverage, and share of voice are hard observati
 6. **Classify content jobs.** Use practical tags such as teach, walkthrough, compare, plan, reassure, show mood, show detail, or answer first-timer questions.
 7. **Prioritize.** Rank by relevance, search intent strength, competitive/creator activity, expected business usefulness, and production feasibility.
 8. **Select evidence.** For each recommendation, include metrics plus 1-3 examples that show what currently surfaces, cited by video title/URL and `@handle`. Label each recommendation's confidence basis (measured / scoped statistic / indicative pattern).
+9. **Run the demand decision gate.** Present 3-5 prioritized query/topic options with
+   the audience job, evidence, brand fit, and production feasibility. Ask the user to
+   select or adjust the production priority before concepting; do not silently choose
+   a whole content plan from one keyword.
 
 ## Output
 
@@ -94,6 +103,9 @@ Create an opportunity table with:
 - caveat/confidence (measured / scoped statistic / indicative pattern)
 
 Also include a short action summary: what to brief, what to track, what to inspect further, and what not to pursue.
+
+For production-bound work, include the selected/awaiting-selection status so the
+next skill does not mistake every opportunity for an approved brief.
 
 ## Do / Don't
 
@@ -125,4 +137,3 @@ Don't:
 - [ ] Owned, competitor, creator, and irrelevant rows are separated.
 - [ ] Opportunities include evidence and a content job.
 - [ ] Recommendations are actionable and within brand scope.
-

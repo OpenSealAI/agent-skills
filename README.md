@@ -2,7 +2,9 @@
 
 [![skills.sh](https://skills.sh/b/OpenSealAI/agent-skills)](https://skills.sh/OpenSealAI/agent-skills)
 
-Open-source Agent Skills for SocialSeal workflows: social-search strategy, creator/UGC production planning, and discoverability measurement.
+Open-source Agent Skills for SocialSeal workflows: social-search strategy,
+evidence-grounded video/carousel production, creator/UGC planning, and discoverability
+measurement.
 
 ## Install
 
@@ -20,6 +22,11 @@ Use the hosted SocialSeal remote MCP connector for live tools, then install this
 8. Click **Install** on **socialseal-agent-skills**.
 
 Skills then appear via `/` or the **+** button. If Claude says SocialSeal tools are unavailable, the connector is not connected or enabled for that conversation. Return to **Customize** -> **Connectors**, confirm `socialseal` (`https://mcp.socialseal.co/mcp`) is connected, and retry. If the connector is not available, use file mode with SocialSeal CSV/JSON exports.
+
+For a large content plan or production request, explicitly start with
+`socialseal-orchestrator` if Claude does not select it automatically. The orchestrator
+will check brand utility, demand evidence, benchmarks, asset choices, prototypes, and
+delivery state before routing into downstream skills.
 
 ### Claude Code
 
@@ -94,6 +101,12 @@ These follow the SocialSeal vNext engine: opportunity -> reference videos -> blu
 - `socialseal-generation-prompts`
 - `socialseal-asset-studio-generation`
 - `socialseal-capcut-export-prep`
+- `socialseal-carousel-production` (evidence, visual direction, asset selection,
+  prototype approval, rendered slides, and post-ready QA for carousels)
+
+For multi-stage creative work, the skills use explicit foundation, demand,
+benchmark, asset, prototype, and final-QA gates. See
+[references/creative-production-gates.md](references/creative-production-gates.md).
 
 ### Measurement
 - `socialseal-performance-readout`

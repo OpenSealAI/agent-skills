@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.6.0
+
+- Rewrote all 23 existing skill descriptions around concrete user-language triggers
+  so SocialSeal routing activates for content plans, videos/carousels, benchmark
+  requests, asset-bank production, search-demand questions, creator discovery, and
+  measurement work even when the user does not name the internal skill.
+- Added shared creative-production gates: delivery contracts, brand utility,
+  demand/topic choices, benchmark and tiered Video DNA choices, rights/location-aware
+  asset selection, representative prototypes, final QA, precise delivery states, and
+  a workflow audit manifest.
+- Added `socialseal-carousel-production` (24 skills total) for evidence-grounded
+  carousel creative direction, asset mapping, prototype approval, rendered slide
+  production, mobile-view verification, and post-ready QA. It explicitly rejects
+  ungrounded AI-template defaults and unverified location imagery.
+- Strengthened strategy readiness with a brand utility bank and hard exclusions;
+  added a focused one-off versus reusable setup branch when no tracking group exists;
+  and prevented briefs, shot lists, blueprints, or Asset Studio rough cuts from being
+  mislabeled as finished content.
+
 ## 0.5.0
 
 - Made discoverability / share-of-voice measurement a first-class, findable workflow: rewrote `socialseal-discoverability-tracking` so it measures a brand-vs-competitor snapshot (keyword coverage, rank-weighted and views-weighted share of voice, best rank) as well as tracking over time. It now bundles `references/metrics-glossary.md`, defines the last-mile computation with a worked example, requires metric tables and a chart (via the `dataviz` skill), and leads ranked data access with `search_results_enriched`.

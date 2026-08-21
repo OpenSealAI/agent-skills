@@ -1,10 +1,11 @@
 ---
 name: socialseal-blueprint-builder
 description: >-
-  Use this skill when compiling a SocialSeal best-practices blueprint from grounded
-  reference-video evidence: generating or reading a blueprint version, handling the
-  missing_data outcome, inspecting best practices and shot-lift, and preparing the
-  blueprint as the source of truth for briefs and Asset Studio rough cuts.
+  Use this skill when the user needs evidence-backed creative best practices, a
+  SocialSeal blueprint, reusable Video DNA patterns, or the source of truth for a
+  brief/rough cut. Trigger after reference examples are selected; compile their
+  grounded practices and shot panels, handle missing_data honestly, and pass the
+  blueprint into briefing and production.
 license: MIT
 metadata:
   socialseal:
@@ -25,6 +26,10 @@ metadata:
 A SocialSeal blueprint is the compiled, evidence-grounded answer to "what makes content win for this opportunity." It is generated from real exemplar videos, not authored from intuition. It carries `best_practices[]`, `evidence[]`, the selected exemplars, and a set of shot panels that downstream briefs and Asset Studio rough cuts follow.
 
 This skill drives `vnext-blueprints-*`. See `references/production-pipeline.md` for the end-to-end flow and `references/mcp-and-cli-usage.md` for call patterns. Use `socialseal-reference-video-analysis` first to select and analyze exemplars.
+
+Generate only after the benchmark direction and analysis depth are approved. A
+blueprint compiles evidence; it does not replace brand utility facts, asset choices,
+or visual-direction approval.
 
 ## When to Use
 
@@ -56,6 +61,8 @@ Good to have:
 5. **Read shot-lift.** Use `vnext-blueprints-shots-read` to get shot panels and pinned shot assets (signed URLs). Each panel has a `panelId` used by clip mapping and the Asset Studio editSpec.
 6. **Refresh shots if stale.** Use `vnext-blueprints-shots-refresh` to requeue shot assets.
 7. **Hand off.** Pass `blueprintId` (+ version) to `socialseal-creator-briefing` and the panels to `socialseal-asset-studio-generation`.
+8. **Record state.** Mark the blueprint generated, draft, or missing_data in the
+   workflow manifest. Never describe a generated blueprint as finished content.
 
 ## Tool Calls (MCP-first)
 

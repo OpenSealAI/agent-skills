@@ -1,12 +1,13 @@
 ---
 name: socialseal-strategy-readiness
 description: >-
-  Use this skill when checking whether a brand has the strategy foundations (target
-  personas, content pillars, brand voice, measurable goals) and a correct SocialSeal
-  setup before analysis or production, and to guide the user through defining what is
-  missing using SocialSeal research. It explains each concept in plain language and
-  proposes concrete, SocialSeal-backed ways to produce it rather than asking the user
-  to supply perfect inputs.
+  Use this skill when strategy and SocialSeal readiness must be checked before
+  creating a content plan, campaign, creator brief, video, carousel, or other
+  production for a new or under-specified brand, especially when personas, brand
+  voice, product truths, exclusions, real utility knowledge, goals, tracking groups,
+  or evidence may be missing. Diagnose the gaps
+  and propose SocialSeal-backed foundations instead of inventing them or asking the
+  user for a perfect brief.
 license: MIT
 metadata:
   socialseal:
@@ -26,7 +27,7 @@ metadata:
 
 Most SocialSeal skills assume a strategy and a working setup already exist. Often they do not, and the concepts are unfamiliar. This skill diagnoses readiness and guides the user to fill gaps. Guiding means teaching the concept and proposing a concrete, SocialSeal-backed way to define it, not asking "please input your personas."
 
-`socialseal-orchestrator` routes here when strategy or setup may be missing. See `references/strategy-foundations.md` for the concept definitions and derivation methods, and `references/evidence-and-confidence.md` for how to talk about what the data can and cannot prove.
+`socialseal-orchestrator` routes here when strategy or setup may be missing. See `references/strategy-foundations.md` for the concept definitions and derivation methods, `references/evidence-and-confidence.md` for how to talk about what the data can and cannot prove, and `references/creative-production-gates.md` when this readiness check precedes a large creative task.
 
 ## When to Use
 
@@ -44,6 +45,8 @@ Assess two halves and report each as ready / partial / missing.
 - **Target personas:** named viewers with a job-to-be-done and hesitations, not just demographics.
 - **Content pillars:** 3-5 durable themes, each tied to real tracked search demand.
 - **Brand voice:** tone, point of view, and hard constraints (claims to avoid).
+- **Brand utility bank:** products/services actually offered, exclusions, real tips,
+  itineraries, routes, timings, prices, proof, and facts needing confirmation.
 - **Goal / measurement intent:** which pillars/keywords, market, and platform to improve, with a baseline.
 
 ### SocialSeal setup
@@ -66,6 +69,10 @@ Assess two halves and report each as ready / partial / missing.
    - **Personas:** run a search journey on the category, read which questions/jobs surface, cluster keywords, and propose 2-4 personas grounded in real search behavior for the user to confirm.
    - **Pillars:** cluster the tracked keyword set and surfaced content into 3-5 candidate pillars relevant to the user's brand and product USPs, each validated for search demand and a presence gap.
    - **Brand voice:** ask for existing guidelines; if none, draft a short voice note from how the brand talks on their website and in existing social videos, or from high-surfacing creator tone in the category, then confirm.
+   - **Brand utility bank:** inspect approved project materials, product/service pages,
+     itineraries, call notes, existing content, and asset metadata. Draft a table of
+     useful facts with source and status (`confirmed`, `needs confirmation`, `out of
+     scope`). Ask the user to correct or select, not to write the bank from scratch.
    - **Goals:** pick priority pillars/keywords and capture the current measured discoverability/SOV baseline so movement is checkable.
 4. **Offer, do not demand.** Present the proposal and ask the user to confirm or adjust. If they already have a foundation, capture it and move on.
 5. **Route.** Hand off to the right skill: `socialseal-workspace-setup` and `socialseal-tracking-group-design` for setup gaps; `socialseal-opportunity-analysis` to turn readiness into opportunities; the production chain once foundations hold.
@@ -74,7 +81,7 @@ Assess two halves and report each as ready / partial / missing.
 
 - a short readiness report: each foundation and setup item marked ready / partial / missing
 - for each gap: a one-line explanation and a proposed SocialSeal-backed way to define it
-- a confirmed or draft set of personas, pillars, voice note, and goal where the user engaged
+- a confirmed or draft set of personas, pillars, voice note, brand utility bank, and goal where the user engaged
 - the recommended next skill and why
 
 ## Do / Don't
@@ -83,6 +90,8 @@ Do:
 - explain every unfamiliar concept in plain language before asking about it
 - propose to produce missing foundations with SocialSeal research, then confirm with the user
 - ground proposed personas/pillars in real surfaced search behavior, not invention
+- treat exclusions and claim confidence as hard constraints; demand does not override
+  what the brand actually offers
 - be honest that proposed personas/pillars are hypotheses to validate (see `references/evidence-and-confidence.md`)
 
 Don't:
@@ -94,6 +103,7 @@ Don't:
 ## Verification Checklist
 
 - [ ] Both halves (strategy foundations + SocialSeal setup) were diagnosed.
+- [ ] A brand utility bank captures useful material, exclusions, sources, and facts needing confirmation.
 - [ ] Every missing foundation got a plain-language explanation.
 - [ ] Each gap has a concrete, SocialSeal-backed proposal, not just a request for input.
 - [ ] Proposed foundations are labeled as hypotheses to confirm.

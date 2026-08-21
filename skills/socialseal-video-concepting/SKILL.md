@@ -1,10 +1,11 @@
 ---
 name: socialseal-video-concepting
 description: >-
-  Use this skill when turning a SocialSeal opportunity or keyword gap into short-form
-  video concept routes that feed the blueprint engine. Produces concepts with viewer
-  job, lens, hook and first-frame ideas, arcs, and the scope or retrievalPrompt to
-  drive socialseal-blueprint-builder, plus a measurement intent.
+  Use this skill when the user asks for video ideas, creative routes, hooks, first
+  frames, or ways to turn a search query/audience problem into short-form content.
+  Generate multiple SocialSeal-groundable concept options before briefing or
+  production, each with a viewer job, lens, arc, blueprint scope/retrievalPrompt,
+  production difficulty, and measurement intent.
 license: MIT
 metadata:
   socialseal:
@@ -25,6 +26,10 @@ Video concepting is the ideation step that frames an opportunity into shootable 
 
 See `references/production-pipeline.md` and `references/content-lenses.md`. Concepting precedes reference-video analysis and blueprint generation; it does not replace them. Concepts are hypotheses to ground in real surfacing videos and then test, not proven winners; see `references/evidence-and-confidence.md`.
 
+For work that will proceed into production, read
+`references/creative-production-gates.md`. Concepts are a decision gate, not an
+excuse to select one route silently and build a large batch.
+
 ## When to Use
 
 - Translating an opportunity/gap into 3+ distinct concept families.
@@ -36,6 +41,7 @@ See `references/production-pipeline.md` and `references/content-lenses.md`. Conc
 - target platform, market, and keyword/topic, with the `opportunityKey`
 - opportunity analysis or competitor/content evidence
 - brand context and constraints
+- brand utility bank: real facts, tips, proof, exclusions, and facts needing confirmation
 - available assets, creator type, or shoot context
 
 ## Workflow
@@ -46,7 +52,10 @@ See `references/production-pipeline.md` and `references/content-lenses.md`. Conc
 4. **For each concept, specify:** hook, first frame, arc, hero shot, supporting shots, useful detail or mood cue, CTA, and target keyword/topic.
 5. **Attach an engine handle.** For each concept, define the blueprint input: a `scopeType` (+ scope fields) or a `retrievalPrompt` that would retrieve matching exemplars. This is what makes the concept groundable.
 6. **Rank concepts.** Score by evidence fit, usefulness/emotional pull, production ease, and measurement clarity.
-7. **Hand off.** Send the top concepts to `socialseal-reference-video-analysis` (preview exemplars) and `socialseal-blueprint-builder` (generate).
+7. **Present the concept decision.** Show the top 2-3 routes with trade-offs and ask
+   the user to select, combine, or adjust them. Record the approved route and facts;
+   do not produce every route unless requested.
+8. **Hand off.** Send approved concepts to `socialseal-reference-video-analysis` (preview exemplars) and `socialseal-blueprint-builder` (generate).
 
 ## Output
 
@@ -57,6 +66,7 @@ For each concept:
 - caption direction and measurement keyword/topic
 - blueprint input: scope or `retrievalPrompt`
 - production difficulty
+- brand utility/proof used and approval status
 
 ## Do / Don't
 

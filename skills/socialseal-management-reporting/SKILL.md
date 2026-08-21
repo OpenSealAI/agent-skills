@@ -1,8 +1,10 @@
 ---
 name: socialseal-management-reporting
-description: Use this skill when creating senior stakeholder summaries from SocialSeal
-  tracking and readout data. It converts detailed discoverability evidence into a
-  concise business-language update with decisions, risks, and next priorities.
+description: Use this skill when the user asks for an executive, leadership, board,
+  client, or senior-stakeholder summary of SocialSeal results. Convert detailed
+  tracking/readout evidence into a concise business-language update with scope,
+  decisions, risks, examples, and next priorities rather than repeating the full
+  analysis.
 license: MIT
 metadata:
   socialseal:
@@ -74,4 +76,3 @@ Don't:
 - [ ] Scope/date range are visible.
 - [ ] Risks and decisions are explicit.
 - [ ] Next priorities are concrete.
-

@@ -1,8 +1,10 @@
 ---
 name: socialseal-competitor-content-analysis
-description: Use this skill when extracting competitor, creator, and category content
-  patterns from SocialSeal search results or tracked-video extracts. Produces reusable
-  video/content DNA for strategy, briefs, and concepting without copying posts.
+description: Use this skill when the user asks what good social content looks like,
+  which competitor/creator posts or carousels are useful benchmarks, what formats and
+  hooks surface for a query, or why category content works. Extract repeatable content
+  patterns from SocialSeal ranked results or tracked analyses for strategy and
+  concepting without copying individual posts.
 license: MIT
 metadata:
   socialseal:
@@ -26,6 +28,11 @@ The deliverable is not “competitor posts are doing well.” The deliverable is
 Measurement is a different job: if the request is to measure or compare visibility — discoverability, keyword coverage, share of voice, or rank statistics for a brand vs a competitor — route to `socialseal-discoverability-tracking`. This skill extracts content patterns (Video DNA); it does not produce visibility metrics.
 
 When the goal is to produce content (not just analysis), route into the production engine instead of stopping at a pattern matrix: use `socialseal-reference-video-analysis` to select and analyze exemplars and `socialseal-blueprint-builder` to compile a grounded blueprint. This skill is for the strategy-side pattern read; the engine turns those patterns into briefs and rough cuts. See `references/production-pipeline.md`.
+
+For carousels or other non-video formats, inspect the actual post/slide assets when
+the ranked result exposes them. If only metadata is available, label the format read
+metadata-only rather than inventing slide structure. Read
+`references/creative-production-gates.md` when the analysis will drive production.
 
 ## Inputs
 
@@ -67,10 +74,15 @@ Evidence note: surfaced exemplars are anecdotal evidence for creative direction,
 1. **Sample deliberately.** Select examples from top keywords, repeated competitors/creators, and high-opportunity gaps. Avoid only picking viral outliers.
 2. **Qualify scope.** Remove irrelevant rows, wrong market/language, wrong topic, or non-comparable account types.
 3. **Extract video DNA.** For each example, capture hook, first frame, hero shot, shot sequence, on-screen text, useful details, mood cues, caption style, CTA, and creator/account type.
+   For a verified carousel, capture cover mechanism, slide sequence, text density,
+   visual hierarchy, proof objects, CTA, and save/share utility.
 4. **Classify format.** Use labels such as walkthrough, comparison, first-timer guide, map/pin, list, day-in-life, itinerary, review, before-after, FAQ, or myth-vs-reality.
 5. **Separate lenses.** Aspirational patterns create mood/desire. Utility patterns teach, plan, compare, or reduce hesitation.
 6. **Find repeated mechanisms.** A pattern needs multiple examples or a clear reason it matters for a priority keyword.
 7. **Translate into adaptation.** State how the brand should adapt the mechanism, not copy the post.
+8. **Present benchmark directions.** Group the strongest patterns into 2-3 coherent
+   creative routes with trade-offs and representative examples. Record the user's
+   selected direction before briefing or production.
 
 ## Output
 
@@ -88,12 +100,15 @@ Create a content-pattern matrix:
 - caveat
 
 Then write a short “briefing implications” section for downstream creator briefs or concepts.
+For carousels, hand the approved pattern direction to
+`socialseal-carousel-production`.
 
 ## Do / Don't
 
 Do:
 
 - inspect visuals/captions where possible before making format claims
+- distinguish viewed video/slide evidence from metadata-only inference
 - identify account type: owned, creator, media, affiliate/partner, competitor
 - adapt the mechanism, not the wording
 - cite examples by title/URL and `@handle`; keep `video_uid` as a traceability note
@@ -105,6 +120,7 @@ Don't:
 - infer a pattern from one example, or present an exemplar as proof it will work
 - confuse account size with format quality
 - use ad-style labels; describe social-native content jobs
+- treat a visually attractive but off-topic post as a useful benchmark
 
 ## Troubleshooting
 
@@ -120,4 +136,3 @@ Don't:
 - [ ] Visual/caption evidence status is labeled.
 - [ ] Recommendations are adaptations, not copies.
 - [ ] Output can feed creator briefing or video concepting directly.
-

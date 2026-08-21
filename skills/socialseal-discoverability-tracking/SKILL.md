@@ -1,12 +1,11 @@
 ---
 name: socialseal-discoverability-tracking
 description: >-
-  Use this skill when measuring, comparing, or tracking discoverability, keyword
-  coverage, and share of voice for a brand or competitor across tracked keywords,
-  markets, and platforms — a single snapshot or over time. It defines the metrics,
-  computes them from ranked exports (tables and a chart), and checks export
-  completeness, anomaly patterns, and denominator consistency before reporting
-  movement.
+  Use this skill when the user asks whether a brand or competitor appears in social
+  search, who leads, how ranks/keyword coverage/share of voice compare, or whether
+  visibility changed over time. Compute scoped discoverability metrics from ranked
+  SocialSeal exports, produce tables/charts, and verify completeness and denominator
+  consistency before reporting movement.
 license: MIT
 metadata:
   socialseal:

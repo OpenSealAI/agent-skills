@@ -1,8 +1,10 @@
 ---
 name: socialseal-follow-up-planning
-description: Use this skill when turning a SocialSeal meeting, readout, or report
-  into a next-cycle action plan with owners, due dates, data refreshes, open questions,
-  and measurement checkpoints.
+description: Use this skill when the user asks to turn a SocialSeal meeting, report,
+  recommendation set, or review into actions; assign owners/due dates; schedule the
+  next refresh; or prepare the next-cycle agenda. Produce an operational follow-up
+  plan with dependencies, acceptance criteria, open questions, and measurement
+  checkpoints.
 license: MIT
 metadata:
   socialseal:
@@ -76,4 +78,3 @@ Don't:
 - [ ] Open questions are recorded.
 - [ ] Next review agenda is clear.
 - [ ] Measurement checkpoints map back to recommendations.
-

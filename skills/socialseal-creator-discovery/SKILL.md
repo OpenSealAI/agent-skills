@@ -1,11 +1,10 @@
 ---
 name: socialseal-creator-discovery
 description: >-
-  Use this skill when shortlisting creator-shop or UGC partners for a market using
-  SocialSeal search evidence: ranking creators by how often and how prominently they
-  surface for the destination, category, and language searches that matter, not by
-  follower or vanity metrics. Produces an evidence-backed partner shortlist with
-  market, language, destination/topic authority, and the queries each creator wins.
+  Use this skill when the user asks which creators, influencers, affiliates, UGC
+  partners, or creator-shops to work with for a market/topic. Build a shortlist from
+  creators who actually surface for the relevant SocialSeal searches, ranking scoped
+  search authority and queries won rather than follower or vanity metrics.
 license: MIT
 metadata:
   socialseal:

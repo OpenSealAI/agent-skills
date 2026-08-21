@@ -35,3 +35,8 @@ Use export-file mode when the user provides CSV/JSON. The agent should inspect c
 16. Content adjustment, management reporting, and follow-up planning
 
 The production stages (6-13) are joined by a single `opportunityKey`. See `../references/production-pipeline.md`.
+For an approved carousel concept, branch after evidence/benchmark selection into
+`socialseal-carousel-production`: visual direction -> asset choices -> prototype ->
+rendered/verified slides.
+Use `../references/creative-production-gates.md` for large production requests and
+delivery-state/QA rules.

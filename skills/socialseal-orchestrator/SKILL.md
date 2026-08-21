@@ -1,11 +1,13 @@
 ---
 name: socialseal-orchestrator
 description: >-
-  Use this skill when starting, scoping, or unsure how to approach any SocialSeal
-  task (strategy, setup, analysis, content production, or measurement). It is the
-  lightweight entry point: it checks foundations first, routes to the right
-  SocialSeal skill in the right order, and keeps the agent proactive instead of
-  waiting for a perfectly specified request.
+  Use this skill when starting any SocialSeal or social-search-informed task,
+  including requests to create a content plan, videos, carousels, briefs,
+  search-optimized content,
+  competitor benchmarks, or content from an image/footage bank. Trigger even when
+  the user does not say "SocialSeal" if the project is SocialSeal-connected or the
+  request relies on search demand. Check foundations, plan multi-stage work, and
+  route through the evidence and production skills in order.
 license: MIT
 metadata:
   socialseal:
@@ -26,6 +28,11 @@ This is the always-on router for SocialSeal work. Keep it light: its job is to f
 
 SocialSeal concepts (personas, pillars, discoverability, share of voice, tracking groups, blueprints) are not widely understood. Be proactive: diagnose what is missing, explain it briefly, and offer to produce it with SocialSeal, rather than asking the user to supply perfect inputs.
 
+For multi-stage content production, read `references/creative-production-gates.md`.
+Start with a delivery contract and stage plan, then use the foundation, demand,
+benchmark, asset, prototype, and final-QA gates. Present choices at material creative
+decisions; do not turn routine execution into a stream of questions.
+
 ## First move: choose access mode and check foundations
 
 Before strategy or setup checks, confirm whether live SocialSeal tools are available:
@@ -38,6 +45,10 @@ Before strategy or setup checks, confirm whether live SocialSeal tools are avail
 See `references/onboarding-and-auth.md` and `references/mcp-and-cli-usage.md`. Never print raw `ss_cli_...` keys in full; use only the final six characters.
 
 Before any analysis or production, decide whether strategy and setup exist. If you are unsure, run `socialseal-strategy-readiness` first; it diagnoses strategy foundations (personas, pillars, brand voice, goals) and SocialSeal setup, and guides the user to define what is missing using SocialSeal research.
+
+If the request includes several artifacts or research plus production, define what
+the user expects to receive (briefs, JPG/PNG carousel slides, rough-cut video,
+FCPXML/editor handoff, or post-ready exports). Keep those delivery states distinct.
 
 Do not stall on a missing input. Name it, explain it in a sentence, propose a SocialSeal-backed way to define it, then route.
 
@@ -56,6 +67,7 @@ Do not stall on a missing input. Name it, explain it in a sentence, propose a So
 - "Where is demand shifting?" / route budget and fast-track tour onboarding -> `socialseal-predictive-demand-routing`
 - Turn opportunities into a plan -> `socialseal-social-plan-builder`
 - Produce content (engine path): `socialseal-video-concepting` -> `socialseal-reference-video-analysis` -> `socialseal-blueprint-builder` -> `socialseal-creator-briefing` -> `socialseal-asset-planning` / `socialseal-generation-prompts` -> `socialseal-asset-studio-generation` -> `socialseal-capcut-export-prep`
+- Produce a carousel: foundations/opportunity/benchmarks -> `socialseal-carousel-production`; use `socialseal-asset-planning` for asset-bank gaps
 - "How do we compare with <competitor> on discoverability / share of voice?" / measure brand-vs-competitor visibility (snapshot or trend) -> `socialseal-discoverability-tracking`
 - "How did it do?" / movement -> `socialseal-performance-readout`, `socialseal-discoverability-tracking`
 - Decide next changes -> `socialseal-content-adjustment-recommendations`
@@ -73,6 +85,15 @@ Strategy & setup -> opportunity/competitor analysis -> plan -> production engine
 - Cite evidence in human-readable terms: `"keyword" [market, platform]`, video title/URL, `@handle`, group name. Keep `video_uid`/`search_result_id` as internal traceability only. See `references/socialseal-data-contract.md`.
 - Be honest about evidence tiers: hard measurements are exact (not estimates), statistics carry selection bias (only high-ranking videos for tracked queries), and creative exemplars are anecdotal, not proof. See `references/evidence-and-confidence.md`.
 - Reuse one `opportunityKey` across blueprint, brief, and asset.
+- For paid/credit-consuming journeys or Video DNA, inspect the live schema/preflight,
+  state the focused and fuller options, and get the user's choice before running.
+- Never substitute unknown or merely plausible location imagery for verified imagery
+  without the user's explicit selection and a visible caveat.
+- Use plan / brief / prototype / draft / rough cut / editor-ready / production
+  candidate / post-ready precisely. Never call an artifact done or ready-to-post
+  before its factual, rights, brand, visual, mobile, and export checks pass.
+- Keep a compact workflow manifest for large tasks: routed skills, evidence scope,
+  approved decisions, credit-consuming actions, artifact state, and blockers.
 - Never expose literal ids/tokens in shared artifacts; use placeholders.
 
 ## Do / Don't
@@ -86,3 +107,5 @@ Don't:
 - do the deep analysis/production inside this skill
 - wait for a perfect brief when you can guide the user to one
 - proceed with analysis when strategy/setup is clearly missing
+- jump from a request directly to finished-looking creative without demand,
+  benchmark, asset, and prototype gates

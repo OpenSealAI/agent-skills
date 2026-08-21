@@ -1,8 +1,10 @@
 ---
 name: socialseal-performance-readout
-description: Use this skill when evaluating posted content, content periods, or campaigns
-  using SocialSeal tracking exports. Produces a readout with scope, metrics, examples,
-  interpretation, caveats, and next actions.
+description: Use this skill when the user asks how posted content, a campaign, a
+  creator programme, or a content period performed in SocialSeal; what changed after
+  publishing; or what the latest results mean. Produce a scoped readout with metrics,
+  examples, interpretation, caveats, and next actions without claiming unsupported
+  causality.
 license: MIT
 metadata:
   socialseal:
@@ -104,4 +106,3 @@ Don't:
 - [ ] Examples support interpretation.
 - [ ] Recommendations are concrete.
 - [ ] Caveats are visible.
-

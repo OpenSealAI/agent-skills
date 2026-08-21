@@ -1,9 +1,10 @@
 ---
 name: socialseal-tracking-group-design
-description: Use this skill when designing or implementing SocialSeal tracking groups,
-  keyword sets, market/platform splits, or competitor scopes. It teaches the agent
-  how SocialSeal tracking groups and tracking items should be structured, then creates
-  or specifies groups using the CLI or MCP.
+description: Use this skill when the user asks what keywords or queries to track,
+  wants a SocialSeal tracking group created or reorganized, needs market/platform/
+  language splits, or discovers that a topic has no group. Design clean keyword and
+  competitor scopes, then create or specify groups and tracking items through MCP or
+  CLI.
 license: MIT
 metadata:
   socialseal:
@@ -170,4 +171,3 @@ Don't:
 - [ ] Keywords are local-language where relevant.
 - [ ] Completeness confirms expected tracking items.
 - [ ] Setup manifest is saved for downstream analysis.
-

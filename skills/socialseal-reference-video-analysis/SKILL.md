@@ -1,11 +1,11 @@
 ---
 name: socialseal-reference-video-analysis
 description: >-
-  Use this skill when identifying and analyzing the reference videos that already
-  surface for tracked searches: finding exemplars by scope or semantic prompt,
-  previewing promoted candidates, and extracting Video DNA (hook, structure, shots,
-  production qualities) to ground a blueprint. This is the evidence stage before
-  blueprints and briefs.
+  Use this skill when the user asks to find real social examples, benchmark videos,
+  successful-looking references, "what good looks like", or Video DNA for a topic,
+  brief, or planned video. Find exemplars that actually surface for tracked searches,
+  preview candidates, and optionally extract hooks, structure, shots, language,
+  pacing, and production qualities before any blueprint, brief, or rough cut.
 license: MIT
 metadata:
   socialseal:
@@ -26,6 +26,10 @@ metadata:
 SocialSeal does not start content from a blank prompt. It lifts patterns from real videos that already surface for the brand's tracked searches. This skill is the evidence stage: identify the right reference videos for an opportunity, and analyze them into Video DNA you can ground a blueprint on.
 
 Do not hand-invent "what good looks like." Pull exemplars from SocialSeal and read their actual analysis. See `references/production-pipeline.md` for the full pipeline and `references/mcp-and-cli-usage.md` for the call patterns.
+
+Read `references/creative-production-gates.md` for production-bound work. The
+benchmark gate should let the user see representative candidates and choose the
+creative direction before expensive analysis or large-scale production.
 
 ## When to Use
 
@@ -52,10 +56,16 @@ Good to have:
 
 1. **Confirm scope and workspace.** Identify the opportunity and reuse its `opportunityKey`.
 2. **Preview candidates.** Call `vnext-blueprints-generate` with `previewOnly: true`. Inspect the candidate and promoted-exemplar lists: each carries a score, matched keywords, sources, and metrics. Do not generate yet.
-3. **Refine selection.** Pin must-include exemplars (`pinnedVideoUids`), drop off-scope or off-market ones (`excludedVideoUids`), and set `promotedCandidateTarget` for how many exemplars to promote. For semantic exploration, set `retrievalPrompt`.
-4. **Analyze Video DNA.** For promoted exemplars that need detail, call `tracked-video-extract` with `ensureAnalysis: true` to resolve hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, and signed frame/asset URLs. For a one-off public video, use `extract-url` with `allowUntracked: true`.
-5. **Cluster if needed.** Use `vnext-cluster-videos` to group exemplars into repeated mechanisms when the set is large.
-6. **Record evidence.** For every exemplar capture the human-readable citation (video title/URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) as an internal traceability note for tool calls and blueprint joins. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
+3. **Offer analysis depth.** Present representative candidates and let the user choose:
+   - metadata/preview only (fastest; weakest visual claims)
+   - focused DNA on roughly 3-5 exemplars (default for a single deliverable)
+   - fuller DNA on roughly 8-12 exemplars (broader pattern confidence)
+   Inspect the live schema/preflight and state likely time/credit trade-offs before a
+   credit-consuming run.
+4. **Refine selection.** Pin must-include exemplars (`pinnedVideoUids`), drop off-scope or off-market ones (`excludedVideoUids`), and set `promotedCandidateTarget` for how many exemplars to promote. For semantic exploration, set `retrievalPrompt`.
+5. **Analyze Video DNA.** For the approved promoted exemplars, call `tracked-video-extract` with `ensureAnalysis: true` to resolve hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, and signed frame/asset URLs. For a one-off public video, use `extract-url` with `allowUntracked: true`.
+6. **Cluster if needed.** Use `vnext-cluster-videos` to group exemplars into repeated mechanisms when the set is large.
+7. **Record evidence.** For every exemplar capture the human-readable citation (video title/URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) as an internal traceability note for tool calls and blueprint joins. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
 
 ## Tool Calls (MCP-first)
 
@@ -128,11 +138,13 @@ npx -y @socialseal/cli video extract --url <public-video-url> --allow-untracked 
 - Video DNA per exemplar: hook, first frame, structure, hero/supporting shots, useful details or mood cues, production qualities, caption/CTA style, account type
 - format and lens labels (aspirational vs utility/practical) with the evidence behind each
 - a note on which exemplars are analyzed vs metadata-only
+- approved benchmark direction and analysis-depth choice
 
 ## Do / Don't
 
 Do:
 - preview before generating; refine with pins and exclusions
+- get the user's benchmark/analysis-depth choice before credit-heavy DNA work
 - inspect actual analysis/frames before claiming a visual or format pattern
 - cite exemplars by title/URL and `@handle`; keep `video_uid`/`search_result_id` as a traceability note for the blueprint
 - separate owned, creator, media, affiliate, and competitor exemplars

@@ -1,11 +1,11 @@
 ---
 name: socialseal-creator-briefing
 description: >-
-  Use this skill when producing creator, influencer, or UGC briefs from SocialSeal
-  evidence. Prefer generating the brief from a best-practices blueprint with the
-  vNext briefs engine; fall back to structured manual authoring (hooks, hero shot,
-  shot priorities, caption rules, evidence) when no engine access or the blueprint
-  is missing_data.
+  Use this skill when the user asks to create, rewrite, or improve a short-form video,
+  creator, influencer, or UGC brief, including hooks, social-first language, shots,
+  captions, and CTAs. Prefer a brief generated from a SocialSeal blueprint and real
+  exemplars; use a clearly labeled manual hypothesis only when engine evidence is
+  unavailable or missing_data.
 license: MIT
 metadata:
   socialseal:
@@ -27,6 +27,10 @@ A SocialSeal creator brief turns grounded evidence into creator-ready direction.
 
 See `references/production-pipeline.md` for the pipeline, `references/mcp-and-cli-usage.md` for call patterns, and `references/content-lenses.md` for lenses. Run `socialseal-blueprint-builder` first when possible.
 
+Read `references/creative-production-gates.md` when the brief will feed immediate
+production. Confirm the chosen concept, brand utility facts, benchmark direction,
+and non-negotiable exclusions before generating.
+
 ## When to Use
 
 - Generating a brief from an existing blueprint (`blueprintId`/version) or scope.
@@ -42,6 +46,7 @@ Required:
 
 Good to have:
 - brand context (brandName, productName, campaignGoal, notes, locale, platform)
+- approved brand utility/proof and facts needing confirmation
 - creator type/persona, required assets/locations, compliance constraints
 - deliverable count, length, aspect ratio, deadline
 
@@ -65,6 +70,8 @@ socialseal_call_tool { "function": "vnext-briefs-export", "workspaceId": "<works
 ```
 
 3. **Review against the blueprint.** Confirm hooks, hero shot, and shot priorities trace to blueprint best practices and exemplar evidence. Tighten brand context; never add unsupported claims.
+   Confirm every practical tip, itinerary, price, timing, product statement, and
+   location against the approved utility bank; label any unresolved fact.
 4. **Creative pack (optional).** Use `creative-pack-generate` / `creative-pack-export` when more than one brief is needed.
 
 CLI equivalents:
@@ -95,6 +102,7 @@ Use only when there is no SocialSeal access or the blueprint is `missing_data`. 
 - 3 hook options
 - Hero shot and shot list with priorities (aligned to blueprint shot panels when available)
 - Useful details / validators
+- Brand utility/proof sources and unresolved confirmations
 - Caption direction and CTA
 - What to avoid
 - Evidence references: cite exemplars by video title/URL and `@handle` and the `"keyword" [market, platform]`; keep `blueprintId`/`video_uid` as a traceability note
@@ -108,12 +116,15 @@ Do:
 - prefer engine briefs grounded in a blueprint
 - align shot direction to blueprint shot panels
 - keep direction creator-led and social-native
+- use language depth and mechanisms anchored in selected references, not generic
+  "pause/stop scrolling" filler
 - cite blueprint and exemplar evidence
 
 Don't:
 - say proof, prove, persuasion, reasons to buy, or ad script
 - hand-author when a generated blueprint is available
 - include unsupported product or performance claims
+- call the brief a finished video or carousel
 - copy a competitor hook verbatim
 
 ## Troubleshooting

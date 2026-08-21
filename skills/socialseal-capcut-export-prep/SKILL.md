@@ -1,10 +1,11 @@
 ---
 name: socialseal-capcut-export-prep
 description: >-
-  Use this skill when finishing a SocialSeal Asset Studio rough cut in CapCut or
-  another editor after FCPXML export: importing the timeline, organizing source
-  clips, applying captions/overlays, setting export specs, naming, and mobile-view
-  QC. This is the post-engine finishing step, not posting.
+  Use this skill when the user asks to finish, polish, caption, export, or hand off a
+  SocialSeal rough cut in CapCut or another editor after FCPXML export. Import and
+  relink the timeline, apply approved text/brand treatments, set delivery specs, run
+  mobile-view QC, and distinguish editor-ready, production-candidate, and post-ready
+  states. This is finishing, not posting.
 license: MIT
 metadata:
   socialseal:
@@ -24,6 +25,10 @@ metadata:
 This skill finishes an Asset Studio rough cut for delivery. It starts from the FCPXML export produced by `socialseal-asset-studio-generation` (`vnext-generated-asset-export`) and prepares an editor-ready handoff and export checklist. It is about finishing files and specs, not posting.
 
 See `references/production-pipeline.md`. The rough cut and its shot order come from the blueprint; finishing should respect that structure.
+
+Read `references/creative-production-gates.md`. Use the approved reference/brand
+direction for typography, overlays, colors, transitions, and copy; do not apply an
+editor's generic template as an unreviewed creative decision.
 
 ## When to Use
 
@@ -47,8 +52,12 @@ See `references/production-pipeline.md`. The rough cut and its shot order come f
 4. **Set edit rules.** Pace, caption style, overlay safe areas, music/audio, transitions, and what not to over-edit.
 5. **Define export settings.** Common vertical baseline: 9:16, 1080x1920, H.264 MP4, platform-appropriate bitrate, original frame rate unless there is a reason to change.
 6. **Name files.** `<brand>_<platform>_<concept>_<market>_<version>_<date>.mp4` or the team convention.
-7. **QC on mobile.** Readability, crop, audio, caption timing, first frame, final CTA.
-8. **Prepare handoff note.** Source folder, FCPXML/`assetId` reference, edit notes, export settings, QC checklist.
+7. **QC on mobile.** Readability, crop, audio, caption timing, first frame, final CTA,
+   factual claims, location confidence, rights, brand voice, and export playback.
+8. **Assign delivery state.** Use editor-ready or production candidate until all
+   final checks and approvals pass. Use post-ready only after there are no unresolved
+   blockers.
+9. **Prepare handoff note.** Source folder, FCPXML/`assetId` reference, edit notes, export settings, QC checklist.
 
 ## Output
 
@@ -57,6 +66,7 @@ See `references/production-pipeline.md`. The rough cut and its shot order come f
 - export settings
 - caption/overlay instructions
 - QC checklist
+- delivery state and unresolved blocker list
 
 ## Do / Don't
 

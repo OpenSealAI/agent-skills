@@ -1,10 +1,11 @@
 ---
 name: socialseal-asset-studio-generation
 description: >-
-  Use this skill when assembling a SocialSeal Asset Studio rough cut from a workspace
-  clip library that follows a blueprint's shots: uploading and finalizing clips,
-  mapping clips to blueprint shot panels, creating a generated asset from an edit
-  spec, optimizing revisions, and exporting FCPXML or a share link.
+  Use this skill when the user asks to make, assemble, or edit a short-form video from
+  supplied clips/briefs, create a SocialSeal rough cut, map assets to blueprint shots,
+  or export an editable timeline/share link. Build through Asset Studio from verified
+  blueprint panels and rights-cleared clips; call the output a rough cut until editor
+  finishing and post-ready QA are complete.
 license: MIT
 metadata:
   socialseal:
@@ -25,6 +26,10 @@ metadata:
 Asset Studio assembles a rough cut by mapping workspace clip-library footage onto a blueprint's shot panels and rendering an edit spec. The blueprint defines the shots; clips fill them; the engine produces a generated asset you can optimize, export as FCPXML, and share.
 
 This skill drives `vnext-clips-*`, `vnext-clip-shot-mappings-*`, and `vnext-generated-asset-*`. See `references/production-pipeline.md` for the pipeline and `references/mcp-and-cli-usage.md` for call patterns. Run `socialseal-blueprint-builder` first to get the `blueprintId` and shot panels.
+
+Read `references/creative-production-gates.md`. Asset Studio produces a rough cut,
+not an automatically post-ready video. Preserve approved concepts and asset choices,
+then hand off for finishing and final QA.
 
 ## When to Use
 
@@ -51,7 +56,10 @@ Good to have:
 4. **Map clips to panels.** `vnext-clip-shot-mappings-write` `action: "upsert"` for each `panelId` + `clipId` (`source: "override"` for manual picks). Use `vnext-clip-shot-mappings-read` to confirm coverage; `action: "delete"` to clear a panel.
 5. **Create the rough cut.** `vnext-generated-asset-create` with `blueprintId`, `title`, and an `editSpec` (`version`, `fps`, `width`, `height`, `totalDurationSeconds`, and `shots[]`). Each shot maps a `panelId` to a `clipId` with `sourceStartSeconds`, `durationSeconds`, `kind`, `shotLabel`, and `evidenceIds[]`.
 6. **Review and optimize.** `vnext-generated-assets-read` (`detail`) to inspect; `vnext-generated-asset-optimize` to optimize or `create-revision`.
-7. **Export and share.** `vnext-generated-asset-export` for FCPXML to finish in an editor; `vnext-generated-asset-share` to create a review link.
+7. **Run rough-cut QA.** Check every required panel is covered by the approved clip,
+   factual/location confidence is intact, the hook/first frame matches the blueprint,
+   and no unknown substitute was smuggled into the edit.
+8. **Export and share.** `vnext-generated-asset-export` for FCPXML to finish in an editor; `vnext-generated-asset-share` to create a review link.
 
 ## Tool Calls (MCP-first)
 
@@ -104,6 +112,7 @@ npx -y @socialseal/cli tools call --function vnext-generated-asset-export --work
 - finalized clips in the library (with `clipId`s)
 - clip-to-panel mappings covering the blueprint shots
 - a generated asset (`assetId`) with status
+- explicit delivery state (`rough cut`, never `post-ready` at this stage)
 - an FCPXML export and/or a share link
 
 ## Do / Don't
@@ -113,12 +122,14 @@ Do:
 - keep `panelId`s consistent across mappings and the editSpec
 - attest rights (`rightsAttested: true`) on every finalized clip
 - export FCPXML for finishing rather than treating the rough cut as final
+- preserve the approved asset mapping and record unresolved blockers
 
 Don't:
 - finalize or assemble footage the workspace lacks rights to
 - invent `panelId`s that are not in the blueprint
 - skip the blueprint and assemble arbitrary clips
 - put share tokens or literal asset/clip IDs in public artifacts
+- call a generated Asset Studio timeline a finished or ready-to-post video
 
 ## Troubleshooting
 

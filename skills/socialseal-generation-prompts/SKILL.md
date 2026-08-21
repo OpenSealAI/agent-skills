@@ -1,10 +1,11 @@
 ---
 name: socialseal-generation-prompts
 description: >-
-  Use this skill when writing image, video, storyboard, or voice prompts to produce
-  reference or B-roll clips that fill a SocialSeal blueprint shot panel in the Asset
-  Studio clip library. Keeps generated assets social-native and rights-safe, and
-  routes finished clips to upload and clip-to-shot mapping.
+  Use this skill when real footage is missing and the user asks for generated B-roll,
+  images, storyboard frames, cover explorations, voice guides, or prompts to fill a
+  SocialSeal blueprint panel. Keep outputs social-native, non-deceptive, tied to a
+  specific shot job, rights-safe, and clearly labeled as reference, draft, or
+  production candidate.
 license: MIT
 metadata:
   socialseal:
@@ -25,6 +26,10 @@ Generated assets support production by filling shot panels that lack real footag
 
 See `references/production-pipeline.md`. Generated clips are reference or draft material; they do not replace lived creator footage when the shot needs authenticity.
 
+Use the approved visual direction from `references/creative-production-gates.md`.
+Do not fill an unspecified design gap with generic gradients, option/step pills,
+arbitrary colors, fake social UI, or commercial stock aesthetics.
+
 ## When to Use
 
 - Filling a blueprint shot panel that has no captured footage.
@@ -44,6 +49,8 @@ See `references/production-pipeline.md`. Generated clips are reference or draft 
 1. **Tie to a panel.** State which `panelId` the asset fills and the shot's job (hook, hero, detail, B-roll).
 2. **Define the asset job.** Reference, storyboard, B-roll, thumbnail idea, voice guide, or editor aid.
 3. **Extract non-negotiables.** Subject, setting, action, mood, camera style, aspect ratio, realism level.
+   Include the approved brand/reference visual mechanisms and explicitly excluded
+   template treatments.
 4. **Write the positive prompt.** Be concrete about scene, action, lens, lighting, social-native texture, and what the viewer should understand.
 5. **Write the negative prompt.** Exclude over-polished commercial style, distorted hands/faces, fake logos, incorrect products, unreadable text, invented claims.
 6. **Separate text rendering.** Unless the tool is reliable with text, generate no-text assets and add exact text later in editing/design tools.
@@ -67,6 +74,7 @@ Do:
 
 Don't:
 - invent product capabilities, places, people, or endorsements
+- invent brand styling or present a generated destination image as documentary proof
 - generate fake real creators or impersonations
 - use generated assets as final UGC when the shot requires lived experience
 - finalize generated clips without confirming rights

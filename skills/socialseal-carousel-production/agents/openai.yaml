@@ -1,0 +1,4 @@
+interface:
+  display_name: "SocialSeal Carousel Production"
+  short_description: "Ground and produce social-native carousels"
+  default_prompt: "Use $socialseal-carousel-production to turn grounded SocialSeal evidence into a reviewed, production-ready carousel."

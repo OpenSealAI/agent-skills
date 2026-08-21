@@ -2,6 +2,11 @@
 
 SocialSeal has an opinionated, evidence-grounded production engine. Content is not invented from a blank prompt. It is lifted from real videos that already surface for tracked searches, compiled into a best-practices blueprint, turned into a brief, and assembled from a clip library that follows the blueprint's shots.
 
+For a multi-stage production request, pair this engine with
+`creative-production-gates.md`: confirm brand utility, let the user choose demand and
+benchmark directions, approve material asset substitutions and a representative
+prototype, then run final QA. Engine completion is not the same as post-ready.
+
 Use this reference whenever a task touches reference videos, blueprints, briefs, or generated rough cuts. Do not fall back to generic "write a content idea" behavior when these tools exist.
 
 ## The opportunity spine
@@ -113,10 +118,21 @@ Asset Studio assembles a rough cut from a workspace clip library that follows th
 6. Fill the clip library (`vnext-clips-create`), map clips to panels (`vnext-clip-shot-mappings-write`).
 7. `vnext-generated-asset-create` from an editSpec; `optimize`; `export` FCPXML; `share`.
 
+## Carousel branch
+
+For a carousel, reuse the same evidence stages through opportunity and benchmark
+selection, then route to `socialseal-carousel-production` instead of pretending the
+video rough-cut engine renders slides. The carousel skill applies the approved brand
+utility, benchmark mechanisms, visual direction, rights/location-aware asset map,
+prototype approval, slide rendering, and phone-size QA.
+
 ## Hard rules
 
 - Reuse one `opportunityKey` across the blueprint, brief, and asset.
 - Treat `missing_data` as a real outcome. Fix scope or evidence; never paper over it with invented best practices.
 - Use blueprint `panelId`s as the contract between shots, clip mappings, and the editSpec.
 - Only finalize clips with `rightsAttested: true`.
+- Call Asset Studio output a rough cut until editor finishing and final QA pass.
+- Never call a brief, blueprint, shot list, outline, placeholder set, or unverified
+  asset treatment finished content.
 - Never put literal workspace IDs, blueprint IDs, clip IDs, or share tokens in shared/public artifacts; use placeholders.

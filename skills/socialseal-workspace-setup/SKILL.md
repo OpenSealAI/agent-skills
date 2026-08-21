@@ -1,7 +1,12 @@
 ---
 name: socialseal-workspace-setup
 description: >-
-  Use this skill when configuring a SocialSeal workspace for a brand, market, or campaign: selecting or creating the workspace, creating tracking groups, adding tracking items, running a baseline search journey, and confirming exports work. The deliverable is a working SocialSeal workspace, not a setup brief.
+  Use this skill when configuring or repairing SocialSeal for a brand, destination,
+  market, or campaign, including "set up/onboard SocialSeal", "there is no tracking
+  group", "create a workspace/group", "run a baseline/search journey", or when production is blocked
+  because the requested topic has no usable SocialSeal evidence. Select or create the
+  workspace, add groups/items, run a baseline journey, and verify exports; deliver a
+  working setup, not merely a setup brief.
 license: MIT
 metadata:
   socialseal:
@@ -212,6 +217,21 @@ npx -y @socialseal/cli tools status <run-uuid> \
 
 Use `subjectType: "brand"` for a brand, `"topic"` for a category/topic. If the CLI schema shows additional fields such as `locale`, `platformKeys`, `seedKeywords`, `contentPillars`, or `maxKeywords`, use them when relevant.
 
+#### Fast discovery when no tracking group exists
+
+Do not stop at "there is no group" and do not proceed with generic content. Offer:
+
+1. **Focused one-off journey:** quickest way to discover or validate a small query
+   set for an immediate brief. It does not create reusable tracking on its own.
+2. **Reusable setup:** create clean groups/items, run the journey, refresh, and verify
+   exports so future planning and measurement reuse the evidence.
+
+Before a journey, inspect the live `search-journey-run` schema and any exposed
+preflight/credit information. Show the proposed subject, region, seeds, platform
+scope, and focused/full option. Obtain the user's choice before consuming credits.
+After the run, preserve the journey output and route it to opportunity analysis; do
+not reduce it to a list of hashtags.
+
 ### 8. Verify export data flow
 
 List export options:
@@ -336,6 +356,7 @@ Workspace setup is done only when all of these are true:
 - [ ] Items added using schema-valid payloads.
 - [ ] Completeness confirms expected tracking items.
 - [ ] Baseline journey/status was run or intentionally skipped with reason.
+- [ ] If the topic initially lacked a group, the one-off versus reusable choice and any credit approval are recorded.
 - [ ] Exports tested and saved for downstream use.
 - [ ] Setup log includes workspace ID, group IDs, group names, platforms, markets, and export paths.
 - [ ] No private IDs or credentials appear in public/shared docs.
