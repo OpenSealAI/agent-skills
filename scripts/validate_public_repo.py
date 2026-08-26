@@ -1,5 +1,5 @@
 from pathlib import Path
-import re, sys, yaml
+import json, re, sys, yaml
 root = Path(__file__).resolve().parents[1]
 blocked = [
     r"@socialseal\.co",
@@ -10,6 +10,38 @@ blocked = [
     r"\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b",
 ]
 errors=[]
+
+codex_manifest_path = root / ".codex-plugin" / "plugin.json"
+mcp_manifest_path = root / ".mcp.json"
+discovery_prompts_path = root / "tests" / "plugin-discovery-prompts.json"
+
+for required_path in (codex_manifest_path, mcp_manifest_path, discovery_prompts_path):
+    if not required_path.is_file():
+        errors.append(f"missing required plugin file: {required_path.relative_to(root)}")
+
+if codex_manifest_path.is_file() and mcp_manifest_path.is_file() and discovery_prompts_path.is_file():
+    codex_manifest = json.loads(codex_manifest_path.read_text())
+    mcp_manifest = json.loads(mcp_manifest_path.read_text())
+    discovery_prompts = json.loads(discovery_prompts_path.read_text())
+    searchable_parts = [
+        codex_manifest.get("name", ""),
+        codex_manifest.get("description", ""),
+        *codex_manifest.get("keywords", []),
+        codex_manifest.get("interface", {}).get("displayName", ""),
+        codex_manifest.get("interface", {}).get("shortDescription", ""),
+        codex_manifest.get("interface", {}).get("longDescription", ""),
+        *codex_manifest.get("interface", {}).get("defaultPrompt", []),
+    ]
+    searchable_copy = "\n".join(str(part) for part in searchable_parts).casefold()
+    for phrase in discovery_prompts.get("positive", []):
+        if str(phrase).casefold() not in searchable_copy:
+            errors.append(f".codex-plugin/plugin.json: missing discovery phrase {phrase!r}")
+    socialseal_mcp = mcp_manifest.get("mcpServers", {}).get("socialseal", {})
+    if socialseal_mcp.get("url") != "https://mcp.socialseal.co/mcp":
+        errors.append(".mcp.json: SocialSeal MCP URL is missing or incorrect")
+    if codex_manifest.get("mcpServers") != "./.mcp.json":
+        errors.append(".codex-plugin/plugin.json: mcpServers must reference ./.mcp.json")
+
 trigger_expectations = {
     "socialseal-orchestrator": ["content plan", "videos", "carousels", "search demand"],
     "socialseal-strategy-readiness": ["content plan", "product truths", "exclusions"],

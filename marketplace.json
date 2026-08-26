@@ -1,4 +1,11 @@
 {
-  "see": ".claude-plugin/marketplace.json",
-  "note": "Claude Code marketplace catalog lives under .claude-plugin/marketplace.json."
+  "plugin": "socialseal-agent-skills",
+  "manifests": {
+    "chatgpt_codex": ".codex-plugin/plugin.json",
+    "claude": ".claude-plugin/plugin.json"
+  },
+  "catalogs": {
+    "legacy_compatible": ".claude-plugin/marketplace.json"
+  },
+  "note": "ChatGPT and Codex use the native .codex-plugin manifest. Claude and legacy-compatible marketplace loading use .claude-plugin."
 }

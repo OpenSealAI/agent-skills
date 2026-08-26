@@ -1,11 +1,36 @@
 {
   "name": "socialseal-agent-skills",
-  "description": "SocialSeal agent skills for social-search strategy, evidence-grounded video/carousel production, creator/UGC planning, and discoverability measurement.",
-  "version": "0.6.0",
+  "description": "Turn TikTok, Instagram, Xiaohongshu/RedNote, Douyin, and social-search demand into short-form video ideas, creator briefs, content plans, and discoverability insights.",
+  "version": "0.7.0",
   "author": {
     "name": "SocialSeal contributors"
   },
   "homepage": "https://github.com/OpenSealAI/agent-skills",
   "repository": "https://github.com/OpenSealAI/agent-skills",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "socialseal",
+    "social search",
+    "social video",
+    "short-form video",
+    "TikTok",
+    "TikTok SEO",
+    "Instagram",
+    "Instagram Reels",
+    "YouTube Shorts",
+    "Xiaohongshu",
+    "XiaoHongShu",
+    "小红书",
+    "RedNote",
+    "Douyin",
+    "抖音",
+    "creator content",
+    "UGC",
+    "content strategy",
+    "content planning",
+    "competitor analysis",
+    "social listening",
+    "discoverability",
+    "share of voice"
+  ]
 }

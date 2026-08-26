@@ -1,0 +1,58 @@
+{
+  "name": "socialseal-agent-skills",
+  "version": "0.7.0",
+  "description": "Turn TikTok, Instagram, Xiaohongshu/RedNote, Douyin, and social-search demand into short-form video ideas, creator briefs, content plans, and discoverability insights.",
+  "author": {
+    "name": "SocialSeal contributors",
+    "url": "https://socialseal.co"
+  },
+  "homepage": "https://github.com/OpenSealAI/agent-skills",
+  "repository": "https://github.com/OpenSealAI/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "socialseal",
+    "social search",
+    "social video",
+    "short-form video",
+    "TikTok",
+    "TikTok SEO",
+    "Instagram",
+    "Instagram Reels",
+    "YouTube Shorts",
+    "Xiaohongshu",
+    "XiaoHongShu",
+    "小红书",
+    "RedNote",
+    "Douyin",
+    "抖音",
+    "creator content",
+    "UGC",
+    "content strategy",
+    "content planning",
+    "competitor analysis",
+    "social listening",
+    "discoverability",
+    "share of voice"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "SocialSeal — Social Search & Video",
+    "shortDescription": "Plan social video from social-search demand.",
+    "longDescription": "Find what audiences search for across TikTok, Instagram, Xiaohongshu/RedNote, Douyin, YouTube Shorts, and other social platforms. Identify content gaps and competitor patterns, then turn the evidence into short-form video concepts, creator and UGC briefs, social plans, and discoverability reporting.",
+    "developerName": "SocialSeal",
+    "category": "Marketing",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://socialseal.co",
+    "privacyPolicyURL": "https://app.socialseal.co/privacy",
+    "termsOfServiceURL": "https://app.socialseal.co/terms",
+    "defaultPrompt": [
+      "Find what people search for on TikTok, Instagram, RedNote, and Douyin, then show the content gaps.",
+      "Turn social-search demand into a short-form video and carousel plan.",
+      "Benchmark competitor videos and draft a creator or UGC brief."
+    ]
+  }
+}

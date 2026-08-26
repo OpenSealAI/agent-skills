@@ -4,17 +4,17 @@
     "name": "SocialSeal contributors"
   },
   "description": "Marketplace catalog for SocialSeal Agent Skills.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "metadata": {
     "description": "Marketplace catalog for SocialSeal Agent Skills.",
-    "version": "0.6.0"
+    "version": "0.7.0"
   },
   "plugins": [
     {
       "name": "socialseal-agent-skills",
       "source": "./",
-      "description": "SocialSeal agent skills for social-search strategy, evidence-grounded video/carousel production, creator/UGC planning, and discoverability measurement.",
-      "version": "0.6.0",
+      "description": "Turn TikTok, Instagram, Xiaohongshu/RedNote, Douyin, and social-search demand into short-form video ideas, creator briefs, content plans, and discoverability insights.",
+      "version": "0.7.0",
       "author": {
         "name": "SocialSeal contributors"
       },
@@ -23,22 +23,42 @@
       "license": "MIT",
       "keywords": [
         "socialseal",
-        "social-search",
-        "creator-content",
+        "social search",
+        "social video",
+        "short-form video",
+        "tiktok",
+        "tiktok seo",
+        "instagram",
+        "instagram reels",
+        "youtube shorts",
+        "xiaohongshu",
+        "xiao hong shu",
+        "小红书",
+        "rednote",
+        "douyin",
+        "抖音",
+        "creator content",
         "ugc",
-        "video-production",
-        "carousel-production",
+        "content strategy",
+        "content planning",
+        "competitor analysis",
+        "social listening",
         "discoverability",
-        "measurement"
+        "share of voice"
       ],
       "category": "marketing",
       "tags": [
         "socialseal",
-        "discoverability",
-        "creator-content",
-        "video-production",
-        "carousel-production",
-        "measurement"
+        "social search",
+        "social video",
+        "tiktok",
+        "instagram",
+        "xiaohongshu",
+        "rednote",
+        "douyin",
+        "creator content",
+        "ugc",
+        "discoverability"
       ]
     }
   ]

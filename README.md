@@ -2,11 +2,45 @@
 
 [![skills.sh](https://skills.sh/b/OpenSealAI/agent-skills)](https://skills.sh/OpenSealAI/agent-skills)
 
-Open-source Agent Skills for SocialSeal workflows: social-search strategy,
-evidence-grounded video/carousel production, creator/UGC planning, and discoverability
-measurement.
+Open-source Agent Skills for SocialSeal workflows: social-search strategy across
+TikTok, Instagram, Xiaohongshu/RedNote, Douyin, YouTube Shorts, and other social
+platforms; evidence-grounded video/carousel production; creator/UGC planning; and
+discoverability measurement.
 
 ## Install
+
+### ChatGPT and Codex (recommended)
+
+Install **SocialSeal — Social Search & Video** from the Plugins Directory, connect
+to SocialSeal when prompted, and start a new task. The plugin bundles the SocialSeal
+skills and its hosted remote MCP server at `https://mcp.socialseal.co/mcp`, so users
+do not need to add a separate custom connector or install Node.js.
+
+Search for SocialSeal by name, or through jobs such as social search, social video,
+short-form video, TikTok SEO, Instagram Reels, Xiaohongshu/RedNote, Douyin, creator
+content, UGC, content strategy, competitor analysis, or discoverability tracking.
+
+The public ChatGPT/Codex listing must be submitted and published as a **With MCP**
+plugin in the OpenAI plugin submission portal. Updating this repository does not by
+itself replace the reviewed public listing or its MCP metadata snapshot. See the
+[ChatGPT and Codex submission checklist](docs/openai-plugin-submission.md).
+
+### Codex local and repository development
+
+This repository includes the native `.codex-plugin/plugin.json` manifest and a
+bundled `.mcp.json` connection to the hosted SocialSeal MCP server. Add the repository
+as a marketplace source, install `socialseal-agent-skills`, then start a new Codex
+session so the new skills and tools are loaded:
+
+```bash
+codex plugin marketplace add OpenSealAI/agent-skills
+codex plugin add socialseal-agent-skills@socialseal-skills
+```
+
+If authentication is required, follow the connection prompt and sign in to
+SocialSeal. For local testing in ChatGPT Chat or Work, enable Developer mode, register
+`https://mcp.socialseal.co/mcp` in the Plugins page, and use the generated registered
+connection when packaging a local `.app.json` mapping.
 
 ### Claude Cowork and non-technical users
 
@@ -49,7 +83,11 @@ claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
 npx skills add OpenSealAI/agent-skills
 ```
 
-The plugin manifest lives at `.claude-plugin/plugin.json` and is skills-only by default for Claude plugin compatibility. Live tools should use the hosted connector for Cowork or the local stdio MCP developer fallback for Claude Code.
+The Claude plugin manifest lives at `.claude-plugin/plugin.json` and remains
+skills-only for Claude plugin compatibility. Live tools should use the hosted
+connector for Cowork or the local stdio MCP developer fallback for Claude Code. The
+native ChatGPT/Codex package instead lives at `.codex-plugin/plugin.json` and bundles
+the hosted MCP connection through `.mcp.json`.
 
 ## What this helps agents do
 
@@ -127,8 +165,9 @@ SocialSeal primarily supports UGC and creator content, not advertising. These sk
 This repository is structured for:
 
 - Agent Skills / skills.sh: `skills/<skill-name>/SKILL.md`
+- ChatGPT/Codex plugin: `.codex-plugin/plugin.json`, `.mcp.json`, and `skills/`
 - Claude Code plugin marketplace: `.claude-plugin/plugin.json` plus direct `skills/` children
-- Hermes/Codex project usage through the same SKILL.md files
+- Hermes project usage through the same `SKILL.md` files
 
 ## License
 

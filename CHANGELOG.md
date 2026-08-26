@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0
+
+- Added a native ChatGPT/Codex plugin manifest and bundled hosted SocialSeal MCP configuration.
+- Expanded marketplace discovery metadata for social video, short-form video, TikTok, Instagram, Xiaohongshu/XiaoHongShu/RedNote, Douyin, creator/UGC, content strategy, competitor analysis, and discoverability jobs.
+- Split installation guidance by ChatGPT/Codex, Claude Cowork, Claude Code, and skills-only use.
+- Documented the OpenAI **With MCP** submission requirement and local ChatGPT developer-mode connection flow.
+- Added a discovery regression fixture and public submission checklist.
+
 ## 0.6.0
 
 - Rewrote all 23 existing skill descriptions around concrete user-language triggers
