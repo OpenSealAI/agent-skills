@@ -1,13 +1,9 @@
 ---
 name: socialseal-orchestrator
 description: >-
-  Use this skill when starting any SocialSeal or social-search-informed task,
-  including requests to create a content plan, videos, carousels, briefs,
-  search-optimized content,
-  competitor benchmarks, or content from an image/footage bank. Trigger even when
-  the user does not say "SocialSeal" if the project is SocialSeal-connected or the
-  request relies on search demand. Check foundations, plan multi-stage work, and
-  route through the evidence and production skills in order.
+  Use this skill when a customer uses SocialSeal to research search demand or create
+  a content plan, videos, carousels, briefs, or performance insights. Not for engineering planning,
+  implementation, code review, or local integration testing.
 license: MIT
 metadata:
   socialseal:
@@ -24,7 +20,7 @@ metadata:
 
 ## Overview
 
-This is the always-on router for SocialSeal work. Keep it light: its job is to figure out where the user is, check that foundations exist, and hand off to the right skill. It does not do the deep work itself.
+This router is for customers using SocialSeal. It must not activate merely because the current repository is SocialSeal or its connector is available. For engineering planning, implementation, review, or local connector testing, follow the repository workflow and call the relevant tools directly only when needed for the authorised test. Keep it light: its job is to figure out where the user is, check that foundations exist, and hand off to the right skill. It does not do the deep work itself.
 
 SocialSeal concepts (personas, pillars, discoverability, share of voice, tracking groups, blueprints) are not widely understood. Be proactive: diagnose what is missing, explain it briefly, and offer to produce it with SocialSeal, rather than asking the user to supply perfect inputs.
 
