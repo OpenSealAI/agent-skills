@@ -22,7 +22,7 @@ metadata:
 
 ## Overview
 
-Generated assets support production by filling shot panels that lack real footage. Use this skill to create reference images, storyboard frames, draft B-roll, cover explorations, or voice guides for a specific blueprint shot panel, then route the finished clip into the Asset Studio clip library.
+Generated assets support production by filling shot panels that lack real footage. Use this skill to create reference images, storyboard frames, draft B-roll, cover explorations, or voice guides for a specific blueprint shot panel, then route the finished clip into the source-clip library.
 
 See `references/production-pipeline.md`. Generated clips are reference or draft material; they do not replace lived creator footage when the shot needs authenticity.
 
@@ -54,7 +54,7 @@ arbitrary colors, fake social UI, or commercial stock aesthetics.
 4. **Write the positive prompt.** Be concrete about scene, action, lens, lighting, social-native texture, and what the viewer should understand.
 5. **Write the negative prompt.** Exclude over-polished commercial style, distorted hands/faces, fake logos, incorrect products, unreadable text, invented claims.
 6. **Separate text rendering.** Unless the tool is reliable with text, generate no-text assets and add exact text later in editing/design tools.
-7. **Document settings and route to library.** Record model/tool, aspect ratio, seed, prompt, and result notes. Hand the finished clip to `socialseal-asset-studio-generation` for upload (`vnext-clips-create`, `rightsAttested: true`) and mapping to the `panelId`.
+7. **Document settings and route to library.** Record model/tool, aspect ratio, seed, prompt, and result notes. Hand the finished clip to `socialseal-asset-planning` for rights verification, source-clip upload (`vnext-clips-create`, `rightsAttested: true`), and inclusion in the editor handoff coverage table for the `panelId`.
 
 ## Output
 

@@ -5,7 +5,7 @@ description: >-
   use, wants a shot list or capture plan, or needs to know what is missing before a
   video or carousel can be produced. Map verified, rights-cleared assets to grounded
   blueprint panels, present meaningful source/substitute/reshoot choices, identify
-  gaps, and prepare clips for Asset Studio rather than guessing from filenames.
+  gaps, and prepare source clips and an editor handoff rather than guessing from filenames.
 license: MIT
 metadata:
   socialseal:
@@ -22,7 +22,7 @@ metadata:
 
 ## Overview
 
-Asset planning converts a blueprint's shot panels into a concrete capture and clip-library plan. The goal is that every shot panel the rough cut needs has a rights-cleared clip ready to upload and map. This is the bridge between `socialseal-blueprint-builder` and `socialseal-asset-studio-generation`.
+Asset planning converts a blueprint's shot panels into a concrete capture and clip-library plan. The goal is that every shot panel the rough cut needs has a rights-cleared clip ready for the editor. This is the bridge between `socialseal-blueprint-builder` and an editor handoff. Record panel coverage in the handoff document; SocialSeal's clip-to-shot mapping and generated-video tools have retired.
 
 See `references/production-pipeline.md`. Work from the blueprint shot panels (`vnext-blueprints-shots-read`), not a generic shot list.
 
@@ -39,25 +39,25 @@ images because they are visually convenient.
 ## Inputs
 
 - the `blueprintId` and its shot panels (`panelId`, shot label, kind)
-- current clip library (`vnext-clips-read`) and existing mappings (`vnext-clip-shot-mappings-read`)
+- current clip library (`vnext-clips-read`) and any user-provided panel coverage table
 - platform specs and aspect ratio
 - available footage, creator/talent/location constraints, deadline
 
 ## Workflow
 
 1. **List the shot panels.** From `vnext-blueprints-shots-read`, enumerate every `panelId` and what it needs (hook, hero, supporting, detail).
-2. **Audit coverage.** Compare panels against the clip library and existing mappings. Mark each panel: covered, needs capture, needs sourcing, or needs generation.
+2. **Audit coverage.** Compare panels against the clip library and documented panel coverage. Mark each panel: covered, needs capture, needs sourcing, or needs generation.
    Inspect the actual media (or a contact sheet), not only filenames/descriptions.
    Record rights and subject/location confidence as `verified`, `likely`, or
    `unknown`.
 3. **Plan capture for gaps.** For panels needing footage, write required shots first, then useful, then optional B-roll.
 4. **Batch capture.** Group shots by location, setup, product, screen recording, creator, or time of day.
 5. **Add validators.** Capture practical details that make utility content useful: signs, screens, maps, prices, steps, timing, packing, setup, texture, before/after.
-6. **Prepare clips for upload.** Define file names and confirm usage rights for each clip (required to finalize with `rightsAttested: true`).
+6. **Prepare clips for upload.** Define file names and confirm usage rights for each clip. `vnext-clips-create` with `action: "create"` returns a signed upload target; upload bytes, then finalize with `action: "finalize"`, `clipId`, `fileName`, `storagePath`, `mimeType`, `sizeBytes`, and `rightsAttested: true`.
 7. **Run the asset decision gate.** For material gaps, present 2-3 viable choices:
    verified owned material, rights-cleared stock, new capture/reshoot, generated
    reference, or a concept change. Get approval before using substitutes.
-8. **Hand off.** Pass the approved plan to `socialseal-asset-studio-generation` (upload + map), and to `socialseal-generation-prompts` for any panel that should be filled with a generated reference clip.
+8. **Hand off.** Package the approved plan, exported brief, source clips, trim suggestions, and delivery specs for the user's editor. Route gaps to `socialseal-generation-prompts` only for approved generated references. SocialSeal does not assemble the video or export FCPXML.
 
 ## Output
 
@@ -79,7 +79,7 @@ Do:
 
 Don't:
 - plan footage that does not map to a blueprint shot
-- assume a panel is covered without checking mappings
+- assume a panel is covered without inspecting the source clip and coverage table
 - label or depict an unknown location/person/product as verified
 - over-polish UGC assets
 - forget thumbnails, first frames, safe areas, captions, source audio
@@ -96,4 +96,4 @@ Don't:
 - [ ] Capture is batched where possible.
 - [ ] Missing assets are listed with a fill path (capture/source/generate).
 - [ ] Rights are confirmed for clips planned for upload.
-- [ ] Plan hands off cleanly to Asset Studio generation.
+- [ ] Editor handoff includes the brief, approved coverage table, accessible source clips, and unresolved blockers.

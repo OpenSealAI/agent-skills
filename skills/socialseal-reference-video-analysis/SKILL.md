@@ -16,7 +16,7 @@ metadata:
     - reference-videos
     - video-dna
     - exemplars
-    - asset-studio
+    - editor-handoff
 ---
 
 # SocialSeal Reference Video Analysis

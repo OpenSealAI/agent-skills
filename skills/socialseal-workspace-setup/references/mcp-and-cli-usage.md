@@ -34,7 +34,7 @@ Local stdio MCP only:
 Canonical MCP loop:
 
 1. `socialseal_list_workspaces` -> confirm scope.
-2. `socialseal_list_available_tools` (optionally by `category`, e.g. `vnext`, `asset-studio`, `tracking`, `export`).
+2. `socialseal_list_available_tools` (optionally by `category`, e.g. `vnext`, `tracking`, `export`).
 3. `socialseal_get_tool_schema` with `{ "toolName": "<target>" }` before any mutating call.
 4. `socialseal_call_tool` with `{ "toolName": "<target>", "body": { ... }, "workspaceId": "<workspace-id>" }`.
 5. For async work, `socialseal_get_tool_status` with the returned id and the right `kind`.

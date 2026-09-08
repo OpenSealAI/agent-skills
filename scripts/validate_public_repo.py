@@ -56,8 +56,6 @@ trigger_expectations = {
     "socialseal-creator-briefing": ["create, rewrite, or improve", "social-first language"],
     "socialseal-asset-planning": ["footage/image bank", "which assets to use"],
     "socialseal-generation-prompts": ["generated b-roll", "storyboard frames"],
-    "socialseal-asset-studio-generation": ["make, assemble, or edit", "rough cut"],
-    "socialseal-capcut-export-prep": ["finish, polish, caption, export", "post-ready"],
     "socialseal-carousel-production": ["create, design, redesign, or finish", "avoid generic ai design"],
     "socialseal-creator-discovery": ["which creators", "ugc partners"],
     "socialseal-bilingual-demand-monitoring": ["local language versus", "multilingual demand"],
@@ -97,7 +95,7 @@ for p in root.glob('skills/*/SKILL.md'):
     for phrase in trigger_expectations.get(name, []):
         if phrase not in desc_lower:
             errors.append(f'{p}: missing trigger phrase {phrase!r}')
-expected=24
+expected=22
 found=len(list(root.glob('skills/*/SKILL.md')))
 if found != expected:
     errors.append(f'expected {expected} skills, found {found}')

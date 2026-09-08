@@ -1,24 +1,24 @@
 # SocialSeal Production Pipeline (vNext)
 
-SocialSeal has an opinionated, evidence-grounded production engine. Content is not invented from a blank prompt. It is lifted from real videos that already surface for tracked searches, compiled into a best-practices blueprint, turned into a brief, and assembled from a clip library that follows the blueprint's shots.
+SocialSeal has an opinionated, evidence-grounded production engine. Content is not invented from a blank prompt. It is lifted from real videos that already surface for tracked searches, compiled into a best-practices blueprint, turned into a brief, and handed to an editor with rights-cleared source clips that follow the blueprint's shots.
 
 For a multi-stage production request, pair this engine with
 `creative-production-gates.md`: confirm brand utility, let the user choose demand and
 benchmark directions, approve material asset substitutions and a representative
 prototype, then run final QA. Engine completion is not the same as post-ready.
 
-Use this reference whenever a task touches reference videos, blueprints, briefs, or generated rough cuts. Do not fall back to generic "write a content idea" behavior when these tools exist.
+Use this reference whenever a task touches reference videos, blueprints, briefs, or source-clip handoffs. Do not fall back to generic "write a content idea" behavior when these tools exist.
 
 ## The opportunity spine
 
 Every production artifact is tied together by a stable `opportunityKey` (8-128 chars). The same key flows:
 
 ```
-journey / opportunity  ->  blueprint  ->  brief  ->  generated asset (rough cut)
+journey / opportunity  ->  blueprint  ->  brief  ->  editor handoff
         (opportunityKey is the join across all of them)
 ```
 
-A blueprint, a brief, and an asset for the same opportunity share one `opportunityKey`. Reuse it; do not mint a new key per stage.
+A blueprint and brief for the same opportunity share one `opportunityKey`. Preserve it in the editor handoff; do not mint a new key per stage.
 
 ## Stage 1: Identify reference videos (evidence)
 
@@ -70,7 +70,7 @@ Read and shots:
 - `vnext-blueprints-shots-read`: shot-lift rows and pinned shot assets (signed URLs); these define the blueprint's panels/shots
 - `vnext-blueprints-shots-refresh`: queue a refresh of shot assets
 
-A blueprint is the source of truth for the brief and for the Asset Studio edit spec. Each shot panel has a `panelId` used downstream for clip mapping.
+A blueprint is the source of truth for the brief and editor handoff. Use each shot panel's `panelId` in a coverage table linking approved source clips to shots. This table is a handoff document, not a persisted SocialSeal mapping.
 
 ## Stage 4: Generate the brief
 
@@ -85,28 +85,32 @@ Read and export:
 - `vnext-briefs-read`: generated briefs and version history
 - `vnext-briefs-export`: export a brief as markdown by `opportunityKey` (+ optional `version`)
 
-`creative-pack-generate` / `creative-pack-export` produce a broader creative pack when more than a single brief is needed.
+For multiple concepts, generate and export the individual briefs. Creative packs have retired.
 
 Prefer engine briefs over hand-written ones because they carry blueprint evidence and shot structure. Hand authoring is a fallback when the engine returns `missing_data` or when no SocialSeal access exists.
 
-## Stage 5: Generate the video from library clips (Asset Studio)
+## Stage 5: Prepare source clips and an editor handoff
 
-Asset Studio assembles a rough cut from a workspace clip library that follows the blueprint's shots.
+SocialSeal retains the source-clip library, blueprint evidence, and brief exports.
+Asset Studio generation, clip-to-shot mapping APIs, generated-asset sharing, and
+FCPXML export have retired. Do not promise a rendered video or timeline from these
+retired tools; use the user's editor for assembly and finishing.
 
-1. Put clips in the library:
-   - `vnext-clips-read`: list clips, optionally sign source URLs
-   - `vnext-clips-create` (`action: "create"`): get a signed upload target; upload bytes to storage; then `action: "finalize"` with `clipId`, `fileName`, `storagePath`, `mimeType`, `sizeBytes`, and `rightsAttested: true`
-2. Map clips to blueprint shots:
-   - `vnext-clip-shot-mappings-read`: read current clip-to-panel mappings for a `blueprintId`
-   - `vnext-clip-shot-mappings-write`: `action: "upsert"` with `blueprintId`, `panelId`, `clipId`, optional `source` (`suggested`|`override`); `action: "delete"` to clear a panel
-3. Create and refine the rough cut:
-   - `vnext-generated-asset-create`: pass `blueprintId`, `title`, and an `editSpec` (`version`, `fps`, `width`, `height`, `totalDurationSeconds`, `shots[]` where each shot has `panelId`, `clipId`, `title`, `kind`, `shotLabel`, `sourceStartSeconds`, `durationSeconds`, `evidenceIds[]`)
-   - `vnext-generated-assets-read`: `action: "list"` by `blueprintId` or `action: "detail"` by `assetId`
-   - `vnext-generated-asset-optimize`: `action: "optimize"` or `action: "create-revision"` on an `assetId`
-   - `vnext-generated-asset-export`: export FCPXML by `assetId` (`format: "fcpxml"`) for finishing in an editor
-   - `vnext-generated-asset-share`: create/read/revoke a share link (read is unscoped via `shareToken`)
+1. Inspect available clips with `vnext-clips-read`, signing source URLs as needed.
+2. Upload missing rights-cleared footage with `vnext-clips-create`:
+   - `action: "create"` returns a signed upload target; upload bytes to storage.
+   - `action: "finalize"` requires `clipId`, `fileName`, `storagePath`, `mimeType`,
+     `sizeBytes`, and `rightsAttested: true`.
+3. Use `socialseal-asset-planning` to prepare a coverage table of real `panelId`s,
+   approved clips, trim suggestions, rights, and missing-footage decisions. Do not
+   claim the table creates backend mappings.
+4. Hand off the exported brief, approved coverage table, source files or signed
+   download links, and delivery specs to the user's editor. Confirm source access;
+   signed URLs may expire. Preserve hook order and evidence-backed claims.
+5. Label the output an editor handoff. Assembly, captions, audio, rendering, and
+   mobile playback QA happen in the editor; a handoff is not a finished video.
 
-`rightsAttested: true` is required to finalize a clip. Do not upload or assemble footage the workspace does not have rights to.
+Do not upload footage the workspace does not have rights to.
 
 ## End-to-end (happy path)
 
@@ -115,24 +119,24 @@ Asset Studio assembles a rough cut from a workspace clip library that follows th
 3. `vnext-blueprints-generate` (commit) -> poll `vnext-blueprints-read` until `generated`.
 4. `vnext-blueprints-shots-read` to get panels/shots.
 5. `vnext-briefs-generate` from the `blueprintId`; `vnext-briefs-export` for the markdown brief.
-6. Fill the clip library (`vnext-clips-create`), map clips to panels (`vnext-clip-shot-mappings-write`).
-7. `vnext-generated-asset-create` from an editSpec; `optimize`; `export` FCPXML; `share`.
+6. Fill the source-clip library (`vnext-clips-create`) and document approved panel coverage.
+7. Export the brief and hand off source clips, coverage, and delivery specs to the editor.
 
 ## Carousel branch
 
 For a carousel, reuse the same evidence stages through opportunity and benchmark
 selection, then route to `socialseal-carousel-production` instead of pretending the
-video rough-cut engine renders slides. The carousel skill applies the approved brand
+brief and clip tools render slides. The carousel skill applies the approved brand
 utility, benchmark mechanisms, visual direction, rights/location-aware asset map,
 prototype approval, slide rendering, and phone-size QA.
 
 ## Hard rules
 
-- Reuse one `opportunityKey` across the blueprint, brief, and asset.
+- Reuse one `opportunityKey` across the blueprint, brief, and editor handoff.
 - Treat `missing_data` as a real outcome. Fix scope or evidence; never paper over it with invented best practices.
-- Use blueprint `panelId`s as the contract between shots, clip mappings, and the editSpec.
+- Use real blueprint `panelId`s to identify shots in the coverage table.
 - Only finalize clips with `rightsAttested: true`.
-- Call Asset Studio output a rough cut until editor finishing and final QA pass.
+- Call the exported brief and source-clip package an editor handoff; only call a video post-ready after editor finishing and final QA pass.
 - Never call a brief, blueprint, shot list, outline, placeholder set, or unverified
   asset treatment finished content.
 - Never put literal workspace IDs, blueprint IDs, clip IDs, or share tokens in shared/public artifacts; use placeholders.

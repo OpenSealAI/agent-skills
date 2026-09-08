@@ -27,7 +27,7 @@ The deliverable is not “competitor posts are doing well.” The deliverable is
 
 Measurement is a different job: if the request is to measure or compare visibility — discoverability, keyword coverage, share of voice, or rank statistics for a brand vs a competitor — route to `socialseal-discoverability-tracking`. This skill extracts content patterns (Video DNA); it does not produce visibility metrics.
 
-When the goal is to produce content (not just analysis), route into the production engine instead of stopping at a pattern matrix: use `socialseal-reference-video-analysis` to select and analyze exemplars and `socialseal-blueprint-builder` to compile a grounded blueprint. This skill is for the strategy-side pattern read; the engine turns those patterns into briefs and rough cuts. See `references/production-pipeline.md`.
+When the goal is to produce content (not just analysis), route into the production engine instead of stopping at a pattern matrix: use `socialseal-reference-video-analysis` to select and analyze exemplars and `socialseal-blueprint-builder` to compile a grounded blueprint. This skill is for the strategy-side pattern read; the engine turns those patterns into briefs and evidence for editor handoffs. See `references/production-pipeline.md`.
 
 For carousels or other non-video formats, inspect the actual post/slide assets when
 the ranked result exposes them. If only metadata is available, label the format read

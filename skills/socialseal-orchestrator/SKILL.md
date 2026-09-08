@@ -48,7 +48,9 @@ Before any analysis or production, decide whether strategy and setup exist. If y
 
 If the request includes several artifacts or research plus production, define what
 the user expects to receive (briefs, JPG/PNG carousel slides, rough-cut video,
-FCPXML/editor handoff, or post-ready exports). Keep those delivery states distinct.
+editor handoff, or post-ready exports). Keep those delivery states distinct.
+SocialSeal no longer assembles generated videos or exports FCPXML; route video
+assembly and finishing to the user's editor with briefs and source clips.
 
 Do not stall on a missing input. Name it, explain it in a sentence, propose a SocialSeal-backed way to define it, then route.
 
@@ -66,7 +68,7 @@ Do not stall on a missing input. Name it, explain it in a sentence, propose a So
 - "What's trending in local language vs English?" / catch micro-trends early -> `socialseal-bilingual-demand-monitoring`
 - "Where is demand shifting?" / route budget and fast-track tour onboarding -> `socialseal-predictive-demand-routing`
 - Turn opportunities into a plan -> `socialseal-social-plan-builder`
-- Produce content (engine path): `socialseal-video-concepting` -> `socialseal-reference-video-analysis` -> `socialseal-blueprint-builder` -> `socialseal-creator-briefing` -> `socialseal-asset-planning` / `socialseal-generation-prompts` -> `socialseal-asset-studio-generation` -> `socialseal-capcut-export-prep`
+- Produce content (engine path): `socialseal-video-concepting` -> `socialseal-reference-video-analysis` -> `socialseal-blueprint-builder` -> `socialseal-creator-briefing` -> `socialseal-asset-planning` / `socialseal-generation-prompts` -> source-clip/editor handoff
 - Produce a carousel: foundations/opportunity/benchmarks -> `socialseal-carousel-production`; use `socialseal-asset-planning` for asset-bank gaps
 - "How do we compare with <competitor> on discoverability / share of voice?" / measure brand-vs-competitor visibility (snapshot or trend) -> `socialseal-discoverability-tracking`
 - "How did it do?" / movement -> `socialseal-performance-readout`, `socialseal-discoverability-tracking`

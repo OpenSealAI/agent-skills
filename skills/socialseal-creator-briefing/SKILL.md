@@ -72,7 +72,7 @@ socialseal_call_tool { "function": "vnext-briefs-export", "workspaceId": "<works
 3. **Review against the blueprint.** Confirm hooks, hero shot, and shot priorities trace to blueprint best practices and exemplar evidence. Tighten brand context; never add unsupported claims.
    Confirm every practical tip, itinerary, price, timing, product statement, and
    location against the approved utility bank; label any unresolved fact.
-4. **Creative pack (optional).** Use `creative-pack-generate` / `creative-pack-export` when more than one brief is needed.
+4. **Multiple briefs (optional).** Generate and export each concept as a separate brief. Creative packs have retired.
 
 CLI equivalents:
 
