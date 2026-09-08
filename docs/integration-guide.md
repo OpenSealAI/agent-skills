@@ -45,7 +45,7 @@ Use export-file mode when the user provides CSV/JSON. The agent should inspect c
 8. Blueprint builder (compile best-practices blueprint)
 9. Creator briefing (generate brief from blueprint)
 10. Asset planning (plan clips for blueprint shots)
-11. Generation prompts (fill shot gaps with reference clips)
+11. Generation prompts (write prompts for external tools to fill shot gaps)
 12. Source-clip preparation and editor handoff (brief, approved panel coverage, footage, and delivery specs)
 13. Performance readout
 14. Discoverability tracking

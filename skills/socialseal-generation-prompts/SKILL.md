@@ -22,7 +22,7 @@ metadata:
 
 ## Overview
 
-Generated assets support production by filling shot panels that lack real footage. Use this skill to create reference images, storyboard frames, draft B-roll, cover explorations, or voice guides for a specific blueprint shot panel, then route the finished clip into the source-clip library.
+This skill writes prompts for reference images, storyboard frames, draft B-roll, cover explorations, or voice guides tied to a blueprint shot panel. Actual media generation requires an available external generation tool. SocialSeal does not generate or assemble these assets. If no suitable tool is available, deliver the prompts and settings as a handoff.
 
 See `references/production-pipeline.md`. Generated clips are reference or draft material; they do not replace lived creator footage when the shot needs authenticity.
 
@@ -54,7 +54,7 @@ arbitrary colors, fake social UI, or commercial stock aesthetics.
 4. **Write the positive prompt.** Be concrete about scene, action, lens, lighting, social-native texture, and what the viewer should understand.
 5. **Write the negative prompt.** Exclude over-polished commercial style, distorted hands/faces, fake logos, incorrect products, unreadable text, invented claims.
 6. **Separate text rendering.** Unless the tool is reliable with text, generate no-text assets and add exact text later in editing/design tools.
-7. **Document settings and route to library.** Record model/tool, aspect ratio, seed, prompt, and result notes. Hand the finished clip to `socialseal-asset-planning` for rights verification, source-clip upload (`vnext-clips-create`, `rightsAttested: true`), and inclusion in the editor handoff coverage table for the `panelId`.
+7. **Document settings and hand off.** Record the intended external model/tool, aspect ratio, seed when supported, and prompt. If media was generated, record the actual result and usage rights. Give images, storyboards, and voice guides directly to the editor; only supported video files go through `socialseal-asset-planning` for rights verification and source-clip upload (`vnext-clips-create`, `rightsAttested: true`). Document the `panelId` association in the editor handoff coverage table, not a SocialSeal mapping API.
 
 ## Output
 
@@ -62,7 +62,7 @@ arbitrary colors, fake social UI, or commercial stock aesthetics.
 - negative prompt(s)
 - technical settings
 - usage note: reference only, draft asset, or production candidate
-- revision instructions and a route to upload/map the clip
+- revision instructions and an editor handoff; optional source-clip upload for a rights-cleared video produced externally
 
 ## Do / Don't
 
@@ -92,4 +92,4 @@ Don't:
 - [ ] Prompt includes subject, action, setting, mood, and format.
 - [ ] Negative prompt prevents common failure modes.
 - [ ] Exact text is handled outside generation when needed.
-- [ ] Finished clip is routed to upload and mapping with rights confirmed.
+- [ ] Prompts are handed off, or externally generated media is labeled with rights confirmed; any panel coverage is documented in the handoff.

@@ -22,7 +22,7 @@ metadata:
 
 ## Overview
 
-Asset planning converts a blueprint's shot panels into a concrete capture and clip-library plan. The goal is that every shot panel the rough cut needs has a rights-cleared clip ready for the editor. This is the bridge between `socialseal-blueprint-builder` and an editor handoff. Record panel coverage in the handoff document; SocialSeal's clip-to-shot mapping and generated-video tools have retired.
+Asset planning converts a blueprint's shot panels into a concrete capture and clip-library plan. The goal is that every planned video shot panel has a rights-cleared clip ready for the editor. This is the bridge between `socialseal-blueprint-builder` and an editor handoff. Record panel coverage in the handoff document; SocialSeal's clip-to-shot mapping and generated-video tools have retired.
 
 See `references/production-pipeline.md`. Work from the blueprint shot panels (`vnext-blueprints-shots-read`), not a generic shot list.
 
@@ -86,7 +86,7 @@ Don't:
 
 ## Troubleshooting
 
-- A panel has no candidate footage: route it to `socialseal-generation-prompts` (generate a reference clip) or flag for a reshoot.
+- A panel has no candidate footage: route it to `socialseal-generation-prompts` (write a prompt for an external generation tool) or flag for a reshoot.
 - Too expensive: reduce locations and combine capture batches.
 - No hero shot exists for the hook panel: the concept is not production-ready; revisit the blueprint.
 

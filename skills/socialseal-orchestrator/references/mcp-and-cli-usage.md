@@ -94,7 +94,7 @@ npx -y @socialseal/cli data export-tracking --group-id <group-id> --time-period 
 npx -y @socialseal/cli data export-report --report-type search_results_enriched --format csv --payload '{"groupIds":[<group-id>]}' --workspace-id <workspace-id> --out ./exports/ranked.csv
 ```
 
-Video and asset studio (all function targets are also reachable via `tools call`):
+Video analysis, blueprints, and brief exports (all function targets are also reachable via `tools call`):
 
 ```bash
 npx -y @socialseal/cli video extract --search-result-id <search-result-id> --ensure-analysis --wait --out-dir ./video-assets --workspace-id <workspace-id>

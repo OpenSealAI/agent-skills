@@ -5,7 +5,7 @@ description: >-
   successful-looking references, "what good looks like", or Video DNA for a topic,
   brief, or planned video. Find exemplars that actually surface for tracked searches,
   preview candidates, and optionally extract hooks, structure, shots, language,
-  pacing, and production qualities before any blueprint, brief, or rough cut.
+  pacing, and production qualities before any blueprint, brief, or externally edited rough cut.
 license: MIT
 metadata:
   socialseal:

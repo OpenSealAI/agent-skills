@@ -3,7 +3,7 @@ name: socialseal-blueprint-builder
 description: >-
   Use this skill when the user needs evidence-backed creative best practices, a
   SocialSeal blueprint, reusable Video DNA patterns, or the source of truth for a
-  brief/rough cut. Trigger after reference examples are selected; compile their
+  brief/editor handoff. Trigger after reference examples are selected; compile their
   grounded practices and shot panels, handle missing_data honestly, and pass the
   blueprint into briefing and production.
 license: MIT
@@ -35,7 +35,7 @@ or visual-direction approval.
 
 - Generating a blueprint version for an opportunity scope.
 - Reading blueprint history/versions and the latest `best_practices`/`evidence`.
-- Reading shot-lift rows and pinned shot assets (the panels used for clip mapping).
+- Reading shot-lift rows and pinned shot assets (the panels referenced in the editor handoff coverage table).
 - Diagnosing and fixing a `missing_data` blueprint.
 
 ## Inputs
@@ -113,8 +113,8 @@ A compiled blueprint raises confidence because its practices are grounded in mul
 
 Do:
 - ground every best practice in cited exemplar evidence
-- reuse one `opportunityKey` across blueprint, brief, and asset
-- treat `panelId`s as the contract for clip mapping and editSpec
+- reuse one `opportunityKey` across blueprint, brief, and editor handoff
+- use `panelId`s to identify shots in the handoff coverage table; this does not create persisted SocialSeal mappings
 - record the `blueprintId` and version for downstream skills
 
 Don't:

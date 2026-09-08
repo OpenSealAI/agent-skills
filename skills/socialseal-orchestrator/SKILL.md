@@ -47,7 +47,7 @@ See `references/onboarding-and-auth.md` and `references/mcp-and-cli-usage.md`. N
 Before any analysis or production, decide whether strategy and setup exist. If you are unsure, run `socialseal-strategy-readiness` first; it diagnoses strategy foundations (personas, pillars, brand voice, goals) and SocialSeal setup, and guides the user to define what is missing using SocialSeal research.
 
 If the request includes several artifacts or research plus production, define what
-the user expects to receive (briefs, JPG/PNG carousel slides, rough-cut video,
+the user expects to receive (briefs, JPG/PNG carousel slides, externally edited rough-cut video,
 editor handoff, or post-ready exports). Keep those delivery states distinct.
 SocialSeal no longer assembles generated videos or exports FCPXML; route video
 assembly and finishing to the user's editor with briefs and source clips.
@@ -86,7 +86,7 @@ Strategy & setup -> opportunity/competitor analysis -> plan -> production engine
 - A brand-vs-competitor visibility question ("how do we compare with X on discoverability / share of voice?") is measurement, not content analysis — route it to `socialseal-discoverability-tracking` even though it names a competitor.
 - Cite evidence in human-readable terms: `"keyword" [market, platform]`, video title/URL, `@handle`, group name. Keep `video_uid`/`search_result_id` as internal traceability only. See `references/socialseal-data-contract.md`.
 - Be honest about evidence tiers: hard measurements are exact (not estimates), statistics carry selection bias (only high-ranking videos for tracked queries), and creative exemplars are anecdotal, not proof. See `references/evidence-and-confidence.md`.
-- Reuse one `opportunityKey` across blueprint, brief, and asset.
+- Reuse one `opportunityKey` across blueprint, brief, and editor handoff.
 - For paid/credit-consuming journeys or Video DNA, inspect the live schema/preflight,
   state the focused and fuller options, and get the user's choice before running.
 - Never substitute unknown or merely plausible location imagery for verified imagery
