@@ -95,11 +95,15 @@ the hosted MCP connection through `.mcp.json`.
 - Design tracking groups, keyword sets, markets, platforms, and competitor scopes.
 - Analyze discoverability gaps and competitor/content patterns.
 - Shortlist creator-shop partners by search authority, monitor bilingual (local-vs-English) demand, and route resources to early demand signals.
-- Run the SocialSeal production engine: identify and analyze reference videos (Video DNA), compile best-practices blueprints, generate briefs from blueprints, and assemble Asset Studio rough cuts from a clip library.
+- Run the SocialSeal production engine: identify and analyze reference videos (Video DNA), compile best-practices blueprints, generate briefs from blueprints, and prepare source clips and editor handoffs.
 - Build social plans, creator briefs, video concepts, asset plans, and editor handoffs.
 - Read out posted content and campaign performance, track discoverability, and plan next actions.
 
 ## What this does not do
+
+Asset Studio video generation and CapCut/FCPXML export skills have retired. Use
+brief exports and rights-cleared source clips for an editor handoff; SocialSeal
+does not assemble or render that video.
 
 This repo does not automate posting, scheduling, inbox/comment/DM management, account growth tactics, paid media buying, or day-to-day social account operations.
 
@@ -129,7 +133,7 @@ Always inspect the live registry/schema before mutating calls. See [references/m
 
 ### Production
 
-These follow the SocialSeal vNext engine: opportunity -> reference videos -> blueprint -> brief -> Asset Studio rough cut, joined by a single `opportunityKey`. See [references/production-pipeline.md](references/production-pipeline.md).
+These follow the SocialSeal vNext engine: opportunity -> reference videos -> blueprint -> brief -> source-clip/editor handoff, joined by a single `opportunityKey`. See [references/production-pipeline.md](references/production-pipeline.md).
 
 - `socialseal-video-concepting`
 - `socialseal-reference-video-analysis`
@@ -137,8 +141,6 @@ These follow the SocialSeal vNext engine: opportunity -> reference videos -> blu
 - `socialseal-creator-briefing`
 - `socialseal-asset-planning`
 - `socialseal-generation-prompts`
-- `socialseal-asset-studio-generation`
-- `socialseal-capcut-export-prep`
 - `socialseal-carousel-production` (evidence, visual direction, asset selection,
   prototype approval, rendered slides, and post-ready QA for carousels)
 

@@ -16,7 +16,10 @@ Before research or production, restate:
   post-ready)
 
 For work spanning three or more stages, show the stage plan and current stage. Do
-not call a brief or shot list a finished video/carousel.
+not call a brief or shot list a finished video/carousel. SocialSeal supplies evidence,
+briefs, and source clips. Media generation, assembled video prototypes/timelines,
+and finishing require an external generation tool or editor. When none is
+available, deliver the brief, storyboard, and editor handoff and state what remains.
 
 ## Use six decision gates
 
@@ -51,8 +54,11 @@ reference, or pause that deliverable. Do not paper over the gap.
 - **Brief:** instructions for a creator/editor; not the content itself.
 - **Prototype:** representative partial execution for direction approval.
 - **Draft:** complete enough to review, with known gaps.
-- **Rough cut:** assembled video timeline requiring finishing.
-- **Editor-ready:** sources, timeline, copy, and notes are packaged for editing.
+- **Rough cut:** video assembled in an external editor and requiring finishing.
+- **Editor handoff:** brief, sources, panel coverage, copy, and notes packaged for
+  the editor; no assembled timeline is promised.
+- **Editor-ready:** the editor handoff plus any externally produced timeline
+  required by the agreed delivery contract.
 - **Production candidate:** complete output awaiting final factual/rights/brand QA.
 - **Post-ready:** exported artifact passed final QA and has no unresolved blockers.
 

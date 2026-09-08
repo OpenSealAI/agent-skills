@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Removed remaining persisted mapping/editSpec instructions; clarified external generation and editor timelines, and validate retired wording plus canonical bundled-reference consistency.
+- Aligned with SOC-349 retirement: removed Asset Studio generation and CapCut/FCPXML skills from active distribution.
+- Retained blueprint/brief generation and source-clip upload/read; updated routing and bundled references to deliver an editor handoff without retired mapping, creative-pack, or generated-asset calls.
+
 ## 0.7.0
 
 - Added a native ChatGPT/Codex plugin manifest and bundled hosted SocialSeal MCP configuration.

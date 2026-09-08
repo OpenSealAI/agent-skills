@@ -22,6 +22,22 @@ How the brand sounds and what it will and will not say: tone, reading level, poi
 - Why it matters: voice keeps briefs and generated assets on-brand and compliant.
 - Derive with SocialSeal: not a SocialSeal output. Ask for existing brand guidelines; if none, draft a short voice note from how the brand currently talks and from the tone of high-surfacing creator content in the category, then confirm.
 
+### Brand utility bank
+The claim-safe, useful material the brand can contribute: products/services actually
+offered, explicit exclusions, real itineraries, routes, steps, timings, prices or
+price ranges, local tips, named proof, common mistakes, and facts requiring local
+confirmation. For destination content, this is the difference between generic travel
+copy and credible insider help.
+
+- Why it matters: SocialSeal can identify the viewer job and effective format, but it
+  cannot invent the brand's operational knowledge or permission to make a claim.
+- Derive: inspect approved brand/project material, existing content, product pages,
+  itineraries, call notes, and asset metadata. Draft a structured bank with source
+  and confidence (`confirmed`, `needs confirmation`, `out of scope`), then ask the
+  user to correct material choices—not to supply everything from scratch.
+- Hard rule: never let a high-demand keyword override a brand exclusion. Treat an
+  excluded service or claim as out of scope even when it ranks highly.
+
 ### Goal / measurement intent
 What success looks like in SocialSeal terms: improved discoverability or share of voice for which pillars, keywords, market, and platform, by when.
 
@@ -44,6 +60,7 @@ Strategy is ready enough to start production when:
 - there are named personas tied to viewer jobs (not just demographics)
 - there are 3-5 content pillars, each with real tracked search demand
 - there is a brand voice / constraints note
+- there is a brand utility bank with exclusions and claim confidence
 - there is at least one measurable goal (pillar/keyword + market + platform + baseline)
 
 SocialSeal setup is ready when:

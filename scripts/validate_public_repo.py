@@ -56,8 +56,6 @@ trigger_expectations = {
     "socialseal-creator-briefing": ["create, rewrite, or improve", "social-first language"],
     "socialseal-asset-planning": ["footage/image bank", "which assets to use"],
     "socialseal-generation-prompts": ["generated b-roll", "storyboard frames"],
-    "socialseal-asset-studio-generation": ["make, assemble, or edit", "rough cut"],
-    "socialseal-capcut-export-prep": ["finish, polish, caption, export", "post-ready"],
     "socialseal-carousel-production": ["create, design, redesign, or finish", "avoid generic ai design"],
     "socialseal-creator-discovery": ["which creators", "ugc partners"],
     "socialseal-bilingual-demand-monitoring": ["local language versus", "multilingual demand"],
@@ -97,7 +95,31 @@ for p in root.glob('skills/*/SKILL.md'):
     for phrase in trigger_expectations.get(name, []):
         if phrase not in desc_lower:
             errors.append(f'{p}: missing trigger phrase {phrase!r}')
-expected=24
+# SOC-349 removed persisted shot mappings and the generated-video editSpec.
+# Guard the concrete stale instructions; external editor work remains supported.
+retired_instruction_patterns = {
+    "skills/socialseal-blueprint-builder/SKILL.md": [r"\beditSpec\b", r"panels used for clip mapping", r"blueprint, brief, and asset"],
+    "skills/socialseal-generation-prompts/SKILL.md": [r"upload/map", r"upload and mapping"],
+    "references/mcp-and-cli-usage.md": [r"Video and asset studio"],
+    "skills/socialseal-orchestrator/SKILL.md": [r"blueprint, brief, and asset"],
+}
+for relative_path, patterns in retired_instruction_patterns.items():
+    content = (root / relative_path).read_text()
+    for pattern in patterns:
+        if re.search(pattern, content, re.I):
+            errors.append(f"{relative_path}: retired workflow instruction {pattern!r}")
+
+# Single-skill installs must receive the same contracts as the full plugin.
+for resource_type in ("references", "templates"):
+    for bundled in root.glob(f"skills/*/{resource_type}/**/*"):
+        if not bundled.is_file():
+            continue
+        relative = bundled.relative_to(root / "skills")
+        canonical = root / resource_type / Path(*relative.parts[2:])
+        if not canonical.is_file() or bundled.read_bytes() != canonical.read_bytes():
+            errors.append(f"{bundled.relative_to(root)}: differs from canonical {resource_type} resource")
+
+expected=22
 found=len(list(root.glob('skills/*/SKILL.md')))
 if found != expected:
     errors.append(f'expected {expected} skills, found {found}')
