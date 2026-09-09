@@ -1,48 +1,72 @@
 # SocialSeal MCP, CLI, and File-Mode Usage
 
-SocialSeal exposes the same function surface through the hosted SocialSeal connector, the local developer MCP fallback (`@socialseal/mcp-server`), and the public CLI (`@socialseal/cli`). These paths are thin wrappers over the same backend tool registry. Always inspect the live registry/schema before calling a mutating tool; do not rely on stale tool memory.
+The host selects directly discoverable SocialSeal actions from their typed schemas and composes the user's task. Basic reads, supplied-URL analysis, exports, and account evidence require no skill, semantic resolver, or prescribed workflow. This reference adds examples and evidence conventions; the currently available schema is authoritative.
 
-## Hosted connector mode (preferred for Cowork)
+## Discover access and scope
 
-For Cowork and non-technical users, use the hosted SocialSeal remote MCP connector. It should expose `socialseal_*` tools after the user connects SocialSeal under **Customize** -> **Connectors**. If those tools are missing, give setup guidance instead of continuing as if live tools exist:
+Use the host's available tool search/discovery facilities before concluding that a connector is missing. Tools can be loaded lazily. If discovery or connection status confirms missing access, use `references/onboarding-and-auth.md`; do not diagnose disconnection from an empty initial tool list or one failed action.
 
-1. Say that the SocialSeal connector is not connected or enabled in this conversation.
-2. Ask the user to open **Customize** -> **Connectors**, click **+** -> **Add custom connector**, and fill in **Name** `socialseal` and **Remote MCP server URL** `https://mcp.socialseal.co/mcp`, then click **Add**/**Connect** and sign in.
-3. After they connect, retry workspace discovery with `socialseal_list_workspaces`.
-4. If the connector is unavailable, switch to file mode and ask for SocialSeal CSV/JSON exports.
+Use `socialseal_get_current_workspace` or `socialseal_list_workspaces` when workspace context is needed. Reuse the authorized, unambiguous context already available. Ask only when an operation requires context that remains ambiguous. An account read does not imply tracking setup; an absent brand does not block account metrics.
 
-Do not ask Cowork users to install Node.js, run `npx`, or configure a local MCP server. The local stdio MCP server (`@socialseal/mcp-server`) is an npm-based developer fallback that requires Node.js/`npx`; the remote connector at `https://mcp.socialseal.co/mcp` needs none of that.
+An unsupported platform, missing argument, missing evidence, authorization denial, and provider failure are different limitations. Preserve useful completed portions of compound requests. A stale skill or unavailable action does not authorize a search-only substitute or a resolver rephrase loop.
 
-## MCP mode
+## Direct actions
 
-The MCP connector/server registers a small set of stable meta-tools. You do not call backend functions directly by name as separate MCP tools; you call them through `socialseal_call_tool`.
+Select the action matching the supplied target and requested deliverable from the live catalogue. Its description and schema state platforms, inputs, side effects, evidence/freshness limits, collection costs, and continuation. Use the actual schema rather than inventing parameters from a remembered name.
 
-Meta-tools:
+- Existing tracking groups: read the existing authorized group. Do not create groups or run collection to answer a read.
+- Supplied video URL: use the URL-analysis action with that URL. Apply the operation's quote/approval boundary if new analysis is needed.
+- Named creator: read the profile and recent account posts with the requested platform/count. Timeline ordering, pinned posts, mixed media, timestamp provenance, and pagination determine whether a latest-post claim is supported. Return the service's aggregates and denominators; missing values remain distinct from zero. Retrieve accessible brand context independently for fit evaluation.
+- Ranked-search creator discovery: use the requested ranked-search population and retain its sampling caveats. It is not a substitute for account posts.
+- Account tracking: only create the explicitly requested ongoing commitment, retaining required authorization.
 
-- `socialseal_list_workspaces` / `socialseal_get_current_workspace`: workspace discovery and default.
-- `socialseal_list_available_tools` (optional `category`): list backend function targets in the registry.
-- `socialseal_get_tool_schema` (`toolName`): required/optional fields and an example body for a function target.
-- `socialseal_call_tool` (`toolName`, `body`, optional `workspaceId`): invoke a backend function target.
-- `socialseal_get_tool_status` (`id`, `kind`): poll async runs. `kind` is one of `agent_job`, `google_ai_run`, `journey_run`, `video_analysis`.
-- `socialseal_export_tracking_data` (`body`, optional `workspaceId`): stream a tracking CSV for a group or item.
-- `socialseal_export_report` (`body`, optional `workspaceId`): report exports. Inside `body`, `reportType` includes `keyword_universe`, `cluster_insights`, `creator_signatures`, `post_publish`, `quick_audit`, `search_results_enriched` (csv-only).
+A generic `socialseal_call_tool` remains for identified compatibility and rare-operation callers. `socialseal_list_available_tools` and `socialseal_get_tool_schema` can help those callers find a retained backend target. They are not mandatory steps before direct actions, and `socialseal_resolve_request` is not a prerequisite.
 
-Local stdio MCP only:
+Named-account examples (Instagram currently):
 
-- `socialseal_start_login` / `socialseal_poll_login`: browser-based device login when local developer credentials are missing.
+```text
+socialseal_get_creator_profile { "target": "<profile-url-or-handle>", "platform": "instagram" }
+socialseal_get_creator_recent_posts { "target": "<profile-url-or-handle>", "platform": "instagram", "recentPostCount": 5, "freshness": "stored" }
+```
 
-Canonical MCP loop:
+```bash
+npx -y @socialseal/cli creator profile '<profile-url-or-handle>' --platform instagram
+npx -y @socialseal/cli creator recent-posts '<profile-url-or-handle>' --platform instagram --count 5
+npx -y @socialseal/cli tools status '<returned-video-id>' --kind video_analysis --workspace-id '<workspace-id>' --include-results
+```
 
-1. `socialseal_list_workspaces` -> confirm scope.
-2. `socialseal_list_available_tools` (optionally by `category`, e.g. `vnext`, `tracking`, `export`).
-3. `socialseal_get_tool_schema` with `{ "toolName": "<target>" }` before any mutating call.
-4. `socialseal_call_tool` with `{ "toolName": "<target>", "body": { ... }, "workspaceId": "<workspace-id>" }`.
-5. For async work, `socialseal_get_tool_status` with the returned id and the right `kind`.
+Creator reads use stored snapshots. A fresh request returns `FRESH_COLLECTION_REQUIRED` with any usable evidence. For requested fresh collection, discover authorized workspace context and call `socialseal_collect_creator_account` with the target, platform `instagram`, explicit `workspaceId`, `idempotencyKey`, and `maxCredits: 1` under the existing one-account-refresh credit policy. This creates a one-off collection receipt, never a tracker. Reuse the key after timeouts. If running, call `socialseal_get_creator_collection` with its `id` and workspace; terminal failed receipts do not automatically retry. The provider does not support timeline pagination, so preserve partial coverage and `coverage.latestClaim`.
 
-Notes:
+```sh
+npx -y @socialseal/cli creator collect '<profile-url-or-handle>' --workspace-id '<id>' --idempotency-key '<key>' --max-credits 1 --wait --json
+npx -y @socialseal/cli creator status '<collection-id>' --workspace-id '<id>' --json
+npx -y @socialseal/cli actions list --json
+npx -y @socialseal/cli actions schema socialseal_get_tracking_group --json
+npx -y @socialseal/cli actions call socialseal_get_tracking_group --body '{"group_id":436}' --json
+```
 
-- There is no `export-group-evidence` or `export-search-results` MCP tool. In MCP mode reach enriched ranked rows via `socialseal_export_report` with `{ "body": { "reportType": "search_results_enriched", "format": "csv", "payload": { "groupIds": [<group-id>] } } }`, or use `socialseal_export_tracking_data` with `{ "body": { "groupId": <group-id>, "timePeriod": "30d" } }` for a group/item CSV.
-- All `vnext-*` and `tracked-video-extract` function targets are invoked through `socialseal_call_tool` with the same body shapes shown in `references/production-pipeline.md`.
+`actions` reads the deployed catalogue/schema and uses the same definitions as MCP. Generic `tools` remains compatibility access. A client package alone does not prove the new backend is deployed; report an unavailable operation precisely.
+
+## Completed artifacts and async work
+
+For enriched ranked search evidence, the existing export action accepts:
+
+```text
+socialseal_export_report {
+  "workspaceId": "<workspace-id>",
+  "body": { "reportType": "search_results_enriched", "format": "csv", "payload": { "groupIds": [<group-id>] } }
+}
+```
+
+An export returns an artifact, not necessarily inline CSV. When its download cannot be read in-session, pass `read_token` as `t` to `socialseal_read_export_chunk` with `offset` and `limit`. Follow the returned next offset until `has_more` is false. Keep the source, row counts, and actual historical coverage; an artifact URL alone is not a completed analysis.
+
+```text
+socialseal_read_export_chunk { "t": "<read-token>", "offset": 0, "limit": 100 }
+```
+
+Poll async operations using the returned ID and their stated status kind. `socialseal_get_tool_status` takes `id`, `kind`, and workspace context where required. Do not guess whether an ID denotes a journey, video analysis, or another job. A queued response is not completed evidence. Resume the existing job on retry rather than paying for duplicate work.
+
+New collection and external effects retain backend quote, approval, budget, idempotency, and settlement controls. Metadata never authorizes paid work; reuse authorization already given for the same scope. Stored-evidence reads remain separate from fresh collection.
 
 ## Local stdio MCP developer fallback
 
@@ -102,9 +126,9 @@ npx -y @socialseal/cli tools call --function vnext-blueprints-generate --workspa
 npx -y @socialseal/cli tools call --function vnext-briefs-export --workspace-id <workspace-id> --body '{"opportunityKey":"<opportunity-key>"}' --pretty
 ```
 
-## Equivalence note for skills
+## Compatibility calls
 
-Skills document the MCP path first. The CLI equivalent of any `socialseal_call_tool` is:
+Prefer a directly discovered action for routine work. Retained generic calls support existing scripts and rare operations; they do not require a resolver. The CLI equivalent of a compatibility `socialseal_call_tool` is:
 
 ```text
 MCP : socialseal_call_tool { toolName: "<target>", body: { ... }, workspaceId: "<workspace-id>" }
