@@ -55,7 +55,7 @@ Use the hosted SocialSeal remote MCP connector for live tools, then install this
 7. Enter `OpenSealAI/agent-skills` and confirm.
 8. Click **Install** on **socialseal-agent-skills**.
 
-Skills then appear via `/` or the **+** button. If Claude says SocialSeal tools are unavailable, the connector is not connected or enabled for that conversation. Return to **Customize** -> **Connectors**, confirm `socialseal` (`https://mcp.socialseal.co/mcp`) is connected, and retry. If the connector is not available, use file mode with SocialSeal CSV/JSON exports.
+Skills then appear via `/` or the **+** button. If tools are not initially visible, use the host's available tool search/discovery facilities first. A missing initial tool list does not establish that the connector is disconnected. Return to **Customize** -> **Connectors**, confirm `socialseal` (`https://mcp.socialseal.co/mcp`) is connected, and retry. If the connector is not available, use file mode with SocialSeal CSV/JSON exports.
 
 For a large content plan or production request, explicitly start with
 `socialseal-orchestrator` if Claude does not select it automatically. The orchestrator
@@ -118,7 +118,7 @@ Always inspect the live registry/schema before mutating calls. See [references/m
 ## Skill taxonomy
 
 ### Orchestration
-- `socialseal-orchestrator` (lightweight entry point: checks foundations, routes to the right skill)
+- `socialseal-orchestrator` (coordinates explicitly requested multi-stage creative production)
 - `socialseal-strategy-readiness` (diagnoses strategy + setup readiness and guides the user to define what is missing)
 
 ### Strategy
@@ -126,6 +126,7 @@ Always inspect the live registry/schema before mutating calls. See [references/m
 - `socialseal-tracking-group-design`
 - `socialseal-opportunity-analysis`
 - `socialseal-competitor-content-analysis`
+- `socialseal-creator-evaluation` (supplied creator, recent-post metrics, and grounded brand fit)
 - `socialseal-creator-discovery` (shortlist creator-shop partners by market, language, and destination/topic authority from search evidence)
 - `socialseal-bilingual-demand-monitoring` (map the local-language vs English search-demand split and catch micro-trends early)
 - `socialseal-predictive-demand-routing` (source early demand signals to back resource allocation and fast-track activity/tour onboarding)

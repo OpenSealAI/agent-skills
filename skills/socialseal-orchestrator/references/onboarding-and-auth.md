@@ -4,7 +4,7 @@ Choose the onboarding path by environment. Cowork and non-technical users use th
 
 ## Connector-first setup for Cowork
 
-Use this path when SocialSeal `socialseal_*` tools are missing in Cowork, Claude web, or a non-technical setup:
+First use the host's available tool search/discovery facilities to look for SocialSeal actions. Use this setup path only when discovery or connection status confirms the connector is unavailable:
 
 1. Tell the user the SocialSeal connector is not connected or enabled in this conversation.
 2. Ask them to open **Customize** -> **Connectors**.
@@ -19,12 +19,12 @@ Do not ask Cowork users to install Node.js, run `npx`, or configure local MCP. T
 
 Treat these as live-tool setup triggers:
 
-- No `socialseal_*` tools are available.
-- `socialseal_list_workspaces` is unavailable.
-- The hosted connector reports disconnected, unauthorized, or forbidden.
+- Host discovery confirms no SocialSeal tools are available.
+- Workspace discovery is unavailable after host tool discovery.
+- The hosted connector reports disconnected or expired authentication. A forbidden operation can instead mean missing workspace permission; retain that specific error.
 - Local stdio MCP reports a missing SocialSeal API key.
 - CLI exits with auth code `3`, or says to run `socialseal login`.
-- Backend calls return `401` or `403` for the configured key.
+- Backend calls return `401` for the configured key. For `403`, inspect the permission error rather than assuming reconnecting will grant access.
 
 When live tools are missing, give the right next step:
 

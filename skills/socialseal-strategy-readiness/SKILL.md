@@ -25,17 +25,15 @@ metadata:
 
 ## Overview
 
-Most SocialSeal skills assume a strategy and a working setup already exist. Often they do not, and the concepts are unfamiliar. This skill diagnoses readiness and guides the user to fill gaps. Guiding means teaching the concept and proposing a concrete, SocialSeal-backed way to define it, not asking "please input your personas."
+Creative production can require brand foundations that are not yet available. This skill diagnoses only the foundations needed for the requested creative task. Routine group reads, account metrics, supplied-video analysis, and exports do not require this readiness check. Guiding means teaching the concept and proposing a concrete, SocialSeal-backed way to define it, not asking "please input your personas."
 
-`socialseal-orchestrator` routes here when strategy or setup may be missing. See `references/strategy-foundations.md` for the concept definitions and derivation methods, `references/evidence-and-confidence.md` for how to talk about what the data can and cannot prove, and `references/creative-production-gates.md` when this readiness check precedes a large creative task.
+Use this guidance when missing strategy affects requested creative production. See `references/strategy-foundations.md` for the concept definitions and derivation methods, `references/evidence-and-confidence.md` for how to talk about what the data can and cannot prove, and `references/creative-production-gates.md` when this readiness check precedes a large creative task.
 
 ## When to Use
 
-- SocialSeal live tools are missing or invalid; use `references/onboarding-and-auth.md` to route the user to hosted connector setup, local developer fallback, or file mode before deeper readiness work.
 - A request assumes personas, pillars, brand voice, or goals that may not exist.
 - A new brand/workspace with no clear strategy.
-- Before opportunity analysis or production, to confirm the inputs are real.
-- The user seems unsure what SocialSeal concepts mean.
+- Before creative production when required brand facts are missing.
 
 ## Readiness diagnosis
 
@@ -61,7 +59,7 @@ Assess two halves and report each as ready / partial / missing.
 ## Guided workflow
 
 1. **Diagnose.** State what exists, what is partial, and what is missing across both halves. Use what the user said plus any SocialSeal access (list workspaces/groups, inspect exports).
-   - If `socialseal_*` tools are missing in Cowork, mark live access as missing and give hosted connector setup guidance. Do not dead-end on missing tools.
+   - If SocialSeal tools are not initially visible, use the host's tool search/discovery facilities before diagnosing missing access. Only give setup guidance when discovery or an actual connection state confirms it. Do not dead-end on missing tools.
    - If the connector cannot be connected, continue in file mode if the user can provide SocialSeal exports. Mark live setup actions as unavailable in file mode.
    - If local developer MCP/CLI auth fails, complete device login first. Do not ask for payment during first setup; new users start free.
 2. **Explain the gap.** For each missing foundation, give a one or two sentence plain-language explanation of what it is and why it matters. Do not assume the term is understood.

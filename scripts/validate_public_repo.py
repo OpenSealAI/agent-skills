@@ -43,7 +43,7 @@ if codex_manifest_path.is_file() and mcp_manifest_path.is_file() and discovery_p
         errors.append(".codex-plugin/plugin.json: mcpServers must reference ./.mcp.json")
 
 trigger_expectations = {
-    "socialseal-orchestrator": ["content plan", "videos", "carousels", "search demand"],
+    "socialseal-orchestrator": ["multi-stage", "production"],
     "socialseal-strategy-readiness": ["content plan", "product truths", "exclusions"],
     "socialseal-workspace-setup": ["there is no tracking group", "baseline/search journey"],
     "socialseal-tracking-group-design": ["what keywords or queries to track", "no group"],
@@ -57,7 +57,8 @@ trigger_expectations = {
     "socialseal-asset-planning": ["footage/image bank", "which assets to use"],
     "socialseal-generation-prompts": ["generated b-roll", "storyboard frames"],
     "socialseal-carousel-production": ["create, design, redesign, or finish", "avoid generic ai design"],
-    "socialseal-creator-discovery": ["which creators", "ugc partners"],
+    "socialseal-creator-discovery": ["ranked search evidence"],
+    "socialseal-creator-evaluation": ["supplied creator", "brand partnership"],
     "socialseal-bilingual-demand-monitoring": ["local language versus", "multilingual demand"],
     "socialseal-predictive-demand-routing": ["what is trending", "demand is shifting"],
     "socialseal-discoverability-tracking": ["whether a brand or competitor appears", "share of voice"],
@@ -119,7 +120,7 @@ for resource_type in ("references", "templates"):
         if not canonical.is_file() or bundled.read_bytes() != canonical.read_bytes():
             errors.append(f"{bundled.relative_to(root)}: differs from canonical {resource_type} resource")
 
-expected=22
+expected=23
 found=len(list(root.glob('skills/*/SKILL.md')))
 if found != expected:
     errors.append(f'expected {expected} skills, found {found}')

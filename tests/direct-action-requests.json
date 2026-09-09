@@ -1,0 +1,120 @@
+{
+  "purpose": "Behavioral release corpus for SOC-416 and SOC-417. These requests are evaluated by observable outcomes, not an expected tool sequence. Fixture presence is not a host-test pass.",
+  "modes": [
+    "explicit MCP catalogue; skills disabled",
+    "explicit MCP catalogue; narrow skills enabled"
+  ],
+  "surfaces": [
+    "Claude/Cowork",
+    "ChatGPT",
+    "local MCP",
+    "canonical public CLI"
+  ],
+  "recordForEachRun": [
+    "host and version",
+    "backend/gateway build",
+    "MCP catalogue/schema version",
+    "CLI package version",
+    "skill commit/bundle and host packaging/update method",
+    "evidence population",
+    "completion and useful partial results",
+    "unnecessary questions/setup",
+    "tool-call count",
+    "unintended writes",
+    "cost-boundary compliance",
+    "privacy-safe trace location",
+    "pass/fail/unverified and reason"
+  ],
+  "cases": [
+    {
+      "id": "existing-group",
+      "request": "Show our existing tracking group",
+      "outcomes": [
+        "Read the authorized existing group",
+        "No resolver prerequisite or new tracking setup"
+      ]
+    },
+    {
+      "id": "supplied-video",
+      "request": "Analyse this public video URL: <video-url>",
+      "outcomes": [
+        "Preserve the supplied URL",
+        "Use the collection cost/authorization boundary only if new work is needed"
+      ]
+    },
+    {
+      "id": "collected-export",
+      "request": "Export collected hashtag/campaign posts",
+      "outcomes": [
+        "Read the complete artifact, including chunks",
+        "State actual historical coverage"
+      ]
+    },
+    {
+      "id": "account-tracking",
+      "request": "Track this Instagram account: <profile-url>",
+      "outcomes": [
+        "Apply only the requested account commitment",
+        "Respect required collection authorization and idempotency"
+      ]
+    },
+    {
+      "id": "named-creator",
+      "request": "What are the creator insights for https://www.instagram.com/clubbradshaw/? What are their average engagement rates and views for the past 5 posts, and are they a good fit for future work with babonbo?",
+      "outcomes": [
+        "Use account timeline evidence, not search-ranked rows",
+        "Report URLs, dates, type, requested/returned counts, ordering and coverage",
+        "Report available-metric denominators and engagement formula",
+        "Retrieve accessible brand context; preserve metrics if it is absent",
+        "No persistent tracker"
+      ]
+    },
+    {
+      "id": "ranked-creators",
+      "request": "Find creators ranking for our specified Singapore family travel search terms",
+      "outcomes": [
+        "Use the requested ranked search population",
+        "Report sampling caveats and requested ranking criteria"
+      ]
+    },
+    {
+      "id": "compound-multilingual",
+      "request": "Montre notre groupe existant et les vues moyennes des cinq derniers posts de @clubbradshaw sur Instagram; assess Babonbo fit too.",
+      "outcomes": [
+        "Preserve both targets and all deliverables",
+        "Separate unknown brand fit from completed group/account reads"
+      ]
+    },
+    {
+      "id": "stale-skill",
+      "request": "Evaluate @clubbradshaw for Babonbo using the latest five Instagram posts",
+      "outcomes": [
+        "Recover from an older skill suggesting resolver or strategy setup",
+        "Use currently discovered direct actions",
+        "Do not substitute a search-authority shortlist"
+      ]
+    },
+    {
+      "id": "partial-failure",
+      "request": "Read this private/unavailable account and show our existing tracking group",
+      "outcomes": [
+        "Report the precise account limitation",
+        "Preserve the completed group result",
+        "No resolver rephrase loop"
+      ]
+    }
+  ],
+  "accountVariants": [
+    "fewer than five posts",
+    "missing views/engagement/date",
+    "zero versus unknown metrics",
+    "pinned posts and mixed media",
+    "pagination not complete after one page",
+    "historical collection-time date provenance unknown",
+    "stale collection",
+    "provider failure",
+    "expired authentication",
+    "missing workspace permission",
+    "absent brand context"
+  ]
+}
