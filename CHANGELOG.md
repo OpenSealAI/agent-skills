@@ -1,5 +1,10 @@
 # Changelog
 
+## Cursor package 0.8.0
+
+- Added a Cursor-format manifest for the hosted SocialSeal MCP connection and the focused creator-evaluation skill.
+- Included the SocialSeal logo and documented local loading, account requirements, and pending Grok marketplace compatibility.
+
 ## 0.8.0
 
 - Removed remaining persisted mapping/editSpec instructions; clarified external generation and editor timelines, and validate retired wording plus canonical bundled-reference consistency.

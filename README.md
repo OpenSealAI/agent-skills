@@ -77,6 +77,35 @@ For local developer MCP usage, install the local stdio server separately. This i
 claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
 ```
 
+### Cursor and Grok Bot
+
+The Cursor-format package at `.cursor-plugin/plugin.json` connects to the hosted
+SocialSeal MCP server and includes the focused `socialseal-creator-evaluation`
+skill. Routine social-search, profile, and post requests use the live tools directly;
+they do not require a tracking group or the broader production skills in this repo.
+Follow the tools' current schemas, account permissions, collection quotes, and
+approval requirements. A SocialSeal account is required; available operations depend
+on that account's entitlements.
+
+For local Cursor development, load this checkout with
+`agent --plugin-dir /absolute/path/to/agent-skills`, then complete the SocialSeal
+browser sign-in when prompted. The package references `.mcp.json`; it does not
+require Node.js, an API key, or a separate local MCP server.
+
+Example requests:
+
+- "Research social-search results for my brand and market, with source links."
+- "Get this creator's recent posts and explain which engagement metrics are available."
+- "Evaluate this creator for a brand partnership using recent posts and the brand evidence I provide."
+
+Marketplace review and Grok Bot compatibility are pending. This repository is not
+proof of a published Grok listing. Once SocialSeal is available in Grok Bot's
+**Plugins** catalogue, add it, complete the SocialSeal browser authorization, and
+confirm it appears under **Installed**. See the official
+[Grok plugin connection guide](https://cursor.com/help/grok-bot/connect-plugins).
+A custom MCP connection is an assisted setup and does not travel with a shared
+Grok bot template; recipients must connect their own SocialSeal account.
+
 ### skills.sh (skills only)
 
 ```bash
@@ -169,6 +198,7 @@ This repository is structured for:
 
 - Agent Skills / skills.sh: `skills/<skill-name>/SKILL.md`
 - ChatGPT/Codex plugin: `.codex-plugin/plugin.json`, `.mcp.json`, and `skills/`
+- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and the creator-evaluation skill; marketplace review and Grok compatibility pending
 - Claude Code plugin marketplace: `.claude-plugin/plugin.json` plus direct `skills/` children
 - Hermes project usage through the same `SKILL.md` files
 
