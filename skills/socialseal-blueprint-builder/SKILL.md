@@ -3,7 +3,7 @@ name: socialseal-blueprint-builder
 description: >-
   Use this skill when the user needs evidence-backed creative best practices, a
   SocialSeal blueprint, reusable Video DNA patterns, or the source of truth for a
-  brief/rough cut. Trigger after reference examples are selected; compile their
+  brief/editor handoff. Trigger after reference examples are selected; compile their
   grounded practices and shot panels, handle missing_data honestly, and pass the
   blueprint into briefing and production.
 license: MIT
@@ -16,14 +16,14 @@ metadata:
     - blueprint
     - best-practices
     - shot-lift
-    - asset-studio
+    - editor-handoff
 ---
 
 # SocialSeal Blueprint Builder
 
 ## Overview
 
-A SocialSeal blueprint is the synthesis of observed reference patterns and testable creative hypotheses for an opportunity. It is generated from real exemplar videos, not authored from intuition. It carries `best_practices[]`, `evidence[]`, the selected exemplars, and a set of shot panels that downstream briefs and Asset Studio rough cuts follow.
+A SocialSeal blueprint is the synthesis of observed reference patterns and testable creative hypotheses for an opportunity. It is generated from real exemplar videos, not authored from intuition. It carries `best_practices[]`, `evidence[]`, the selected exemplars, and a set of shot panels that downstream briefs and editor handoffs follow.
 
 Prefer `socialseal_generate_blueprint`, `socialseal_get_blueprint` and `socialseal_get_blueprint_shots` when exposed; `vnext-blueprints-*` are compatibility targets. Inspect the current tool schema and preserve returned identities and admission controls. See `references/production-pipeline.md` for the end-to-end flow and `references/mcp-and-cli-usage.md` for call patterns. Use `socialseal-reference-video-analysis` first to select and analyze exemplars.
 
@@ -35,7 +35,7 @@ or visual-direction approval.
 
 - Generating a blueprint version for an opportunity scope.
 - Reading blueprint history/versions and the latest `best_practices`/`evidence`.
-- Reading shot-lift rows and pinned shot assets (the panels used for clip mapping).
+- Reading shot-lift rows and pinned shot assets (the panels referenced in the editor handoff coverage table).
 - Diagnosing and fixing a `missing_data` blueprint.
 
 ## Inputs
@@ -58,9 +58,9 @@ Good to have:
    - `generated`: ready to use.
    - `missing_data`: no qualifying evidence. The engine writes an explicit version with a reason (e.g. "no tracking group keywords found for this scope"). Do not invent practices. Fix the scope/keywords/time window and regenerate.
 4. **Read the blueprint.** Use `vnext-blueprints-read` for the version's `best_practices`, `evidence`, and selected exemplars.
-5. **Read shot-lift.** Use `vnext-blueprints-shots-read` to get shot panels and pinned shot assets (signed URLs). Each panel has a `panelId` used by clip mapping and the Asset Studio editSpec.
+5. **Read shot-lift.** Use `vnext-blueprints-shots-read` to get shot panels and pinned shot assets (signed URLs). Each panel has a `panelId` used in the editor handoff coverage table.
 6. **Refresh shots if stale.** Use `vnext-blueprints-shots-refresh` to requeue shot assets.
-7. **Hand off.** Pass `blueprintId` (+ version) to `socialseal-creator-briefing` and the panels to `socialseal-asset-studio-generation`.
+7. **Hand off.** Pass `blueprintId` (+ version) to `socialseal-creator-briefing` and the panels to `socialseal-asset-planning` for a source-clip/editor handoff.
 8. **Record state.** Mark the blueprint generated, draft, or missing_data in the
    workflow manifest. Never describe a generated blueprint as finished content.
 
@@ -105,8 +105,8 @@ A compiled blueprint raises confidence because its practices are grounded in mul
 
 Do:
 - ground every best practice in cited exemplar evidence
-- reuse one `opportunityKey` across blueprint, brief, and asset
-- treat `panelId`s as the contract for clip mapping and editSpec
+- reuse one `opportunityKey` across blueprint, brief, and editor handoff
+- use `panelId`s to identify shots in the handoff coverage table; this does not create persisted SocialSeal mappings
 - record the `blueprintId` and version for downstream skills
 
 Don't:

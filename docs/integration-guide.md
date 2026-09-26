@@ -45,14 +45,13 @@ Use export-file mode when the user provides CSV/JSON. The agent should inspect c
 8. Blueprint builder (compile best-practices blueprint)
 9. Creator briefing (generate brief from blueprint)
 10. Asset planning (plan clips for blueprint shots)
-11. Generation prompts (fill shot gaps with reference clips)
-12. Asset Studio generation (assemble rough cut, export FCPXML)
-13. CapCut export prep (finish the exported cut)
-14. Performance readout
-15. Discoverability tracking
-16. Content adjustment, management reporting, and follow-up planning
+11. Generation prompts (write prompts for external tools to fill shot gaps)
+12. Source-clip preparation and editor handoff (brief, approved panel coverage, footage, and delivery specs)
+13. Performance readout
+14. Discoverability tracking
+15. Content adjustment, management reporting, and follow-up planning
 
-The production stages (6-13) are joined by a single `opportunityKey`. See `../references/production-pipeline.md`.
+The production stages (6-12) are joined by a single `opportunityKey`. See `../references/production-pipeline.md`.
 For an approved carousel concept, branch after evidence/benchmark selection into
 `socialseal-carousel-production`: visual direction -> asset choices -> prototype ->
 rendered/verified slides.

@@ -5,6 +5,35 @@ local stdio MCP is a developer fallback. Do not direct users to install or use t
 retired standalone SocialSeal CLI. The historical filename of this reference is
 retained for existing skill links.
 
+## Discover access and direct actions
+
+Use the host's available tool search/discovery facilities before concluding that a connector is missing. Tools can be loaded lazily. If discovery or connection status confirms missing access, use `onboarding-and-auth.md`; do not diagnose disconnection from an empty initial tool list or one failed action.
+
+Use `socialseal_get_current_workspace` or `socialseal_list_workspaces` when workspace context is needed. Reuse the authorized, unambiguous context already available. Ask only when an operation requires context that remains ambiguous. An account read does not imply tracking setup; an absent brand does not block account metrics.
+
+An unsupported platform, missing argument, missing evidence, authorization denial, and provider failure are different limitations. Preserve useful completed portions of compound requests. A stale skill or unavailable action does not authorize a search-only substitute or a resolver rephrase loop.
+
+## Direct actions
+
+Select the action matching the supplied target and requested deliverable from the live catalogue. Its description and schema state platforms, inputs, side effects, evidence/freshness limits, collection costs, and continuation. Use the actual schema rather than inventing parameters from a remembered name.
+
+- Existing tracking groups: read the existing authorized group. Do not create groups or run collection to answer a read.
+- Supplied video URL: use the URL-analysis action with that URL. Apply the operation's quote/approval boundary if new analysis is needed.
+- Named creator: read the profile and recent account posts with the requested platform/count. Timeline ordering, pinned posts, mixed media, timestamp provenance, and pagination determine whether a latest-post claim is supported. Return the service's aggregates and denominators; missing values remain distinct from zero. Retrieve accessible brand context independently for fit evaluation.
+- Ranked-search creator discovery: use the requested ranked-search population and retain its sampling caveats. It is not a substitute for account posts.
+- Account tracking: only create the explicitly requested ongoing commitment, retaining required authorization.
+
+A generic `socialseal_call_tool` remains for identified compatibility and rare-operation callers. `socialseal_list_available_tools` and `socialseal_get_tool_schema` can help those callers find a retained backend target. They are not mandatory steps before direct actions, and a semantic resolver is not a prerequisite.
+
+Named-account examples (Instagram currently):
+
+```text
+socialseal_get_creator_profile { "target": "<profile-url-or-handle>", "platform": "instagram" }
+socialseal_get_creator_recent_posts { "target": "<profile-url-or-handle>", "platform": "instagram", "recentPostCount": 5, "freshness": "stored" }
+```
+
+Creator reads use stored snapshots. A fresh request returns `FRESH_COLLECTION_REQUIRED` with any usable evidence. For requested fresh collection, discover authorized workspace context and call `socialseal_collect_creator_account` with the target, platform `instagram`, explicit `workspaceId`, `idempotencyKey`, and `maxCredits: 1` under the existing one-account-refresh credit policy. This creates a one-off collection receipt, never a tracker. Reuse the key after timeouts. If running, call `socialseal_get_creator_collection` with its `id` and workspace; terminal failed receipts do not automatically retry. The provider does not support timeline pagination, so preserve partial coverage and `coverage.latestClaim`.
+
 ## Discover the action for the job
 
 Use a named action directly when its schema is already available. Otherwise use
@@ -74,7 +103,7 @@ or mislabel an MCP-host approval failure as SocialSeal billing or job failure.
 
 ## Connector setup and file mode
 
-If no SocialSeal tools are available in Cowork, explain the missing connection:
+If tool discovery and connection status confirm no SocialSeal access in Cowork, explain the missing connection:
 **Customize → Connectors → + → Add custom connector**, name `socialseal`, URL
 `https://mcp.socialseal.co/mcp`, then connect/sign in. Do not ask a non-technical
 Cowork user to install Node.js or run shell commands.

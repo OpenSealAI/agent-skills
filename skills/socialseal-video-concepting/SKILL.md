@@ -34,7 +34,7 @@ excuse to select one route silently and build a large batch.
 
 - Translating an opportunity/gap into 3+ distinct concept families.
 - Defining the blueprint scope (topic/competitor/tracking_group) or a `retrievalPrompt` per concept.
-- Preparing concepts for grounding before any brief or rough cut.
+- Preparing concepts for grounding before any brief or externally edited rough cut.
 
 ## Inputs
 

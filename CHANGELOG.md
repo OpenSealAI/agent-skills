@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.8.1
+
+- Route content calendars and editor briefs to focused guidance, preserving decisions, cadence and current versions.
+- Make brief generation, reading, revision and export discoverable with correct MCP examples and explicit context handoff.
+- Define metric scope, coverage and inference limits while preserving direct-action routing and retired-tool removals.
+
+## Cursor package 0.8.0
+
+- Added a Cursor-format manifest for the hosted SocialSeal MCP connection and the focused creator-evaluation skill.
+- Included the SocialSeal logo and documented local loading, account requirements, and pending Grok marketplace compatibility.
+
+## 0.8.0
+
+- Removed remaining persisted mapping/editSpec instructions; clarified external generation and editor timelines, and validate retired wording plus canonical bundled-reference consistency.
+- Aligned with SOC-349 retirement: removed Asset Studio generation and CapCut/FCPXML skills from active distribution.
+- Retained blueprint/brief generation and source-clip upload/read; updated routing and bundled references to deliver an editor handoff without retired mapping, creative-pack, or generated-asset calls.
+
 ## 0.7.0
 
 - Added a native ChatGPT/Codex plugin manifest and bundled hosted SocialSeal MCP configuration.

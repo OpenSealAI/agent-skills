@@ -55,7 +55,7 @@ Use the hosted SocialSeal remote MCP connector for live tools, then install this
 7. Enter `OpenSealAI/agent-skills` and confirm.
 8. Click **Install** on **socialseal-agent-skills**.
 
-Skills then appear via `/` or the **+** button. If Claude says SocialSeal tools are unavailable, the connector is not connected or enabled for that conversation. Return to **Customize** -> **Connectors**, confirm `socialseal` (`https://mcp.socialseal.co/mcp`) is connected, and retry. If the connector is not available, use file mode with SocialSeal CSV/JSON exports.
+Skills then appear via `/` or the **+** button. If tools are not initially visible, use the host's available tool search/discovery facilities first. A missing initial tool list does not establish that the connector is disconnected. Return to **Customize** -> **Connectors**, confirm `socialseal` (`https://mcp.socialseal.co/mcp`) is connected, and retry. If the connector is not available, use file mode with SocialSeal CSV/JSON exports.
 
 For a large content plan or production request, explicitly start with
 `socialseal-orchestrator` if Claude does not select it automatically. The orchestrator
@@ -77,6 +77,35 @@ For local developer MCP usage, install the local stdio server separately. This i
 claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
 ```
 
+### Cursor and Grok Bot
+
+The Cursor-format package at `.cursor-plugin/plugin.json` connects to the hosted
+SocialSeal MCP server and includes the focused `socialseal-creator-evaluation`
+skill. Routine social-search, profile, and post requests use the live tools directly;
+they do not require a tracking group or the broader production skills in this repo.
+Follow the tools' current schemas, account permissions, collection quotes, and
+approval requirements. A SocialSeal account is required; available operations depend
+on that account's entitlements.
+
+For local Cursor development, load this checkout with
+`agent --plugin-dir /absolute/path/to/agent-skills`, then complete the SocialSeal
+browser sign-in when prompted. The package references `.mcp.json`; it does not
+require Node.js, an API key, or a separate local MCP server.
+
+Example requests:
+
+- "Research social-search results for my brand and market, with source links."
+- "Get this creator's recent posts and explain which engagement metrics are available."
+- "Evaluate this creator for a brand partnership using recent posts and the brand evidence I provide."
+
+Marketplace review and Grok Bot compatibility are pending. This repository is not
+proof of a published Grok listing. Once SocialSeal is available in Grok Bot's
+**Plugins** catalogue, add it, complete the SocialSeal browser authorization, and
+confirm it appears under **Installed**. See the official
+[Grok plugin connection guide](https://cursor.com/help/grok-bot/connect-plugins).
+A custom MCP connection is an assisted setup and does not travel with a shared
+Grok bot template; recipients must connect their own SocialSeal account.
+
 ### skills.sh (skills only)
 
 ```bash
@@ -95,11 +124,15 @@ the hosted MCP connection through `.mcp.json`.
 - Design tracking groups, keyword sets, markets, platforms, and competitor scopes.
 - Analyze discoverability gaps and competitor/content patterns.
 - Shortlist creator-shop partners by search authority, monitor bilingual (local-vs-English) demand, and route resources to early demand signals.
-- Run the SocialSeal production engine: identify and analyze reference videos (Video DNA), compile best-practices blueprints, generate briefs from blueprints, and assemble Asset Studio rough cuts from a clip library.
+- Run the SocialSeal production engine: identify and analyze reference videos (Video DNA), compile best-practices blueprints, generate briefs from blueprints, and prepare source clips and editor handoffs.
 - Build social plans, creator briefs, video concepts, asset plans, and editor handoffs.
 - Read out posted content and campaign performance, track discoverability, and plan next actions.
 
 ## What this does not do
+
+Asset Studio video generation and CapCut/FCPXML export skills have retired. Use
+brief exports and rights-cleared source clips for an editor handoff; SocialSeal
+does not assemble or render that video.
 
 This repo does not automate posting, scheduling, inbox/comment/DM management, account growth tactics, paid media buying, or day-to-day social account operations.
 
@@ -114,7 +147,7 @@ Always inspect the live registry/schema before mutating calls. See [references/m
 ## Skill taxonomy
 
 ### Orchestration
-- `socialseal-orchestrator` (lightweight entry point: checks foundations, routes to the right skill)
+- `socialseal-orchestrator` (coordinates explicitly requested multi-stage creative production)
 - `socialseal-strategy-readiness` (diagnoses strategy + setup readiness and guides the user to define what is missing)
 
 ### Strategy
@@ -122,6 +155,7 @@ Always inspect the live registry/schema before mutating calls. See [references/m
 - `socialseal-tracking-group-design`
 - `socialseal-opportunity-analysis`
 - `socialseal-competitor-content-analysis`
+- `socialseal-creator-evaluation` (supplied creator, recent-post metrics, and grounded brand fit)
 - `socialseal-creator-discovery` (shortlist creator-shop partners by market, language, and destination/topic authority from search evidence)
 - `socialseal-bilingual-demand-monitoring` (map the local-language vs English search-demand split and catch micro-trends early)
 - `socialseal-predictive-demand-routing` (source early demand signals to back resource allocation and fast-track activity/tour onboarding)
@@ -129,7 +163,7 @@ Always inspect the live registry/schema before mutating calls. See [references/m
 
 ### Production
 
-These follow the SocialSeal vNext engine: opportunity -> reference videos -> blueprint -> brief -> Asset Studio rough cut, joined by a single `opportunityKey`. See [references/production-pipeline.md](references/production-pipeline.md).
+These follow the SocialSeal vNext engine: opportunity -> reference videos -> blueprint -> brief -> source-clip/editor handoff, joined by a single `opportunityKey`. See [references/production-pipeline.md](references/production-pipeline.md).
 
 - `socialseal-video-concepting`
 - `socialseal-reference-video-analysis`
@@ -137,8 +171,6 @@ These follow the SocialSeal vNext engine: opportunity -> reference videos -> blu
 - `socialseal-creator-briefing`
 - `socialseal-asset-planning`
 - `socialseal-generation-prompts`
-- `socialseal-asset-studio-generation`
-- `socialseal-capcut-export-prep`
 - `socialseal-carousel-production` (evidence, visual direction, asset selection,
   prototype approval, rendered slides, and post-ready QA for carousels)
 
@@ -166,6 +198,7 @@ This repository is structured for:
 
 - Agent Skills / skills.sh: `skills/<skill-name>/SKILL.md`
 - ChatGPT/Codex plugin: `.codex-plugin/plugin.json`, `.mcp.json`, and `skills/`
+- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and the creator-evaluation skill; marketplace review and Grok compatibility pending
 - Claude Code plugin marketplace: `.claude-plugin/plugin.json` plus direct `skills/` children
 - Hermes project usage through the same `SKILL.md` files
 

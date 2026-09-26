@@ -4,17 +4,17 @@
     "name": "SocialSeal contributors"
   },
   "description": "Marketplace catalog for SocialSeal Agent Skills.",
-  "version": "0.7.0",
+  "version": "0.8.1",
   "metadata": {
     "description": "Marketplace catalog for SocialSeal Agent Skills.",
-    "version": "0.7.0"
+    "version": "0.8.1"
   },
   "plugins": [
     {
       "name": "socialseal-agent-skills",
       "source": "./",
       "description": "Turn TikTok, Instagram, Xiaohongshu/RedNote, Douyin, and social-search demand into short-form video ideas, creator briefs, content plans, and discoverability insights.",
-      "version": "0.7.0",
+      "version": "0.8.1",
       "author": {
         "name": "SocialSeal contributors"
       },

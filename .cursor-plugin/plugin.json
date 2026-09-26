@@ -1,0 +1,27 @@
+{
+  "name": "socialseal",
+  "description": "Social video research and creator analytics. Connect SocialSeal to research social search, inspect creator profiles and posts, and evaluate brand fit with source evidence.",
+  "version": "0.8.1",
+  "author": {
+    "name": "SocialSeal"
+  },
+  "homepage": "https://socialseal.co",
+  "repository": "https://github.com/OpenSealAI/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "socialseal",
+    "social search",
+    "social video",
+    "creator analytics",
+    "creator evaluation",
+    "brand fit",
+    "TikTok",
+    "Instagram",
+    "Xiaohongshu",
+    "RedNote",
+    "Douyin"
+  ],
+  "logo": "assets/socialseal-logo.png",
+  "skills": ["skills/socialseal-creator-evaluation"],
+  "mcpServers": ".mcp.json"
+}
