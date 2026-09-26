@@ -2,7 +2,7 @@
 name: socialseal-creator-briefing
 description: >-
   Use this skill when the user asks to create, rewrite, or improve a short-form video,
-  creator, influencer, or UGC brief, including hooks, social-first language, shots,
+  creator, influencer, UGC or video-editor brief, including hooks, social-first language, shots,
   captions, and CTAs. Prefer a brief generated from a SocialSeal blueprint and real
   exemplars; use a clearly labeled manual hypothesis only when engine evidence is
   unavailable or missing_data.
@@ -23,9 +23,9 @@ metadata:
 
 ## Overview
 
-A SocialSeal creator brief turns grounded evidence into creator-ready direction. The strongest brief is generated from a best-practices blueprint so it carries the blueprint's evidence and shot structure. Manual authoring is the fallback when there is no SocialSeal access or the blueprint returned `missing_data`.
+A SocialSeal creator brief turns grounded evidence into creator-ready direction. Use the generation tools to retain blueprint evidence and version identity, then review the result. Tool use is not a guarantee of factual support, useful audience advice or better creative quality. Loading this skill does not itself generate a brief. A request for a Word document, editor framework or usual brief template is a delivery-format request, not a reason to bypass the engine.
 
-See `references/production-pipeline.md` for the pipeline, `references/mcp-and-cli-usage.md` for call patterns, and `references/content-lenses.md` for lenses. Run `socialseal-blueprint-builder` first when possible.
+See `references/production-pipeline.md` for the pipeline, `references/mcp-and-cli-usage.md` for call patterns, and `references/content-lenses.md` for lenses. Use `socialseal-blueprint-builder` when reference selection needs work; an existing usable blueprint or supported scope can go directly to brief generation.
 
 Read `references/creative-production-gates.md` when the brief will feed immediate
 production. Confirm the chosen concept, brand utility facts, benchmark direction,
@@ -50,40 +50,38 @@ Good to have:
 - creator type/persona, required assets/locations, compliance constraints
 - deliverable count, length, aspect ratio, deadline
 
-## Engine Path (preferred)
+## Tool discovery and generation
 
-1. **Generate the brief.** Call `vnext-briefs-generate` from the blueprint:
+1. **Resolve the requested work and workspace.** For an existing brief, read it and preserve its identity; do not regenerate for a caption tweak, formatting request or ordinary edit. For new briefs, look for the named `socialseal_generate_brief` action. If absent, list available tools without a category filter and look for `vnext-briefs-generate`; inspect its schema. Briefing spans `vnext` and `video-production`. Do not infer missing capability from one failed category lookup.
+2. **Choose supported inputs.** Reuse an existing `opportunityKey` and blueprint/version. Otherwise supply the supported topic, competitor or tracking-group scope; use `retrievalPrompt` to focus that scope, not with `blueprintId`/`blueprintVersion`. For manually selected video IDs, build a blueprint first. Do not ask the user for internal IDs that can be discovered. Respect the tool's actual access, funding and approval result.
+3. **Carry the creative agreement.** Use the supported `brandContext` fields for concise approved audience needs, product/service facts with source references, voice/CTA, exclusions, length and asset constraints. Project documents are not automatically inputs to the engine: read the relevant material and pass the supported summary. Distinguish unknown facts from approved claims; do not promise automatic document retrieval or verification.
+4. **Generate or update.** Prefer the named actions below. If only the compatibility dispatcher is exposed, use the exact `toolName`/`body` shape, not `function`. Read returned status: pending/draft is not success, and `missing_data` requires the stated evidence gap to be resolved or a labelled fallback. Use returned identities for subsequent reads; do not repeatedly generate while waiting or bypass an access/funding rejection.
+5. **Review and hand off.** Check the actual result against the audience job, source-supported claims, title/hook/payoff, scripts, duration/slide count and asset availability. Keep limitations explicit. Export the saved version, then use document tools for the requested presentation. Record any local edits not saved back to the canonical brief.
+
+| Job | Named action, when available | Compatibility target |
+| --- | --- | --- |
+| Generate a new brief | `socialseal_generate_brief` | `vnext-briefs-generate` |
+| Read a saved version | `socialseal_get_brief` | `vnext-briefs-read` |
+| Revise a saved brief | `socialseal_update_brief` | `vnext-briefs-update` |
+| Export for handoff | `socialseal_export_brief` | `vnext-briefs-export` |
+
+Example for an existing blueprint (inspect the live schema first):
 
 ```text
 socialseal_call_tool {
-  "function": "vnext-briefs-generate",
+  "toolName": "vnext-briefs-generate",
   "workspaceId": "<workspace-id>",
-  "body": { "opportunityKey": "<opportunity-key>", "blueprintId": "<blueprint-id>", "brandContext": { "brandName": "<brand>", "platform": "tiktok" } }
+  "body": {
+    "opportunityKey": "<opportunity-key>",
+    "blueprintId": "<blueprint-id>",
+    "brandContext": { "brandName": "<brand>", "platform": "tiktok", "notes": "<approved facts, audience job and production constraints>" }
+  }
 }
-```
-
-   You can instead pass a scope (`scopeType` + scope fields) or a `retrievalPrompt` (not combinable with `blueprintId`/`blueprintVersion`) and the engine resolves the blueprint.
-2. **Read and export.** `vnext-briefs-read` for versions; `vnext-briefs-export` for markdown:
-
-```text
-socialseal_call_tool { "function": "vnext-briefs-export", "workspaceId": "<workspace-id>", "body": { "opportunityKey": "<opportunity-key>" } }
-```
-
-3. **Review against the blueprint.** Confirm hooks, hero shot, and shot priorities trace to blueprint best practices and exemplar evidence. Tighten brand context; never add unsupported claims.
-   Confirm every practical tip, itinerary, price, timing, product statement, and
-   location against the approved utility bank; label any unresolved fact.
-4. **Creative pack (optional).** Use `creative-pack-generate` / `creative-pack-export` when more than one brief is needed.
-
-CLI equivalents:
-
-```bash
-npx -y @socialseal/cli tools call --function vnext-briefs-generate --workspace-id <workspace-id> --body @brief.json --pretty
-npx -y @socialseal/cli tools call --function vnext-briefs-export --workspace-id <workspace-id> --body '{"opportunityKey":"<opportunity-key>"}' --pretty
 ```
 
 ## Manual Path (fallback)
 
-Use only when there is no SocialSeal access or the blueprint is `missing_data`. Label it as a hypothesis and request more evidence. Even with a blueprint, hooks and hero shots drawn from exemplars are indicative creative bets to test, not proof; see `references/evidence-and-confidence.md`.
+Use when the user explicitly wants manual writing, generation is unavailable, or evidence remains `missing_data`. State the specific reason and what evidence is available; do not silently present a locally authored document as an engine-generated brief. A missing material fact needs a targeted question or omission, not invented specificity. Routine edits to an approved brief need no new generation run. Even with a blueprint, hooks and hero shots drawn from exemplars are indicative creative bets to test, not proof; see `references/evidence-and-confidence.md`.
 
 1. Restate the viewer job.
 2. Choose the content lens (aspirational vs utility/practical). Do not frame as an ad.
@@ -122,7 +120,7 @@ Do:
 
 Don't:
 - say proof, prove, persuasion, reasons to buy, or ad script
-- hand-author when a generated blueprint is available
+- silently bypass available generation for a new brief; preserve an explicit manual choice or documented fallback
 - include unsupported product or performance claims
 - call the brief a finished video or carousel
 - copy a competitor hook verbatim
@@ -138,6 +136,8 @@ Don't:
 
 - [ ] Brief is generated from a blueprint, or the manual fallback is justified.
 - [ ] Hooks, hero shot, and shots trace to evidence/blueprint panels.
-- [ ] `opportunityKey` and `blueprintId` are recorded.
+- [ ] Engine identities and versions are retained when returned; a manual fallback has no invented IDs.
+- [ ] Audience/product constraints reached the actual script and shots, not only metadata.
+- [ ] Generated status and successful rendering are not reported as factual or creative validation.
 - [ ] Caption creates curiosity; no ad framing or unsupported claims.
 - [ ] Measurement note maps to a tracking group/keyword.

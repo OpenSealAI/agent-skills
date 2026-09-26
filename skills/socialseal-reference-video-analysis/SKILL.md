@@ -55,7 +55,7 @@ Good to have:
 ## Workflow
 
 1. **Confirm scope and workspace.** Identify the opportunity and reuse its `opportunityKey`.
-2. **Preview candidates.** Call `vnext-blueprints-generate` with `previewOnly: true`. Inspect the candidate and promoted-exemplar lists: each carries a score, matched keywords, sources, and metrics. Do not generate yet.
+2. **Preview candidates.** Prefer the named `socialseal_generate_blueprint` action when exposed; the compatibility target is `vnext-blueprints-generate`. Call `vnext-blueprints-generate` with `previewOnly: true`. Inspect the candidate and promoted-exemplar lists: each carries a score, matched keywords, sources, and metrics. Do not generate yet.
 3. **Offer analysis depth.** Present representative candidates and let the user choose:
    - metadata/preview only (fastest; weakest visual claims)
    - focused DNA on roughly 3-5 exemplars (default for a single deliverable)
@@ -65,7 +65,7 @@ Good to have:
 4. **Refine selection.** Pin must-include exemplars (`pinnedVideoUids`), drop off-scope or off-market ones (`excludedVideoUids`), and set `promotedCandidateTarget` for how many exemplars to promote. For semantic exploration, set `retrievalPrompt`.
 5. **Analyze Video DNA.** For the approved promoted exemplars, call `tracked-video-extract` with `ensureAnalysis: true` to resolve hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, and signed frame/asset URLs. For a one-off public video, use `extract-url` with `allowUntracked: true`.
 6. **Cluster if needed.** Use `vnext-cluster-videos` to group exemplars into repeated mechanisms when the set is large.
-7. **Record evidence.** For every exemplar capture the human-readable citation (video title/URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) as an internal traceability note for tool calls and blueprint joins. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
+7. **Record evidence.** For every exemplar capture the human-readable citation (video title/URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) as an internal traceability note for tool calls and blueprint joins. Separate observed features from `likelyReasonItRanks` and other model hypotheses; do not cite those interpretations as independent corroboration. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
 
 ## Tool Calls (MCP-first)
 
@@ -73,7 +73,7 @@ Preview exemplars for a tracking-group scope:
 
 ```text
 socialseal_call_tool {
-  "function": "vnext-blueprints-generate",
+  "toolName": "vnext-blueprints-generate",
   "workspaceId": "<workspace-id>",
   "body": {
     "workspaceId": "<workspace-id>",
@@ -91,7 +91,7 @@ Semantic exploration with a prompt (topic scope):
 
 ```text
 socialseal_call_tool {
-  "function": "vnext-blueprints-generate",
+  "toolName": "vnext-blueprints-generate",
   "workspaceId": "<workspace-id>",
   "body": {
     "workspaceId": "<workspace-id>",
@@ -108,7 +108,7 @@ Extract Video DNA for promoted exemplars:
 
 ```text
 socialseal_call_tool {
-  "function": "tracked-video-extract",
+  "toolName": "tracked-video-extract",
   "workspaceId": "<workspace-id>",
   "body": {
     "ensureAnalysis": true,
@@ -122,14 +122,6 @@ Poll analysis status:
 
 ```text
 socialseal_get_tool_status { "id": "<video-uid>", "kind": "video_analysis", "includeResults": true }
-```
-
-CLI equivalents:
-
-```bash
-npx -y @socialseal/cli tools call --function vnext-blueprints-generate --workspace-id <workspace-id> --body @preview.json --pretty
-npx -y @socialseal/cli video extract --video-uid <video-uid> --ensure-analysis --wait --out-dir ./video-assets --workspace-id <workspace-id>
-npx -y @socialseal/cli video extract --url <public-video-url> --allow-untracked --wait --workspace-id <workspace-id>
 ```
 
 ## Output

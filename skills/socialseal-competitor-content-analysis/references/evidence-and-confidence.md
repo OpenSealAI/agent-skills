@@ -56,3 +56,14 @@ Attach a confidence basis to recommendations:
 - **Scoped statistic:** a Tier 1 figure aggregated; state the denominator and selection-bias caveat.
 - **Indicative pattern:** a Tier 3 creative read from multiple exemplars; frame as a test.
 - **Single-example / metadata-only:** weakest; one exemplar, or titles/captions without viewed analysis.
+
+## Interpret the returned fields before recommending content
+
+- **Views, likes, comments, shares and saves:** video engagement snapshots. A search-result row does not attribute those counts to its query. A collection/export window does not turn cumulative counters into gains during that window. Use an explicitly defined delta only when supplied or computed from comparable dated snapshots.
+- **Collection region/market:** where the search was collected; not verified viewer residence, audience demographics or local purchase intent.
+- **Search-result totals:** scope them to the selected queries, platform, market and capture dates. Deduplicate video identities when aggregating across queries; retain repeated rows only for explicitly query-level presence/rank analysis. Report incomplete export coverage without assuming missing rows are irrelevant.
+- **Save/engagement rates:** state the numerator and denominator. A saves/views ratio is not a conversion rate or proof of planning intent; an average of per-video rates differs from a ratio of totals. Missing counters remain unknown, not zero.
+- **Model interpretations:** `likelyReasonItRanks`, inferred intent and blueprint practices are interpretations of evidence. They are not measured causal effects, independent corroboration or performance guarantees. A detected face supports "face present", not "faces caused the result".
+- **Topic versus claim support:** a popular activity does not establish suitability for a birthday, infant, product or market. Support each recommendation's particular scope using relevant audience and product/service facts, or label the inference and unresolved fact.
+
+Use scoped wording such as "the videos returned for these queries accumulated more views" rather than "this audience has more demand". Inspect relevant examples before selecting a creative treatment. If a prerequisite is missing, explain the narrow gap and continue with supported work; do not repeatedly run the same failing operation or fabricate a substitute statistic.

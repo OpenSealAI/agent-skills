@@ -2,7 +2,7 @@
 name: socialseal-orchestrator
 description: >-
   Use this skill when a customer uses SocialSeal to research search demand or create
-  a content plan, videos, carousels, briefs, or performance insights. Not for engineering planning,
+  a content plan, content calendar, posting schedule, videos, carousels, briefs, or performance insights. Not for engineering planning,
   implementation, code review, or local integration testing.
 license: MIT
 metadata:
@@ -36,7 +36,7 @@ Before strategy or setup checks, confirm whether live SocialSeal tools are avail
 - If `socialseal_list_workspaces`, `socialseal_list_available_tools`, and `socialseal_get_tool_schema` are available, use MCP mode. Start with workspace discovery and live registry/schema inspection.
 - If no `socialseal_*` tools are available in Cowork or another non-technical environment, explain that the hosted SocialSeal connector is not connected or enabled. Tell the user to open **Customize** -> **Connectors**, click **+** -> **Add custom connector**, fill in **Name** `socialseal` and **Remote MCP server URL** `https://mcp.socialseal.co/mcp`, click **Add**/**Connect**, sign in, then retry.
 - If the connector is unavailable, switch to file mode. Ask for SocialSeal CSV/JSON exports and continue with the skills that can work from files.
-- If the user is in Claude Code or a developer environment, local stdio MCP and CLI are fallbacks. They require Node.js/`npx` and must be installed separately.
+- In a developer environment, local stdio MCP is a fallback. MCP is the supported agent interface; do not route Cowork users to the retired standalone CLI.
 
 See `references/onboarding-and-auth.md` and `references/mcp-and-cli-usage.md`. Never print raw `ss_cli_...` keys in full; use only the final six characters.
 
@@ -52,8 +52,8 @@ Do not stall on a missing input. Name it, explain it in a sentence, propose a So
 
 - Missing `socialseal_*` tools in Cowork -> hosted connector setup from `references/onboarding-and-auth.md`, then retry workspace discovery
 - Connector unavailable -> file mode with user-provided SocialSeal exports, then route to the best analysis skill
-- Claude Code developer fallback -> local stdio MCP or CLI setup from `references/onboarding-and-auth.md`, then resume
-- Invalid local MCP/CLI credentials -> device login from `references/onboarding-and-auth.md`, then resume
+- Developer fallback -> local stdio MCP setup, then resume
+- Invalid local MCP credentials -> its device-login flow, then resume
 - Unclear request, or strategy/setup may be missing -> `socialseal-strategy-readiness`
 - Need a workspace / tracking groups created or fixed -> `socialseal-workspace-setup`, `socialseal-tracking-group-design`
 - "Where should we make content?" / gaps -> `socialseal-opportunity-analysis`
@@ -61,7 +61,8 @@ Do not stall on a missing input. Name it, explain it in a sentence, propose a So
 - "Which creators should we partner with?" -> `socialseal-creator-discovery`
 - "What's trending in local language vs English?" / catch micro-trends early -> `socialseal-bilingual-demand-monitoring`
 - "Where is demand shifting?" / route budget and fast-track tour onboarding -> `socialseal-predictive-demand-routing`
-- Turn opportunities into a plan -> `socialseal-social-plan-builder`
+- Content calendar / editorial calendar / posting schedule / turn opportunities into a plan -> load `socialseal-social-plan-builder`, including for revisions to an existing spreadsheet.
+- Video/editor/UGC brief or framework, including Word/PDF delivery -> load `socialseal-creator-briefing`; discover generation/read/update/export actions before choosing a manual fallback. Reuse an approved concept or blueprint instead of restarting the whole research sequence.
 - Produce content (engine path): `socialseal-video-concepting` -> `socialseal-reference-video-analysis` -> `socialseal-blueprint-builder` -> `socialseal-creator-briefing` -> `socialseal-asset-planning` / `socialseal-generation-prompts` -> `socialseal-asset-studio-generation` -> `socialseal-capcut-export-prep`
 - Produce a carousel: foundations/opportunity/benchmarks -> `socialseal-carousel-production`; use `socialseal-asset-planning` for asset-bank gaps
 - "How do we compare with <competitor> on discoverability / share of voice?" / measure brand-vs-competitor visibility (snapshot or trend) -> `socialseal-discoverability-tracking`
@@ -76,7 +77,7 @@ Strategy & setup -> opportunity/competitor analysis -> plan -> production engine
 
 ## Hard rules to carry into every routed task
 
-- After routing, load the routed skill's instructions and follow its workflow and output contract: the skill is already in context when the plugin is installed; if not, read it with `socialseal_read_skill` before doing the work. Do not improvise a deliverable shape the skill defines.
+- After routing, load the routed skill's instructions and follow its workflow and output contract: installation exposes the name/description, not necessarily the full instructions. Invoke the skill or read it with `socialseal_read_skill` before doing the work; an orchestrator invocation is not evidence that the specialist workflow ran. Do not improvise a deliverable shape the skill defines.
 - A brand-vs-competitor visibility question ("how do we compare with X on discoverability / share of voice?") is measurement, not content analysis — route it to `socialseal-discoverability-tracking` even though it names a competitor.
 - Cite evidence in human-readable terms: `"keyword" [market, platform]`, video title/URL, `@handle`, group name. Keep `video_uid`/`search_result_id` as internal traceability only. See `references/socialseal-data-contract.md`.
 - Be honest about evidence tiers: hard measurements are exact (not estimates), statistics carry selection bias (only high-ranking videos for tracked queries), and creative exemplars are anecdotal, not proof. See `references/evidence-and-confidence.md`.

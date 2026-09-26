@@ -23,9 +23,9 @@ metadata:
 
 ## Overview
 
-A SocialSeal blueprint is the compiled, evidence-grounded answer to "what makes content win for this opportunity." It is generated from real exemplar videos, not authored from intuition. It carries `best_practices[]`, `evidence[]`, the selected exemplars, and a set of shot panels that downstream briefs and Asset Studio rough cuts follow.
+A SocialSeal blueprint is the synthesis of observed reference patterns and testable creative hypotheses for an opportunity. It is generated from real exemplar videos, not authored from intuition. It carries `best_practices[]`, `evidence[]`, the selected exemplars, and a set of shot panels that downstream briefs and Asset Studio rough cuts follow.
 
-This skill drives `vnext-blueprints-*`. See `references/production-pipeline.md` for the end-to-end flow and `references/mcp-and-cli-usage.md` for call patterns. Use `socialseal-reference-video-analysis` first to select and analyze exemplars.
+Prefer `socialseal_generate_blueprint`, `socialseal_get_blueprint` and `socialseal_get_blueprint_shots` when exposed; `vnext-blueprints-*` are compatibility targets. Inspect the current tool schema and preserve returned identities and admission controls. See `references/production-pipeline.md` for the end-to-end flow and `references/mcp-and-cli-usage.md` for call patterns. Use `socialseal-reference-video-analysis` first to select and analyze exemplars.
 
 Generate only after the benchmark direction and analysis depth are approved. A
 blueprint compiles evidence; it does not replace brand utility facts, asset choices,
@@ -70,7 +70,7 @@ Generate (tracking-group scope):
 
 ```text
 socialseal_call_tool {
-  "function": "vnext-blueprints-generate",
+  "toolName": "vnext-blueprints-generate",
   "workspaceId": "<workspace-id>",
   "body": {
     "workspaceId": "<workspace-id>",
@@ -87,16 +87,8 @@ socialseal_call_tool {
 Read the latest version and shot-lift:
 
 ```text
-socialseal_call_tool { "function": "vnext-blueprints-read", "workspaceId": "<workspace-id>", "body": { "opportunityKey": "<opportunity-key>" } }
-socialseal_call_tool { "function": "vnext-blueprints-shots-read", "workspaceId": "<workspace-id>", "body": { "blueprintId": "<blueprint-id>", "signedUrlSeconds": 3600 } }
-```
-
-CLI equivalents:
-
-```bash
-npx -y @socialseal/cli tools call --function vnext-blueprints-generate --workspace-id <workspace-id> --body @blueprint.json --pretty
-npx -y @socialseal/cli tools call --function vnext-blueprints-read --workspace-id <workspace-id> --body '{"opportunityKey":"<opportunity-key>"}' --pretty
-npx -y @socialseal/cli tools call --function vnext-blueprints-shots-read --workspace-id <workspace-id> --body '{"blueprintId":"<blueprint-id>"}' --pretty
+socialseal_call_tool { "toolName": "vnext-blueprints-read", "workspaceId": "<workspace-id>", "body": { "opportunityKey": "<opportunity-key>" } }
+socialseal_call_tool { "toolName": "vnext-blueprints-shots-read", "workspaceId": "<workspace-id>", "body": { "blueprintId": "<blueprint-id>", "signedUrlSeconds": 3600 } }
 ```
 
 ## Output

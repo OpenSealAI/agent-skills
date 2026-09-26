@@ -1,6 +1,6 @@
 # SocialSeal Production Pipeline (vNext)
 
-SocialSeal has an opinionated, evidence-grounded production engine. Content is not invented from a blank prompt. It is lifted from real videos that already surface for tracked searches, compiled into a best-practices blueprint, turned into a brief, and assembled from a clip library that follows the blueprint's shots.
+SocialSeal can select reference evidence, synthesise a blueprint and generate a brief with retained source lineage. The source links help review; they do not establish factual accuracy, practical usefulness or future performance. Inspect the live released tools for the requested deliverable before following any later production stage.
 
 For a multi-stage production request, pair this engine with
 `creative-production-gates.md`: confirm brand utility, let the user choose demand and
@@ -8,6 +8,17 @@ benchmark directions, approve material asset substitutions and a representative
 prototype, then run final QA. Engine completion is not the same as post-ready.
 
 Use this reference whenever a task touches reference videos, blueprints, briefs, or generated rough cuts. Do not fall back to generic "write a content idea" behavior when these tools exist.
+
+## Brief requests can enter directly
+
+For an approved concept with a usable blueprint or supported scope, go directly to
+`socialseal_generate_brief`, then `socialseal_get_brief` / `socialseal_export_brief`.
+Use `socialseal_update_brief` for ordinary revisions. A new research pass is needed
+only when the evidence or scope requires it; a calendar-only or document-formatting
+request does not require the full pipeline. If a named action is absent, inspect
+the compatibility target using `socialseal_get_tool_schema` and invoke it with
+`socialseal_call_tool` (`toolName`, `body`, `workspaceId`). Preserve actual funding,
+pending and missing-data states rather than silently switching to manual authoring.
 
 ## The opportunity spine
 
@@ -79,7 +90,7 @@ A blueprint is the source of truth for the brief and for the Asset Studio edit s
 - from scope: pass `scopeType` + scope fields and the engine resolves/creates the blueprint
 - from a prompt: pass `retrievalPrompt` (cannot be combined with `blueprintId`/`blueprintVersion`)
 
-Optional `brandContext` (brandName, productName, campaignGoal, notes, locale, platform) shapes tone without inventing facts.
+Optional `brandContext` (brandName, productName, campaignGoal, notes, locale, platform) carries a concise summary of approved audience needs, product/service facts with source references and creative constraints. Read relevant documents first and pass supported context; do not assume the engine retrieves those documents or verifies every supplied claim.
 
 Read and export:
 - `vnext-briefs-read`: generated briefs and version history
@@ -87,7 +98,7 @@ Read and export:
 
 `creative-pack-generate` / `creative-pack-export` produce a broader creative pack when more than a single brief is needed.
 
-Prefer engine briefs over hand-written ones because they carry blueprint evidence and shot structure. Hand authoring is a fallback when the engine returns `missing_data` or when no SocialSeal access exists.
+Use the engine path for new briefs to retain evidence and version lineage, then check the result. Manual authoring is appropriate for an explicit user choice, unavailable generation or unresolved `missing_data`; document the reason. Engine-generated does not mean better than manual or ready for production.
 
 ## Stage 5: Generate the video from library clips (Asset Studio)
 

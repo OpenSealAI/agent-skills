@@ -1,125 +1,88 @@
-# SocialSeal MCP, CLI, and File-Mode Usage
+# SocialSeal MCP and File-Mode Usage
 
-SocialSeal exposes the same function surface through the hosted SocialSeal connector, the local developer MCP fallback (`@socialseal/mcp-server`), and the public CLI (`@socialseal/cli`). These paths are thin wrappers over the same backend tool registry. Always inspect the live registry/schema before calling a mutating tool; do not rely on stale tool memory.
+MCP is the supported agent interface. Use the connected hosted server in Cowork;
+local stdio MCP is a developer fallback. Do not direct users to install or use the
+retired standalone SocialSeal CLI. The historical filename of this reference is
+retained for existing skill links.
 
-## Hosted connector mode (preferred for Cowork)
+## Discover the action for the job
 
-For Cowork and non-technical users, use the hosted SocialSeal remote MCP connector. It should expose `socialseal_*` tools after the user connects SocialSeal under **Customize** -> **Connectors**. If those tools are missing, give setup guidance instead of continuing as if live tools exist:
+Use a named action directly when its schema is already available. Otherwise use
+`socialseal_list_available_tools` and `socialseal_get_tool_schema`. Discovery and
+skills are references, not mandatory gates for every read or edit.
 
-1. Say that the SocialSeal connector is not connected or enabled in this conversation.
-2. Ask the user to open **Customize** -> **Connectors**, click **+** -> **Add custom connector**, and fill in **Name** `socialseal` and **Remote MCP server URL** `https://mcp.socialseal.co/mcp`, then click **Add**/**Connect** and sign in.
-3. After they connect, retry workspace discovery with `socialseal_list_workspaces`.
-4. If the connector is unavailable, switch to file mode and ask for SocialSeal CSV/JSON exports.
+- Content calendars and posting schedules: `socialseal-social-plan-builder` guides composition and revision; do not assume a calendar-generation tool.
+- New video/editor/UGC briefs: `socialseal_generate_brief` (compatibility target `vnext-briefs-generate`). Existing blueprint/version or supported scope is sufficient to begin; reference selection can use `socialseal_generate_blueprint` when needed.
+- Existing brief: `socialseal_get_brief`, `socialseal_update_brief`, `socialseal_export_brief`. A formatting or copy edit does not need new evidence collection.
+- Brief discovery spans `vnext` and `video-production`; omit category if a filtered listing misses it. A missing named action does not prove the compatibility target is unavailable.
 
-Do not ask Cowork users to install Node.js, run `npx`, or configure a local MCP server. The local stdio MCP server (`@socialseal/mcp-server`) is an npm-based developer fallback that requires Node.js/`npx`; the remote connector at `https://mcp.socialseal.co/mcp` needs none of that.
-
-## MCP mode
-
-The MCP connector/server registers a small set of stable meta-tools. You do not call backend functions directly by name as separate MCP tools; you call them through `socialseal_call_tool`.
-
-Meta-tools:
-
-- `socialseal_list_workspaces` / `socialseal_get_current_workspace`: workspace discovery and default.
-- `socialseal_list_available_tools` (optional `category`): list backend function targets in the registry.
-- `socialseal_get_tool_schema` (`toolName`): required/optional fields and an example body for a function target.
-- `socialseal_call_tool` (`toolName`, `body`, optional `workspaceId`): invoke a backend function target.
-- `socialseal_get_tool_status` (`id`, `kind`): poll async runs. `kind` is one of `agent_job`, `google_ai_run`, `journey_run`, `video_analysis`.
-- `socialseal_export_tracking_data` (`body`, optional `workspaceId`): stream a tracking CSV for a group or item.
-- `socialseal_export_report` (`body`, optional `workspaceId`): report exports. Inside `body`, `reportType` includes `keyword_universe`, `cluster_insights`, `creator_signatures`, `post_publish`, `quick_audit`, `search_results_enriched` (csv-only).
-
-Local stdio MCP only:
-
-- `socialseal_start_login` / `socialseal_poll_login`: browser-based device login when local developer credentials are missing.
-
-Canonical MCP loop:
-
-1. `socialseal_list_workspaces` -> confirm scope.
-2. `socialseal_list_available_tools` (optionally by `category`, e.g. `vnext`, `asset-studio`, `tracking`, `export`).
-3. `socialseal_get_tool_schema` with `{ "toolName": "<target>" }` before any mutating call.
-4. `socialseal_call_tool` with `{ "toolName": "<target>", "body": { ... }, "workspaceId": "<workspace-id>" }`.
-5. For async work, `socialseal_get_tool_status` with the returned id and the right `kind`.
-
-Notes:
-
-- There is no `export-group-evidence` or `export-search-results` MCP tool. In MCP mode reach enriched ranked rows via `socialseal_export_report` with `{ "body": { "reportType": "search_results_enriched", "format": "csv", "payload": { "groupIds": [<group-id>] } } }`, or use `socialseal_export_tracking_data` with `{ "body": { "groupId": <group-id>, "timePeriod": "30d" } }` for a group/item CSV.
-- All `vnext-*` and `tracked-video-extract` function targets are invoked through `socialseal_call_tool` with the same body shapes shown in `references/production-pipeline.md`.
-
-## Local stdio MCP developer fallback
-
-Claude Code developers can install the local stdio MCP server separately when they need local development or debugging. This fallback requires Node.js and `npx`; it is not the default Cowork setup.
-
-```bash
-claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
-```
-
-If local MCP credentials are missing, call `socialseal_start_login`, send the approval URL/code to the user, then call `socialseal_poll_login`. The local server stores the resulting key in `~/.config/socialseal/config.json` with local-only file permissions.
-
-## CLI mode
-
-Install: `npm install -g @socialseal/cli` (or `npx -y @socialseal/cli ...`). Run `socialseal login` first when credentials are missing. It stores a local key in `~/.config/socialseal/config.json`; `socialseal workspace use <id|slug|exact-name>` writes a local default.
-
-Discovery and schema:
-
-```bash
-npx -y @socialseal/cli login
-npx -y @socialseal/cli whoami
-npx -y @socialseal/cli tools list
-npx -y @socialseal/cli tools schema --function <function-name>
-npx -y @socialseal/cli data export-options
-```
-
-Direct function calls (inline JSON or `@file.json`):
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function <function-name> \
-  --workspace-id <workspace-id> \
-  --body '{"action":"..."}' \
-  --pretty
-```
-
-Async start + poll:
-
-```bash
-npx -y @socialseal/cli tools call --function search-journey-run --body @journey.json --async --workspace-id <workspace-id>
-npx -y @socialseal/cli tools status <run-id> --kind journey_run --workspace-id <workspace-id>
-```
-
-First-class data exports:
-
-```bash
-npx -y @socialseal/cli data export-search-results --group-ids <group-id> --workspace-id <workspace-id> --out ./exports/search.csv
-npx -y @socialseal/cli data export-group-evidence --group-id <group-id> --workspace-id <workspace-id> --out ./exports/evidence.csv
-npx -y @socialseal/cli data export-tracking --group-id <group-id> --time-period 30d --workspace-id <workspace-id> --out ./exports/tracking.csv
-npx -y @socialseal/cli data export-report --report-type search_results_enriched --format csv --payload '{"groupIds":[<group-id>]}' --workspace-id <workspace-id> --out ./exports/ranked.csv
-```
-
-Video and asset studio (all function targets are also reachable via `tools call`):
-
-```bash
-npx -y @socialseal/cli video extract --search-result-id <search-result-id> --ensure-analysis --wait --out-dir ./video-assets --workspace-id <workspace-id>
-npx -y @socialseal/cli tools call --function vnext-blueprints-generate --workspace-id <workspace-id> --body @blueprint.json --pretty
-npx -y @socialseal/cli tools call --function vnext-briefs-export --workspace-id <workspace-id> --body '{"opportunityKey":"<opportunity-key>"}' --pretty
-```
-
-## Equivalence note for skills
-
-Skills document the MCP path first. The CLI equivalent of any `socialseal_call_tool` is:
+Inspect the exact live input schema before an unfamiliar mutation. The compatibility
+dispatcher accepts **`toolName`**, not `function`:
 
 ```text
-MCP : socialseal_call_tool { toolName: "<target>", body: { ... }, workspaceId: "<workspace-id>" }
-CLI : npx -y @socialseal/cli tools call --function <target> --workspace-id <workspace-id> --body '{ ... }'
+socialseal_get_tool_schema { "toolName": "vnext-briefs-generate" }
+socialseal_call_tool {
+  "toolName": "vnext-briefs-generate",
+  "workspaceId": "<workspace-id>",
+  "body": { "opportunityKey": "<opportunity-key>", "blueprintId": "<blueprint-id>" }
+}
 ```
 
-and the CLI equivalent of `socialseal_get_tool_status` is `npx -y @socialseal/cli tools status <id> --kind <kind>`.
+Prefer named actions when exposed. Preserve backend authorisation, admission and
+funding controls; tool discovery is not approval for additional paid work.
 
-## File mode
+## Workspace and identity
 
-Use file mode when no hosted connector, local MCP server, or CLI is available. Ask the user for SocialSeal CSV/JSON exports, inspect the columns and date ranges, then run the relevant skill from the provided files. Be explicit that file mode can analyze supplied exports but cannot create workspaces, start live jobs, poll async runs, or export new reports.
+Use the workspace the user named. For an unnamed workspace, resolve
+`socialseal_get_current_workspace`; never infer the default from list order or
+ownership. Use `socialseal_list_workspaces` to find a named workspace or resolve
+ambiguity. Reuse the workspace from the lookup that returned a group/item ID.
 
-## Workspace and id discipline
+- A numeric tracking-group ID is not a brand-group UUID.
+- Reuse the opportunity identity and returned blueprint/brief versions across stages.
+- Keep real internal IDs for tool calls; use human-readable citations in deliverables. Never expose credentials or signed read tokens in shared artifacts.
 
-- Effective workspace precedence (CLI): `--workspace-id` -> `SOCIALSEAL_WORKSPACE_ID` -> local config default.
-- `group_id` for exports and group-management is a numeric tracking group id, not a brand-group UUID.
-- Use placeholders (`<workspace-id>`, `<group-id>`, `<blueprint-id>`, `<clip-id>`, `<asset-id>`, `<opportunity-key>`) in any shared artifact; never literal IDs, tokens, or keys.
-- If auth fails, run `socialseal login` before continuing. If credits or quota are exhausted, run `socialseal billing`.
+## Research exports and interpretation
+
+For ranked search results use `socialseal_export_report` with `reportType:
+"search_results_enriched"`, `format: "csv"` and `payload.groupIds`, keeping the
+selected group's workspace. `socialseal_export_tracking_data` is the separate
+legacy group/item time-window export. Inspect actual columns and scope before
+choosing or interpreting either.
+
+Poll a pending export with `socialseal_get_tool_status`, `kind: "export"`, and its
+returned ID. Do not repeatedly submit it. Once ready, fetch `download_url`; if that
+is inaccessible, use `socialseal_read_export_chunk` with the returned `read_token`,
+then each `next_offset` until `has_more` is false. Report partial coverage if reading
+stops early; do not assume omitted rows are unimportant or expose the token.
+
+Views on surfaced videos are not search volume, query-attributed engagement or
+verified local audience demand. Region describes collection context. Preserve
+capture dates, denominator, duplicate-video treatment and missing values. See
+`evidence-and-confidence.md` before deriving audience/creative recommendations.
+
+## Pending work and failures
+
+Use the returned job identity and the action's documented read/status tool.
+Video search uses `socialseal_get_video_search`; video analysis can use
+`socialseal_get_tool_status` with `kind: "video_analysis"` and the returned stored
+identifier. Blueprint/brief versions use their corresponding read actions.
+Pending/draft is not completed; `missing_data` is an evidence gap, not a generated
+deliverable. Inspect typed errors and correct the indicated input once evidence
+supports it. Do not cycle arbitrary parameters, replace pending paid operations,
+or mislabel an MCP-host approval failure as SocialSeal billing or job failure.
+
+## Connector setup and file mode
+
+If no SocialSeal tools are available in Cowork, explain the missing connection:
+**Customize → Connectors → + → Add custom connector**, name `socialseal`, URL
+`https://mcp.socialseal.co/mcp`, then connect/sign in. Do not ask a non-technical
+Cowork user to install Node.js or run shell commands.
+
+Developers can use the local `@socialseal/mcp-server` stdio server. Its
+`socialseal_start_login` / `socialseal_poll_login` actions handle device login.
+
+If live access is unavailable, use supplied exports and approved documents. State
+their dates and limitations; file mode cannot start live collection or run the
+brief engine. A manual brief is a labelled fallback with its evidence gaps, not a
+claim that SocialSeal generated it.
