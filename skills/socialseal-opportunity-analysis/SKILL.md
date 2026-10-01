@@ -29,7 +29,7 @@ This skill replaces a vague prompt like “analyze this SocialSeal data.” It t
 
 Required:
 
-- SocialSeal export files or SocialSeal MCP/CLI access
+- SocialSeal export files or SocialSeal MCP access
 - workspace ID and group ID(s), or exported CSV/JSON files
 - brand/entity definition and owned handles
 - platform, market, language, keyword/topic scope, and date range
@@ -49,25 +49,15 @@ or reusable group setup, then resume with the returned journey/ranked evidence.
 
 Use enriched ranked search rows for keyword-level analysis:
 
-```bash
-npx -y @socialseal/cli data export-search-results \
-  --group-ids <group-id-1>,<group-id-2> \
-  --workspace-id <workspace-id> \
-  --out ./exports/search-results.csv \
-  --timeout 120000
+```text
+socialseal_export_report {
+  "workspaceId": "<workspace-id>",
+  "reportType": "search_results_enriched", "format": "csv",
+  "payload": { "groupIds": [<group-id>] }
+}
 ```
 
-Use group evidence when you need a safer unified export across social and Google AI groups:
-
-```bash
-npx -y @socialseal/cli data export-group-evidence \
-  --group-id <group-id> \
-  --workspace-id <workspace-id> \
-  --out ./exports/group-evidence.csv \
-  --timeout 120000
-```
-
-MCP-first: there is no `export-group-evidence`/`export-search-results` MCP tool. Reach enriched ranked rows via `socialseal_export_report` (`reportType: "search_results_enriched"`, `payload: { "groupIds": [<group-id>] }`) or `socialseal_export_tracking_data`. See `references/mcp-and-cli-usage.md`.
+Use `socialseal_export_tracking_data` for a group/item time-window export. For Google AI evidence, use the named results read and retain its actual coverage. See `references/mcp-and-cli-usage.md`.
 
 Attribution: cite surfaced results in human-readable terms, the `"keyword" [market, platform]`, the video title or `video_url`, and `@author_handle`, with where it ranked. Keep `video_uid`/`search_result_id` only as an internal traceability note, and respect the timestamp rules (no platform-age claims when `published_at` is blank). See `references/socialseal-data-contract.md`.
 

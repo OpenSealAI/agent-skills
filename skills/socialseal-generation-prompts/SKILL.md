@@ -54,7 +54,7 @@ arbitrary colors, fake social UI, or commercial stock aesthetics.
 4. **Write the positive prompt.** Be concrete about scene, action, lens, lighting, social-native texture, and what the viewer should understand.
 5. **Write the negative prompt.** Exclude over-polished commercial style, distorted hands/faces, fake logos, incorrect products, unreadable text, invented claims.
 6. **Separate text rendering.** Unless the tool is reliable with text, generate no-text assets and add exact text later in editing/design tools.
-7. **Document settings and hand off.** Record the intended external model/tool, aspect ratio, seed when supported, and prompt. If media was generated, record the actual result and usage rights. Give images, storyboards, and voice guides directly to the editor; only supported video files go through `socialseal-asset-planning` for rights verification and source-clip upload (`vnext-clips-create`, `rightsAttested: true`). Document the `panelId` association in the editor handoff coverage table, not a SocialSeal mapping API.
+7. **Document settings and hand off.** Record the intended external model/tool, aspect ratio, seed when supported, and prompt. If media was generated, record the actual result and usage rights. Give images, storyboards, and voice guides directly to the editor; only supported video files go through `socialseal-asset-planning` for rights verification and source-clip upload (`socialseal_prepare_source_clip_upload` and `socialseal_finalize_source_clip_upload`, `rightsAttested: true`). Document the `panelId` association in the editor handoff coverage table, not a SocialSeal mapping API.
 
 ## Output
 

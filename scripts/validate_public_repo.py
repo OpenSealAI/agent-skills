@@ -1,5 +1,6 @@
 from pathlib import Path
 import json, re, sys, yaml
+from retired_mcp_guidance import retired_guidance
 root = Path(__file__).resolve().parents[1]
 blocked = [
     r"@socialseal\.co",
@@ -74,6 +75,13 @@ for p in root.rglob('*'):
         for pat in blocked:
             if re.search(pat, txt, flags=re.I):
                 errors.append(f'{rel}: blocked pattern {pat}')
+# Active instructions must not restore the retired public wrapper workflow.
+active_docs = [root / "README.md", *root.glob("docs/**/*.md"),
+               *root.glob("references/**/*.md"), *root.glob("skills/**/*.md")]
+for document in active_docs:
+    for finding in retired_guidance(document.read_text()):
+        errors.append(f"{document.relative_to(root)}: {finding} instruction")
+
 for p in root.glob('skills/*/SKILL.md'):
     txt=p.read_text()
     if not txt.startswith('---'):

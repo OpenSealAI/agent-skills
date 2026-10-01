@@ -25,7 +25,7 @@ metadata:
 
 A SocialSeal blueprint is the synthesis of observed reference patterns and testable creative hypotheses for an opportunity. It is generated from real exemplar videos, not authored from intuition. It carries `best_practices[]`, `evidence[]`, the selected exemplars, and a set of shot panels that downstream briefs and editor handoffs follow.
 
-Prefer `socialseal_generate_blueprint`, `socialseal_get_blueprint` and `socialseal_get_blueprint_shots` when exposed; `vnext-blueprints-*` are compatibility targets. Inspect the current tool schema and preserve returned identities and admission controls. See `references/production-pipeline.md` for the end-to-end flow and `references/mcp-and-cli-usage.md` for call patterns. Use `socialseal-reference-video-analysis` first to select and analyze exemplars.
+Load `socialseal_generate_blueprint`, `socialseal_get_blueprint` and `socialseal_get_blueprint_shots` through host tool search. Inspect their live schemas and preserve returned identities and admission controls. If a required action remains unavailable, report the missing operation and preserve completed work. See `references/production-pipeline.md` for the end-to-end flow and `references/mcp-and-cli-usage.md` for call patterns. Use `socialseal-reference-video-analysis` first to select and analyze exemplars.
 
 Generate only after the benchmark direction and analysis depth are approved. A
 blueprint compiles evidence; it does not replace brand utility facts, asset choices,
@@ -52,14 +52,14 @@ Good to have:
 ## Workflow
 
 1. **Confirm grounded exemplars.** Run the preview path in `socialseal-reference-video-analysis` until the promoted exemplar set is right.
-2. **Generate the blueprint.** Call `vnext-blueprints-generate` (without `previewOnly`). The engine queues analysis for any promoted exemplar missing it and writes a version.
+2. **Generate the blueprint.** Call `socialseal_generate_blueprint` (without `previewOnly`). The engine queues analysis for any promoted exemplar missing it and writes a version.
 3. **Interpret status.**
    - `draft`: analysis pending. Poll until ready.
    - `generated`: ready to use.
    - `missing_data`: no qualifying evidence. The engine writes an explicit version with a reason (e.g. "no tracking group keywords found for this scope"). Do not invent practices. Fix the scope/keywords/time window and regenerate.
-4. **Read the blueprint.** Use `vnext-blueprints-read` for the version's `best_practices`, `evidence`, and selected exemplars.
-5. **Read shot-lift.** Use `vnext-blueprints-shots-read` to get shot panels and pinned shot assets (signed URLs). Each panel has a `panelId` used in the editor handoff coverage table.
-6. **Refresh shots if stale.** Use `vnext-blueprints-shots-refresh` to requeue shot assets.
+4. **Read the blueprint.** Use `socialseal_get_blueprint` for the version's `best_practices`, `evidence`, and selected exemplars.
+5. **Read shot-lift.** Use `socialseal_get_blueprint_shots` to get shot panels and pinned shot assets (signed URLs). Each panel has a `panelId` used in the editor handoff coverage table.
+6. **Refresh shots if stale.** Use `socialseal_refresh_blueprint_shots` to requeue shot assets.
 7. **Hand off.** Pass `blueprintId` (+ version) to `socialseal-creator-briefing` and the panels to `socialseal-asset-planning` for a source-clip/editor handoff.
 8. **Record state.** Mark the blueprint generated, draft, or missing_data in the
    workflow manifest. Never describe a generated blueprint as finished content.
@@ -69,26 +69,29 @@ Good to have:
 Generate (tracking-group scope):
 
 ```text
-socialseal_call_tool {
-  "toolName": "vnext-blueprints-generate",
+socialseal_generate_blueprint {
   "workspaceId": "<workspace-id>",
-  "body": {
-    "workspaceId": "<workspace-id>",
-    "opportunityKey": "<opportunity-key>",
-    "scopeType": "tracking_group",
-    "trackingGroupId": <group-id>,
-    "timePeriod": "30d",
-    "promotedCandidateTarget": 12,
-    "title": "<blueprint-title>"
-  }
+  "opportunityKey": "<opportunity-key>",
+  "scopeType": "tracking_group",
+  "trackingGroupId": <group-id>,
+  "timePeriod": "30d",
+  "promotedCandidateTarget": 12,
+  "title": "<blueprint-title>"
 }
 ```
 
 Read the latest version and shot-lift:
 
 ```text
-socialseal_call_tool { "toolName": "vnext-blueprints-read", "workspaceId": "<workspace-id>", "body": { "opportunityKey": "<opportunity-key>" } }
-socialseal_call_tool { "toolName": "vnext-blueprints-shots-read", "workspaceId": "<workspace-id>", "body": { "blueprintId": "<blueprint-id>", "signedUrlSeconds": 3600 } }
+socialseal_get_blueprint {
+  "workspaceId": "<workspace-id>",
+  "opportunityKey": "<opportunity-key>"
+}
+socialseal_get_blueprint_shots {
+  "workspaceId": "<workspace-id>",
+  "blueprintId": "<blueprint-id>",
+  "signedUrlSeconds": 3600
+}
 ```
 
 ## Output
@@ -118,9 +121,9 @@ Don't:
 ## Troubleshooting
 
 - `missing_data`: widen keywords/scope, adjust `timePeriod`, or switch scope type; for competitor scope ensure `competitorBrandIds` resolve to active aliases.
-- Stuck in `draft`: promoted exemplars are still analyzing; poll `vnext-blueprints-read` and `video_analysis` status.
+- Stuck in `draft`: promoted exemplars are still analyzing; poll `socialseal_get_blueprint` and `video_analysis` status.
 - List scope errors (`READINESS_STALE`/`READINESS_BLOCKED`/`READINESS_WARNING_REQUIRES_OVERRIDE`): re-run list readiness; pass `allowWarningOverride` only when intentional.
-- Empty shot-lift: run `vnext-blueprints-shots-refresh`, then re-read.
+- Empty shot-lift: run `socialseal_refresh_blueprint_shots`, then re-read.
 
 ## Verification Checklist
 

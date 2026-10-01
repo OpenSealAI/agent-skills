@@ -52,55 +52,63 @@ Good to have:
 
 ## Signal Sources (live tools)
 
-Three complementary sources, all invoked through the standard MCP/CLI surface (`references/mcp-and-cli-usage.md`):
+Three complementary sources, all invoked through the named MCP surface (`references/mcp-and-cli-usage.md`):
 
 1. **Search journeys** expand and score keywords for a subject and return staged keywords with `score`, `stage` (e.g. awareness/consideration), `language`, `englishGloss`, `confidence`, and a `scoresByPlatform.snapshotDate`. Re-running over time turns the score and the surfacing into a velocity signal.
 
 ```text
-socialseal_call_tool {
-  "toolName": "search-journey-run",
+socialseal_start_search_journey {
   "workspaceId": "<workspace-id>",
-  "body": { "subject": "<destination or activity>", "subjectType": "topic", "region": "<region>", "locale": "<locale>", "seedKeywords": ["<seed-1>", "<seed-2>"], "maxKeywords": 40, "executionMode": "async" }
+  "subject": "<destination or activity>",
+  "subjectType": "topic",
+  "region": "<region>",
+  "locale": "<locale>",
+  "seedKeywords": [
+    "<seed-1>",
+    "<seed-2>"
+  ],
+  "maxKeywords": 40
 }
 ```
 
-Heavy journeys can time out synchronously; use `executionMode: "async"` and poll:
+The named start action queues an asynchronous run. Retain its returned `runId` and poll without starting another journey:
 
 ```text
-socialseal_get_tool_status { "id": "<run-uuid>", "kind": "journey_run" }
+socialseal_get_search_journey_run { "workspaceId": "<workspace-id>", "runId": "<run-uuid>" }
 ```
 
 2. **Google AI search runs** capture how AI answers/citations treat a destination's queries. They return a numeric `runId`.
 
 ```text
-socialseal_call_tool {
-  "toolName": "google-ai-search",
+socialseal_start_google_ai_search {
   "workspaceId": "<workspace-id>",
-  "body": { "queries": ["<query-1>", "<query-2>"], "countryCode": "<cc>", "searchLanguage": "<lang>" }
+  "queries": [
+    "<query-1>",
+    "<query-2>"
+  ],
+  "countryCode": "<cc>",
+  "searchLanguage": "<lang>"
 }
 ```
 
-Read status/results by numeric run id with the dedicated read function (the generic status route may 403 for numeric AI runs):
+Read status/results by numeric run ID with the dedicated named operations:
 
 ```text
-socialseal_call_tool { "toolName": "get-google-ai-search-runs", "workspaceId": "<workspace-id>", "body": { "runId": <run-id> } }
-socialseal_call_tool { "toolName": "get-google-ai-search-results", "workspaceId": "<workspace-id>", "body": { "runId": <run-id> } }
+socialseal_list_google_ai_search_runs {
+  "workspaceId": "<workspace-id>",
+  "runId": <run-id>
+}
+socialseal_get_google_ai_search_results {
+  "workspaceId": "<workspace-id>",
+  "runId": <run-id>
+}
 ```
 
 3. **Tracking exports** give rank and surfacing over time for established keywords. Compare windows to read velocity.
 
-```bash
-npx -y @socialseal/cli data export-tracking --group-id <group-id> --time-period 30d --workspace-id <workspace-id> --out ./exports/tracking-30d.csv
-npx -y @socialseal/cli data export-search-results --group-ids <group-id> --workspace-id <workspace-id> --out ./exports/ranked.csv --timeout 120000
-```
-
-CLI equivalents for the journey and AI runs:
-
-```bash
-npx -y @socialseal/cli tools call --function search-journey-run --async --body @journey.json --workspace-id <workspace-id>
-npx -y @socialseal/cli tools status <run-uuid> --kind journey_run --workspace-id <workspace-id>
-npx -y @socialseal/cli tools call --function google-ai-search --body @ai.json --workspace-id <workspace-id>
-npx -y @socialseal/cli tools call --function get-google-ai-search-runs --body '{"runId":<run-id>}' --workspace-id <workspace-id>
+```text
+socialseal_export_tracking_data { "workspaceId": "<workspace-id>", "body": { "groupId": <group-id>, "timePeriod": "30d" } }
+socialseal_export_report { "workspaceId": "<workspace-id>", "body": { "reportType": "search_results_enriched", "format": "csv", "payload": { "groupIds": [<group-id>] } } }
 ```
 
 ## Workflow
@@ -147,9 +155,9 @@ Don't:
 
 ## Troubleshooting
 
-- Synchronous `search-journey-run` returns 504: re-run with `executionMode: "async"` and poll `journey_run`.
-- Numeric Google AI run status 403 via the generic status route: read with `get-google-ai-search-runs` / `get-google-ai-search-results` by `runId` instead.
-- Google AI run stays queued: poll `get-google-ai-search-runs` until `succeeded`/`partial`/`failed` before reading results.
+- Journey start times out: recover the existing `runId` and poll `socialseal_get_search_journey_run` in its workspace. A timeout does not justify starting another paid journey. If no run identity is available, report that unresolved state.
+- Numeric Google AI run: read `socialseal_list_google_ai_search_runs` / `socialseal_get_google_ai_search_results` with its returned `runId` and workspace. Preserve permission denials.
+- Google AI run stays queued: poll `socialseal_list_google_ai_search_runs` until `succeeded`/`partial`/`failed` before reading results.
 - No prior run to compare: this cycle is the baseline; state that velocity needs at least one more refresh and avoid movement claims.
 - Signals disagree across sources: report the disagreement; do not force a single ranking, lower confidence instead.
 

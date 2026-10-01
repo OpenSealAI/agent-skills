@@ -50,7 +50,7 @@ Assess two halves and report each as ready / partial / missing.
 ### SocialSeal setup
 - working access mode:
   - hosted connector MCP tools are available (`socialseal_list_workspaces` succeeds), or
-  - developer CLI/local MCP authentication works (`socialseal whoami` or MCP workspace discovery succeeds), or
+  - local MCP authentication works (MCP workspace discovery succeeds), or
   - file mode has enough SocialSeal CSV/JSON exports for the requested analysis
 - correct workspace selected
 - clean tracking groups (one platform, one market/language, one intent) covering the priority pillars
@@ -61,7 +61,7 @@ Assess two halves and report each as ready / partial / missing.
 1. **Diagnose.** State what exists, what is partial, and what is missing across both halves. Use what the user said plus any SocialSeal access (list workspaces/groups, inspect exports).
    - If SocialSeal tools are not initially visible, use the host's tool search/discovery facilities before diagnosing missing access. Only give setup guidance when discovery or an actual connection state confirms it. Do not dead-end on missing tools.
    - If the connector cannot be connected, continue in file mode if the user can provide SocialSeal exports. Mark live setup actions as unavailable in file mode.
-   - If local developer MCP/CLI auth fails, complete device login first. Do not ask for payment during first setup; new users start free.
+   - If local developer MCP auth fails, complete device login first. Do not ask for payment during first setup; new users start free.
 2. **Explain the gap.** For each missing foundation, give a one or two sentence plain-language explanation of what it is and why it matters. Do not assume the term is understood.
 3. **Propose a SocialSeal-backed way to define it.** Concretely:
    - **Personas:** run a search journey on the category, read which questions/jobs surface, cluster keywords, and propose 2-4 personas grounded in real search behavior for the user to confirm.

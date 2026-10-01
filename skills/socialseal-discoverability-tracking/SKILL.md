@@ -66,20 +66,10 @@ socialseal_export_tracking_data {
 Completeness check before movement claims:
 
 ```text
-socialseal_call_tool {
-  "toolName": "group-management",
+socialseal_get_tracking_group_completeness {
   "workspaceId": "<workspace-id>",
-  "body": { "action": "completeness", "group_id": <group-id> }
+  "group_id": <group-id>
 }
-```
-
-CLI equivalents:
-
-```bash
-npx -y @socialseal/cli data export-search-results --group-ids <group-id> --workspace-id <workspace-id> --out ./exports/search.csv
-npx -y @socialseal/cli data export-group-evidence --group-id <group-id> --workspace-id <workspace-id> --out ./exports/evidence.csv
-npx -y @socialseal/cli data export-tracking --group-id <group-id> --time-period 30d --workspace-id <workspace-id> --out ./exports/tracking.csv
-npx -y @socialseal/cli data group-completeness --help
 ```
 
 If an export is too large for context, save it to a file and analyze it in chunks (or use the paginated export-artifact read), never silently drop rows. See `references/mcp-and-cli-usage.md`.
@@ -88,8 +78,8 @@ If an export is too large for context, save it to a file and analyze it in chunk
 
 ### Part A — Measure a snapshot (brand vs competitor)
 
-1. **Confirm scope.** Workspace, platform, market, language, keyword set, date range. If the user did not give a group ID, locate the tracking group first: list groups (`group-management` action `list`), pick the one matching platform + market + keyword topic, and confirm it covers the user's keywords before exporting.
-2. **Export ranked rows.** Use `search_results_enriched` (MCP) or `export-search-results` (CLI) for the group. If the user named exact keywords that are not tracked as items, map each to the nearest tracked item and say so explicitly; offer to add the literal terms and refresh as a follow-up.
+1. **Confirm scope.** Workspace, platform, market, language, keyword set, date range. If the user did not give a group ID, locate the tracking group first: call `socialseal_list_tracking_groups`, pick the one matching platform + market + keyword topic, and confirm it covers the user's keywords before exporting.
+2. **Export ranked rows.** Use `socialseal_export_report` with `reportType: "search_results_enriched"` for the group. If the user named exact keywords that are not tracked as items, map each to the nearest tracked item and say so explicitly; offer to add the literal terms and refresh as a follow-up.
 3. **Qualify rows.** Drop wrong market/language/topic, non-comparable account types, and duplicate rows before any percentage.
 4. **Tag entities.** Owned brand, competitor, creator/affiliate/partner, irrelevant/noise. Use the owned-handle list; when in doubt tag conservatively.
 5. **Compute metrics.** Keyword coverage, discoverability, share of voice (rank-weighted and/or views-weighted), best rank. See "Metrics & last-mile computation".
@@ -98,7 +88,7 @@ If an export is too large for context, save it to a file and analyze it in chunk
 ### Part B — Track over time (movement)
 
 1. **Run exports** for current and previous periods with identical scope.
-2. **Check completeness.** Compare expected groups/items with actual outputs (`group-management` `completeness` action or `data group-completeness`).
+2. **Check completeness.** Compare expected groups/items with actual outputs using `socialseal_get_tracking_group_completeness` with the expected membership manifest.
 3. **Compare denominators.** Do not compare percentages if keyword sets changed without noting the break.
 4. **Flag anomalies.** Sudden zeros, missing platforms, duplicate rows, missing media IDs, impossible spikes, or date gaps.
 5. **Log changes.** Group membership edits, keyword additions/removals, platform changes, and export failures.

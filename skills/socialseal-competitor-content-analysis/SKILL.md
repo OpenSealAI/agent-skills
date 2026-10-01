@@ -45,27 +45,15 @@ metadata-only rather than inventing slide structure. Read
 
 Export ranked rows:
 
-```bash
-npx -y @socialseal/cli data export-search-results \
-  --group-ids <group-id> \
-  --workspace-id <workspace-id> \
-  --out ./exports/search-results.csv
+```text
+socialseal_export_report {
+  "workspaceId": "<workspace-id>",
+  "reportType": "search_results_enriched", "format": "csv",
+  "payload": { "groupIds": [<group-id>] }
+}
 ```
 
-Extract individual video analysis/assets when row identifiers are available:
-
-```bash
-npx -y @socialseal/cli video extract \
-  --search-result-id <search-result-id> \
-  --workspace-id <workspace-id> \
-  --ensure-analysis \
-  --wait \
-  --out-dir ./video-assets/<search-result-id>
-```
-
-Alternative identifiers include `--video-id`, `--video-uid`, or `--platform-video-id`. Use the CLI help to choose the correct one.
-
-MCP equivalent: `socialseal_call_tool` with `function: "tracked-video-extract"` and a body of `{ "ensureAnalysis": true, "includeAssets": true, "items": [{ "videoUid": "<video-uid>" }] }`. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
+Extract individual video analysis/assets with `socialseal_extract_video_assets` using `{ "workspaceId": "<workspace-id>", "ensureAnalysis": true, "items": [{ "videoUid": "<video-uid>" }] }`. Inspect the live schema for supported stored identifiers and preserve analysis costs and continuation. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
 
 Evidence note: surfaced exemplars are anecdotal evidence for creative direction, not proof a pattern will perform. A pattern needs multiple exemplars or an explicit reason; frame adaptations as hypotheses to test. See `references/evidence-and-confidence.md`.
 
@@ -124,7 +112,7 @@ Don't:
 
 ## Troubleshooting
 
-- If `video extract` cannot resolve an ID, try the other supported identifiers from CLI help.
+- If `socialseal_extract_video_assets` cannot resolve an ID, inspect its live schema for the supported stored identifiers and preserve the unresolved item. Use `socialseal_analyse_public_video` for a supplied public URL under its quote/approval boundary.
 - If analysis is missing, use `--ensure-analysis --wait`.
 - If assets are unavailable, use titles/captions/metadata and label the evidence as metadata-only.
 - If examples are off-topic, resample from stricter keyword or market filters.
