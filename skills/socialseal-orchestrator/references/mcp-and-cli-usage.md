@@ -63,6 +63,41 @@ If host discovery confirms an action is unavailable, report that precise limitat
 and preserve completed work. Preserve backend authorisation, admission and funding
 controls; tool discovery is not approval for additional paid work.
 
+## Explore acquisition preview and start
+
+When Explore is released for the authorized workspace, load
+`socialseal_explore_preview_start` and `socialseal_explore_start` through host tool
+search. Call the preview with the same workspace, canonical anchor, market,
+language and provider basket that will be used for start:
+
+```text
+socialseal_explore_preview_start {
+  "workspaceId": "<workspace-id>",
+  "anchor": { "anchorKind": "search_term", "subjectId": "<subject-id>" },
+  "marketCode": "US", "languageTag": "en", "providerBasket": []
+}
+socialseal_explore_start {
+  "workspaceId": "<workspace-id>",
+  "anchor": { "anchorKind": "search_term", "subjectId": "<subject-id>" },
+  "marketCode": "US", "languageTag": "en", "providerBasket": [],
+  "previewFingerprint": "<returned-planFingerprint>",
+  "idempotencyKey": "<stable-request-key>"
+}
+```
+
+Read the preview's source availability, estimated credits, capacity and blocking
+reasons. It does not collect provider evidence or create a lineage. Pass the
+returned `startLineagePreview.planFingerprint` as `previewFingerprint` without
+inventing a fingerprint or probing start for an error. Ordinary approved plans
+need no additional user confirmation. Only when `confirmationRequired` is true,
+obtain the user's scope confirmation and echo that plan fingerprint as
+`confirmedScopeFingerprint`, retaining the same retry key. If the plan is stale,
+read a fresh preview for the intended scope; if blocked, preserve the blocker.
+Retain the returned lineage/run identity and poll with `socialseal_explore_get`
+(`resource: "run"`, `runId`, workspace); do not restart collection to poll. If
+preview or start is unavailable after host discovery, report that exact capability
+limitation and preserve completed work.
+
 ## Workspace and identity
 
 Use the workspace the user named. For an unnamed workspace, resolve

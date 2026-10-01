@@ -13,4 +13,4 @@ Before publishing any skill, reference, template, script, or example, remove or 
 
 Use placeholders such as `{{BRAND}}`, `{{MARKET}}`, `{{PLATFORM}}`, `{{WORKSPACE_ID}}`, `{{TRACKING_GROUP_ID}}`, `{{KEYWORD_SET}}`, and `{{CAMPAIGN_PERIOD}}`.
 
-Public skills may reference the public SocialSeal MCP server, the public SocialSeal CLI, or files the user provides. They must not reference private local skills or private internal paths.
+Public skills may reference the public SocialSeal MCP server or files the user provides. They must not reference private local skills or private internal paths.

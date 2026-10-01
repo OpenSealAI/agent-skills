@@ -52,18 +52,18 @@ Good to have:
 
 ## Tool discovery and generation
 
-1. **Resolve the requested work and workspace.** For an existing brief, read it and preserve its identity; do not regenerate for a caption tweak, formatting request or ordinary edit. For new briefs, look for the named `socialseal_generate_brief` action. If absent, list available tools without a category filter and look for `vnext-briefs-generate`; inspect its schema. Briefing spans `vnext` and `video-production`. Do not infer missing capability from one failed category lookup.
+1. **Resolve the requested work and workspace.** For an existing brief, read it and preserve its identity; do not regenerate for a caption tweak, formatting request or ordinary edit. For new briefs, load `socialseal_generate_brief` through host tool search and inspect its live schema. If discovery confirms it is unavailable, report the missing operation and preserve completed work. Do not infer missing capability from one failed lookup.
 2. **Choose supported inputs.** Reuse an existing `opportunityKey` and blueprint/version. Otherwise supply the supported topic, competitor or tracking-group scope; use `retrievalPrompt` to focus that scope, not with `blueprintId`/`blueprintVersion`. For manually selected video IDs, build a blueprint first. Do not ask the user for internal IDs that can be discovered. Respect the tool's actual access, funding and approval result.
 3. **Carry the creative agreement.** Use the supported `brandContext` fields for concise approved audience needs, product/service facts with source references, voice/CTA, exclusions, length and asset constraints. Project documents are not automatically inputs to the engine: read the relevant material and pass the supported summary. Distinguish unknown facts from approved claims; do not promise automatic document retrieval or verification.
-4. **Generate or update.** Prefer the named actions below. If only the compatibility dispatcher is exposed, use the exact `toolName`/`body` shape, not `function`. Read returned status: pending/draft is not success, and `missing_data` requires the stated evidence gap to be resolved or a labelled fallback. Use returned identities for subsequent reads; do not repeatedly generate while waiting or bypass an access/funding rejection.
+4. **Generate or update.** Use the named actions below with their typed arguments. If a required action is unavailable after host discovery, report that limitation; preserve actual pending, funding and missing-data states. Read returned status: pending/draft is not success, and `missing_data` requires the stated evidence gap to be resolved or a labelled fallback. Use returned identities for subsequent reads; do not repeatedly generate while waiting or bypass an access/funding rejection.
 5. **Review and hand off.** Check the actual result against the audience job, source-supported claims, title/hook/payoff, scripts, duration/slide count and asset availability. Keep limitations explicit. Export the saved version, then use document tools for the requested presentation. Record any local edits not saved back to the canonical brief.
 
-| Job | Named action, when available | Compatibility target |
-| --- | --- | --- |
-| Generate a new brief | `socialseal_generate_brief` | `vnext-briefs-generate` |
-| Read a saved version | `socialseal_get_brief` | `vnext-briefs-read` |
-| Revise a saved brief | `socialseal_update_brief` | `vnext-briefs-update` |
-| Export for handoff | `socialseal_export_brief` | `vnext-briefs-export` |
+| Job | Named action |
+| --- | --- |
+| Generate a new brief | `socialseal_generate_brief` |
+| Read a saved version | `socialseal_get_brief` |
+| Revise a saved brief | `socialseal_update_brief` |
+| Export for handoff | `socialseal_export_brief` |
 
 Example for an existing blueprint (inspect the live schema first):
 
@@ -128,7 +128,7 @@ Don't:
 
 ## Troubleshooting
 
-- `vnext-briefs-generate` returns `missing_data`: the underlying blueprint lacks evidence; fix scope in `socialseal-blueprint-builder` first.
+- `socialseal_generate_brief` returns `missing_data`: the underlying blueprint lacks evidence; fix scope in `socialseal-blueprint-builder` first.
 - Brief feels like an ad: rewrite around a viewer question or practical-use moment.
 - Shot list is abstract: pull concrete validators from blueprint shots and exemplar Video DNA.
 - No engine access: use the manual path and label evidence gaps.

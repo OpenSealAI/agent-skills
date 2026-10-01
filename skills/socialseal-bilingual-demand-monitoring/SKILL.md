@@ -62,18 +62,6 @@ Good to have:
 
 Compare language-clean groups by exporting each and reading discoverability movement.
 
-CLI:
-
-```bash
-# enriched ranked rows per language-clean group
-npx -y @socialseal/cli data export-search-results --group-ids <local-lang-group-id> --workspace-id <workspace-id> --out ./exports/local.csv --timeout 120000
-npx -y @socialseal/cli data export-search-results --group-ids <english-group-id> --workspace-id <workspace-id> --out ./exports/english.csv --timeout 120000
-
-# tracking movement over a window per group
-npx -y @socialseal/cli data export-tracking --group-id <local-lang-group-id> --time-period 30d --workspace-id <workspace-id> --out ./exports/local-30d.csv
-npx -y @socialseal/cli data export-tracking --group-id <english-group-id> --time-period 30d --workspace-id <workspace-id> --out ./exports/english-30d.csv
-```
-
 MCP-first:
 
 ```text
@@ -142,7 +130,7 @@ Don't:
 ## Troubleshooting
 
 - `language` column blank: derive from the `keyword` text or journey `language`; if a group mixes languages, split it via `socialseal-tracking-group-design` before trusting comparisons.
-- Synchronous `search-journey-run` returns 504: re-run with `executionMode: "async"` and poll `journey_run`.
+- Journey start times out: recover the existing `runId` and poll `socialseal_get_search_journey_run` in its workspace. Preserve the unresolved state if no identity is available; do not start another paid run just to poll.
 - No English equivalent surfaces for a local trend: that is the early-signal case; propose tracking the `englishGloss` form, do not assume absence of demand.
 - Denominators differ a lot between languages: report each language in its own scope; do not normalize away a real size difference.
 

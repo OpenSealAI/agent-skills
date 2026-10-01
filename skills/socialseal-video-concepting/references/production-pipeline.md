@@ -48,24 +48,24 @@ Refinement controls: `pinnedVideoUids[]`, `excludedVideoUids[]`, `promotedCandid
 
 Preview before committing: pass `previewOnly: true` to inspect candidate and promoted-exemplar lists (with scores, matched keywords, sources) without creating a blueprint version.
 
-For ad hoc or deeper analysis of a single video, use `tracked-video-extract` (`ensureAnalysis: true`) to resolve Video DNA, shots, and frames for a tracked identifier or an allowed public URL.
+For ad hoc or deeper analysis of a single video, use `socialseal_extract_video_assets` (`ensureAnalysis: true`) with an `items` array of stored identifiers to resolve Video DNA, shots and frames. For a supplied public URL, use `socialseal_analyse_public_video` under its existing quote/approval boundary.
 
-Engine tools:
-- `vnext-blueprints-generate` (candidate selection + analysis queueing live here)
-- `tracked-video-extract` (Video DNA for one video or URL)
-- `vnext-cluster-videos` (cluster reference videos)
+Named tools:
+- `socialseal_generate_blueprint` (candidate selection + analysis queueing live here)
+- `socialseal_extract_video_assets` (Video DNA for stored video identifiers)
+- `socialseal_analyse_public_video` (analysis for a supplied public URL)
 
 ## Stage 2: Analyze reference videos (Video DNA)
 
-When `vnext-blueprints-generate` selects promoted exemplars that lack completed analysis, it queues analysis automatically and returns `status: "draft"` with a summary like "Analysis queued. Blueprint will generate once promoted exemplar analysis completes." Poll the blueprint until analysis lands.
+When `socialseal_generate_blueprint` selects promoted exemplars that lack completed analysis, it queues analysis automatically and returns `status: "draft"` with a summary like "Analysis queued. Blueprint will generate once promoted exemplar analysis completes." Poll the blueprint until analysis lands.
 
-For explicit analysis, `tracked-video-extract` returns structured analysis: hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, plus signed frame and asset URLs.
+For explicit analysis, `socialseal_extract_video_assets` returns structured analysis: hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, plus signed frame and asset URLs.
 
 Do not assert visual/format claims you have not seen. Label evidence as metadata-only when analysis is not available.
 
 ## Stage 3: Compile a blueprint (best practices + evidence)
 
-`vnext-blueprints-generate` compiles selected exemplars into a blueprint version with:
+`socialseal_generate_blueprint` compiles selected exemplars into a blueprint version with:
 - `best_practices[]`: the grounded, reusable mechanisms
 - `evidence[]`: the exemplar references behind each practice
 - `selected_video_uids` / `selected_candidates` with scores and matched keywords
@@ -76,15 +76,15 @@ Status semantics (never fabricate):
 - `missing_data`: no qualifying evidence for the scope. The engine writes an explicit `missing_data` version with a summary (e.g. "no tracking group keywords found for this scope") instead of inventing content. Surface that to the user and fix the scope.
 
 Read and shots:
-- `vnext-blueprints-read`: history and a specific version
-- `vnext-blueprints-shots-read`: shot-lift rows and pinned shot assets (signed URLs); these define the blueprint's panels/shots
-- `vnext-blueprints-shots-refresh`: queue a refresh of shot assets
+- `socialseal_get_blueprint`: history and a specific version
+- `socialseal_get_blueprint_shots`: shot-lift rows and pinned shot assets (signed URLs); these define the blueprint's panels/shots
+- `socialseal_refresh_blueprint_shots`: queue a refresh of shot assets
 
 A blueprint is the source of truth for the brief and editor handoff. Use each shot panel's `panelId` in a coverage table linking approved source clips to shots. This table is a handoff document, not a persisted SocialSeal mapping.
 
 ## Stage 4: Generate the brief
 
-`vnext-briefs-generate` produces a brief grounded in a blueprint:
+`socialseal_generate_brief` produces a brief grounded in a blueprint:
 - from an existing blueprint: pass `blueprintId` (+ optional `blueprintVersion`)
 - from scope: pass `scopeType` + scope fields and the engine resolves/creates the blueprint
 - from a prompt: pass `retrievalPrompt` (cannot be combined with `blueprintId`/`blueprintVersion`)
@@ -92,8 +92,8 @@ A blueprint is the source of truth for the brief and editor handoff. Use each sh
 Optional `brandContext` (brandName, productName, campaignGoal, notes, locale, platform) carries a concise summary of approved audience needs, product/service facts with source references and creative constraints. Read relevant documents first and pass supported context; do not assume the engine retrieves those documents or verifies every supplied claim.
 
 Read and export:
-- `vnext-briefs-read`: generated briefs and version history
-- `vnext-briefs-export`: export a brief as markdown by `opportunityKey` (+ optional `version`)
+- `socialseal_get_brief`: generated briefs and version history
+- `socialseal_export_brief`: export a brief as markdown by `opportunityKey` (+ optional `version`)
 
 For multiple concepts, generate and export the individual briefs. Creative packs have retired.
 
@@ -106,11 +106,11 @@ Asset Studio generation, clip-to-shot mapping APIs, generated-asset sharing, and
 FCPXML export have retired. Do not promise a rendered video or timeline from these
 retired tools; use the user's editor for assembly and finishing.
 
-1. Inspect available clips with `vnext-clips-read`, signing source URLs as needed.
-2. Upload missing rights-cleared footage with `vnext-clips-create`:
-   - `action: "create"` returns a signed upload target; upload bytes to storage.
-   - `action: "finalize"` requires `clipId`, `fileName`, `storagePath`, `mimeType`,
-     `sizeBytes`, and `rightsAttested: true`.
+1. Inspect available clips with `socialseal_list_source_clips`, signing source URLs as needed.
+2. Call `socialseal_prepare_source_clip_upload` for missing rights-cleared footage,
+   then upload the bytes to its signed storage target. Call
+   `socialseal_finalize_source_clip_upload` with the returned `clipId`, `fileName`,
+   `storagePath`, `mimeType`, `sizeBytes`, and `rightsAttested: true`.
 3. Use `socialseal-asset-planning` to prepare a coverage table of real `panelId`s,
    approved clips, trim suggestions, rights, and missing-footage decisions. Do not
    claim the table creates backend mappings.
@@ -125,11 +125,11 @@ Do not upload footage the workspace does not have rights to.
 ## End-to-end (happy path)
 
 1. Pick or define the opportunity and `opportunityKey` and scope.
-2. `vnext-blueprints-generate` with `previewOnly: true` to inspect candidate exemplars; refine with pins/exclusions/prompt.
-3. `vnext-blueprints-generate` (commit) -> poll `vnext-blueprints-read` until `generated`.
-4. `vnext-blueprints-shots-read` to get panels/shots.
-5. `vnext-briefs-generate` from the `blueprintId`; `vnext-briefs-export` for the markdown brief.
-6. Fill the source-clip library (`vnext-clips-create`) and document approved panel coverage.
+2. `socialseal_generate_blueprint` with `previewOnly: true` to inspect candidate exemplars; refine with pins/exclusions/prompt.
+3. `socialseal_generate_blueprint` (commit) -> poll `socialseal_get_blueprint` until `generated`.
+4. `socialseal_get_blueprint_shots` to get panels/shots.
+5. `socialseal_generate_brief` from the `blueprintId`; `socialseal_export_brief` for the markdown brief.
+6. Fill the source-clip library using `socialseal_prepare_source_clip_upload` and `socialseal_finalize_source_clip_upload`, and document approved panel coverage.
 7. Export the brief and hand off source clips, coverage, and delivery specs to the editor.
 
 ## Carousel branch

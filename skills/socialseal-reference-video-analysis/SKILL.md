@@ -55,7 +55,7 @@ Good to have:
 ## Workflow
 
 1. **Confirm scope and workspace.** Identify the opportunity and reuse its `opportunityKey`.
-2. **Preview candidates.** Prefer the named `socialseal_generate_blueprint` action when exposed; the compatibility target is `vnext-blueprints-generate`. Call `vnext-blueprints-generate` with `previewOnly: true`. Inspect the candidate and promoted-exemplar lists: each carries a score, matched keywords, sources, and metrics. Do not generate yet.
+2. **Preview candidates.** Load `socialseal_generate_blueprint` through host tool search and call it with `previewOnly: true`. If the named action remains unavailable, report that limitation and preserve completed work. Inspect the candidate and promoted-exemplar lists: each carries a score, matched keywords, sources, and metrics. Do not generate yet.
 3. **Offer analysis depth.** Present representative candidates and let the user choose:
    - metadata/preview only (fastest; weakest visual claims)
    - focused DNA on roughly 3-5 exemplars (default for a single deliverable)
@@ -63,8 +63,8 @@ Good to have:
    Inspect the live schema/preflight and state likely time/credit trade-offs before a
    credit-consuming run.
 4. **Refine selection.** Pin must-include exemplars (`pinnedVideoUids`), drop off-scope or off-market ones (`excludedVideoUids`), and set `promotedCandidateTarget` for how many exemplars to promote. For semantic exploration, set `retrievalPrompt`.
-5. **Analyze Video DNA.** For the approved promoted exemplars, call `tracked-video-extract` with `ensureAnalysis: true` to resolve hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, and signed frame/asset URLs. For a one-off public video, use `extract-url` with `allowUntracked: true`.
-6. **Cluster if needed.** Use `vnext-cluster-videos` to group exemplars into repeated mechanisms when the set is large.
+5. **Analyze Video DNA.** For the approved promoted exemplars, call `socialseal_extract_video_assets` with `ensureAnalysis: true` to resolve hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, and signed frame/asset URLs. For a supplied public video URL, use `socialseal_analyse_public_video` and preserve its quote/approval boundary.
+6. **Group observed mechanisms if needed.** Compare the returned exemplar analysis locally and label this as your synthesis. The named catalogue has no separate clustering action; do not claim a backend cluster result.
 7. **Record evidence.** For every exemplar capture the human-readable citation (video title/URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) as an internal traceability note for tool calls and blueprint joins. Separate observed features from `likelyReasonItRanks` and other model hypotheses; do not cite those interpretations as independent corroboration. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
 
 ## Tool Calls (MCP-first)
@@ -142,7 +142,7 @@ Don't:
 ## Troubleshooting
 
 - Preview returns `missing_data`: the scope has no qualifying evidence. Widen the keyword/scope, change `timePeriod`, or pick a different scope before generating.
-- Exemplars lack analysis: `tracked-video-extract` with `ensureAnalysis: true`, then poll `video_analysis` status.
+- Exemplars lack analysis: `socialseal_extract_video_assets` with `ensureAnalysis: true`, then poll `video_analysis` status.
 - `retrievalPrompt` rejected: it is not allowed for `manual` or `list` scope; use a topic/competitor/tracking_group scope.
 - Too many viral outliers: lower `promotedCandidateTarget` and pin representative exemplars instead.
 

@@ -24,7 +24,7 @@ metadata:
 
 Asset planning converts a blueprint's shot panels into a concrete capture and clip-library plan. The goal is that every planned video shot panel has a rights-cleared clip ready for the editor. This is the bridge between `socialseal-blueprint-builder` and an editor handoff. Record panel coverage in the handoff document; SocialSeal's clip-to-shot mapping and generated-video tools have retired.
 
-See `references/production-pipeline.md`. Work from the blueprint shot panels (`vnext-blueprints-shots-read`), not a generic shot list.
+See `references/production-pipeline.md`. Work from the blueprint shot panels (`socialseal_get_blueprint_shots`), not a generic shot list.
 
 Read `references/creative-production-gates.md` for production-bound work. The asset
 gate must present meaningful choices and evidence, not silently assign approximate
@@ -39,13 +39,13 @@ images because they are visually convenient.
 ## Inputs
 
 - the `blueprintId` and its shot panels (`panelId`, shot label, kind)
-- current clip library (`vnext-clips-read`) and any user-provided panel coverage table
+- current clip library (`socialseal_list_source_clips`) and any user-provided panel coverage table
 - platform specs and aspect ratio
 - available footage, creator/talent/location constraints, deadline
 
 ## Workflow
 
-1. **List the shot panels.** From `vnext-blueprints-shots-read`, enumerate every `panelId` and what it needs (hook, hero, supporting, detail).
+1. **List the shot panels.** From `socialseal_get_blueprint_shots`, enumerate every `panelId` and what it needs (hook, hero, supporting, detail).
 2. **Audit coverage.** Compare panels against the clip library and documented panel coverage. Mark each panel: covered, needs capture, needs sourcing, or needs generation.
    Inspect the actual media (or a contact sheet), not only filenames/descriptions.
    Record rights and subject/location confidence as `verified`, `likely`, or
@@ -53,7 +53,7 @@ images because they are visually convenient.
 3. **Plan capture for gaps.** For panels needing footage, write required shots first, then useful, then optional B-roll.
 4. **Batch capture.** Group shots by location, setup, product, screen recording, creator, or time of day.
 5. **Add validators.** Capture practical details that make utility content useful: signs, screens, maps, prices, steps, timing, packing, setup, texture, before/after.
-6. **Prepare clips for upload.** Define file names and confirm usage rights for each clip. `vnext-clips-create` with `action: "create"` returns a signed upload target; upload bytes, then finalize with `action: "finalize"`, `clipId`, `fileName`, `storagePath`, `mimeType`, `sizeBytes`, and `rightsAttested: true`.
+6. **Prepare clips for upload.** Define file names and confirm usage rights for each clip. `socialseal_prepare_source_clip_upload` returns a signed upload target; upload bytes, then call `socialseal_finalize_source_clip_upload` with `clipId`, `fileName`, `storagePath`, `mimeType`, `sizeBytes`, and `rightsAttested: true`.
 7. **Run the asset decision gate.** For material gaps, present 2-3 viable choices:
    verified owned material, rights-cleared stock, new capture/reshoot, generated
    reference, or a concept change. Get approval before using substitutes.

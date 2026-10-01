@@ -33,23 +33,15 @@ A SocialSeal performance readout explains what changed in discoverability and wh
 
 ## Data Access
 
-```bash
-npx -y @socialseal/cli data export-group-evidence \
-  --group-id <group-id> \
-  --workspace-id <workspace-id> \
-  --out ./exports/group-evidence-current.csv
+```text
+socialseal_export_report {
+  "workspaceId": "<workspace-id>",
+  "reportType": "search_results_enriched", "format": "csv",
+  "payload": { "groupIds": [<group-id>] }
+}
 ```
 
-```bash
-npx -y @socialseal/cli data export-search-results \
-  --group-ids <group-id> \
-  --workspace-id <workspace-id> \
-  --date-from <iso> \
-  --date-to <iso> \
-  --out ./exports/search-results-current.csv
-```
-
-MCP-first: use `socialseal_export_report` (`reportType: "search_results_enriched"`) or `socialseal_export_tracking_data`; there is no group-evidence MCP tool. See `references/mcp-and-cli-usage.md`.
+Use `socialseal_export_tracking_data` for a group/item time-window export. For Google AI evidence, use the named results read and retain its actual coverage. See `references/mcp-and-cli-usage.md`.
 
 Attribution: cite movement in human-readable terms, the `"keyword" [market, platform]`, the video title/URL, `@author_handle`, and where it ranked; keep `video_uid`/`search_result_id` as an internal traceability note. Use `first_seen_at`/`last_seen_at` for resurfacing language and never infer platform age when `published_at` is blank. See `references/socialseal-data-contract.md`.
 

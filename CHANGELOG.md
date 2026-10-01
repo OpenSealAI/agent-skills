@@ -4,6 +4,8 @@
 
 - Use named MCP operations and typed arguments across active skills and bundled references.
 - Add read-only tracking-group completeness guidance and remove the public discovery/schema/dispatcher workflow.
+- Remove semantic dispatcher and standalone CLI fallbacks, and validate their wording in active guidance.
+- Use the named Explore start preview to obtain the server-owned plan fingerprint before acquisition.
 - Require the coordinated MCP retirement release and host bundle refresh before rollout.
 
 ## 0.8.1

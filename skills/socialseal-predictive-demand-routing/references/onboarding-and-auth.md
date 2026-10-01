@@ -1,6 +1,6 @@
 # SocialSeal Onboarding and Auth
 
-Choose the onboarding path by environment. Cowork and non-technical users use the hosted remote MCP connector first. Claude Code developers can use local stdio MCP or CLI as fallbacks. File mode remains available when no live connector is present.
+Choose the onboarding path by environment. Cowork and non-technical users use the hosted remote MCP connector first. Claude Code developers can use local stdio MCP as a developer fallback. File mode remains available when no live connector is present.
 
 ## Connector-first setup for Cowork
 
@@ -23,13 +23,12 @@ Treat these as live-tool setup triggers:
 - Workspace discovery is unavailable after host tool discovery.
 - The hosted connector reports disconnected or expired authentication. A forbidden operation can instead mean missing workspace permission; retain that specific error.
 - Local stdio MCP reports a missing SocialSeal API key.
-- CLI exits with auth code `3`, or says to run `socialseal login`.
 - Backend calls return `401` for the configured key. For `403`, inspect the permission error rather than assuming reconnecting will grant access.
 
 When live tools are missing, give the right next step:
 
 - Cowork / non-technical users: connect the hosted SocialSeal connector.
-- Claude Code developers: install the local stdio MCP fallback or use CLI.
+- Claude Code developers: install the local stdio MCP fallback.
 - No connector or terminal access: switch to file mode with SocialSeal CSV/JSON exports.
 
 ## Local stdio MCP developer fallback
@@ -42,16 +41,7 @@ claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
 
 Then use local device login if credentials are missing.
 
-## Device login flow for local MCP and CLI
-
-CLI:
-
-```bash
-npx -y @socialseal/cli login
-npx -y @socialseal/cli whoami
-```
-
-MCP:
+## Device login flow for local MCP
 
 1. Call `socialseal_start_login`.
 2. Give the user `verification_uri_complete` and ask them to confirm the short `user_code`.
@@ -70,10 +60,4 @@ New users start on the free tier after browser signup or login. Do not ask for p
 
 For hosted connector users in Cowork or Claude web, billing changes happen in the SocialSeal app. If a connector call reports exhausted credits, quota, plan, billing, or entitlement limits, ask the user to open SocialSeal billing from the app/account UI, upgrade or add credits, then retry the original action.
 
-For Claude Code developers using the local CLI fallback, the CLI can open billing:
-
-```bash
-npx -y @socialseal/cli billing
-```
-
-Do not give the `npx` billing command as the primary path for hosted connector users.
+Local MCP users also manage billing in the SocialSeal app/account UI.

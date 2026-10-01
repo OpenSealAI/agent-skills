@@ -16,7 +16,6 @@ metadata:
   - setup
   - workspace
   - tracking-groups
-  - cli
   - mcp
 ---
 
@@ -55,7 +54,7 @@ Do not use this skill for opportunity analysis, creator briefs, social plans, or
 
 ### Required
 
-- SocialSeal CLI access or SocialSeal MCP server access.
+- SocialSeal MCP server access.
 - Workspace target: existing workspace ID/name, or enough context to identify the intended workspace.
 - Brand or subject name.
 - Target platform(s): use platform values supported by SocialSeal, commonly `tiktok`, `instagram`, `youtube`, `ig_reels`, `yt_shorts`, `douyin`, `xhs`, or `google_ai`.
@@ -164,10 +163,10 @@ Workspace setup is done only when all of these are true:
 
 ### Do
 
-- Use `workspace list` before setup if the workspace is not explicitly provided.
-- Use `tools schema --function group-management` before creating or adding items.
-- Use `group_id`, not `groupId`, in `group-management` bodies unless the live schema says otherwise.
-- Use `--group-ids` for `export-search-results` and `--group-id` for `export-group-evidence`.
+- Resolve `socialseal_get_current_workspace` or `socialseal_list_workspaces` before setup when workspace context is missing.
+- Inspect the live named-action schema before creating or adding items.
+- Use typed `group_id` for group operations and `payload.groupIds` for enriched report exports.
+- Keep numeric tracking-group IDs distinct from brand-group UUIDs.
 - Keep a raw setup log with commands run, returned IDs, and export file paths.
 - Create and validate one group first, then scale the pattern.
 
@@ -176,7 +175,7 @@ Workspace setup is done only when all of these are true:
 - Don't call the output a brief when the user asked for setup.
 - Don't mix platforms or keyword types inside one group.
 - Don't add English-only keywords for non-English markets unless the user's scope is English-language search.
-- Don't use brand-group UUIDs where the CLI expects numeric tracking group IDs.
+- Don't use brand-group UUIDs where a named action expects numeric tracking-group IDs.
 - Don't treat a header-only export as success without explaining why no rows exist.
 - Don't expose real workspace IDs, tracking IDs, API keys, or private exports in public examples.
 
@@ -184,15 +183,14 @@ Workspace setup is done only when all of these are true:
 
 ### Workspace not found
 
-- Run `npx -y @socialseal/cli workspace list --pretty`.
-- Confirm the key has access to the intended workspace.
-- Use `workspace use <identifier>` with ID, slug, or exact name.
-- Pass `--workspace-id <workspace-id>` explicitly on scoped commands.
+- Call `socialseal_list_workspaces` and find the exact intended workspace.
+- Preserve any permission denial; reconnecting does not grant workspace membership.
+- Pass its returned `workspaceId` explicitly to scoped operations.
 
 ### `add_items` succeeds but completeness fails
 
-- Re-check the live schema for `group-management`.
-- Confirm the body uses `group_id` and item objects.
+- Re-check the live `socialseal_add_tracking_group_items` schema.
+- Confirm the arguments use `group_id` and typed item objects.
 - Confirm the region value is valid and consistent.
 - Try adding a single item first to isolate malformed payloads.
 
@@ -200,20 +198,20 @@ Workspace setup is done only when all of these are true:
 
 - Confirm items were added with completeness.
 - New or modified groups may need refresh time before ranked results exist.
-- Try `export-group-evidence` to route the group to the correct export type.
+- Use `socialseal_export_report` for enriched social search results, or the named Google AI results read for an AI-search group. Preserve unsupported report types and empty evidence.
 - Check date filters; too narrow a date range can hide valid results.
 
 ### Search journey does not start
 
 - Confirm required fields: `subject`, `subjectType`, `region`, and workspace context.
 - Use `subjectType: "topic"` for category searches, not `brand`.
-- Add `executionMode: "async"` for long runs and poll with `tools status`.
+- The named start action queues an asynchronous run; poll `socialseal_get_search_journey_run` with its returned `runId` and workspace. After a timeout, recover the run identity before starting additional paid work.
 
-### MCP and CLI disagree
+### Required action unavailable
 
-- Prefer the live schema from the surface you are using.
-- Record which surface created each group/item.
-- If a mutating MCP call is missing or unstable, use the CLI for setup and MCP for inspection/exports.
+- Use host tool search to load the named operation and its live schema.
+- If it remains unavailable, report the exact missing operation and preserve the workspace/group IDs and completed setup.
+- Do not claim setup is complete when a required mutation or export could not run.
 
 ## Verification Checklist
 

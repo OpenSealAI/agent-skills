@@ -1,6 +1,6 @@
 # SocialSeal Data Contract
 
-Skills can work from MCP responses, CLI exports, or CSV/JSON files. Before analysis, inspect available fields and identify:
+Skills can work from MCP responses or supplied CSV/JSON exports. Before analysis, inspect available fields and identify:
 
 - workspace or project scope
 - tracking group or keyword set
@@ -49,7 +49,7 @@ These map directly to enriched export columns:
 
 ## Enriched ranked search export columns
 
-`export-search-results` (CLI) and `search_results_enriched` (report export) return enriched ranked rows. Human-readable fields for citation:
+`socialseal_export_report` with `reportType: "search_results_enriched"` return enriched ranked rows. Human-readable fields for citation:
 
 - `keyword`, `region`, `language`, `platform_id`: the query and its scope.
 - `title`, `description`: the video's human title and caption.

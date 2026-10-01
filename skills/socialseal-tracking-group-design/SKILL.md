@@ -3,8 +3,7 @@ name: socialseal-tracking-group-design
 description: Use this skill when the user asks what keywords or queries to track,
   wants a SocialSeal tracking group created or reorganized, needs market/platform/
   language splits, or discovers that a topic has no group. Design clean keyword and
-  competitor scopes, then create or specify groups and tracking items through MCP or
-  CLI.
+  competitor scopes, then create or specify groups and tracking items through MCP, or prepare a specification from supplied files when live access is unavailable.
 license: MIT
 metadata:
   socialseal:
@@ -25,7 +24,7 @@ A SocialSeal tracking group is not a folder for random keywords. It is a measure
 
 The deliverable depends on access:
 
-- With SocialSeal CLI/MCP access: tracking groups are created, populated, and checked for completeness.
+- With SocialSeal MCP access: tracking groups are created, populated, and checked for completeness.
 - Without access: a tracking-group specification is produced for someone else to implement.
 
 ## What SocialSeal Needs
