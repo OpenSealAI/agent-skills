@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.2 (unreleased)
+
+- Use named MCP operations and typed arguments across active skills and bundled references.
+- Add read-only tracking-group completeness guidance and remove the public discovery/schema/dispatcher workflow.
+- Require the coordinated MCP retirement release and host bundle refresh before rollout.
+
 ## 0.8.1
 
 - Route content calendars and editor briefs to focused guidance, preserving decisions, cadence and current versions.

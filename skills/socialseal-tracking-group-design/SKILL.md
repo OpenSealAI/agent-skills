@@ -59,48 +59,42 @@ Good to have:
 
 ## Tooling
 
-Prefer MCP when available (`socialseal_get_tool_schema` then `socialseal_call_tool` with `function: "group-management"`); the CLI `tools call` mirrors it. See `references/mcp-and-cli-usage.md`.
+Use the host's tool search to load each named operation and inspect its live
+schema. Resolve the workspace with `socialseal_get_current_workspace` or
+`socialseal_list_workspaces`; pass that exact workspace ID throughout. Read existing
+groups before proposing new setup. See `references/mcp-and-cli-usage.md`.
 
-## CLI Workflow
+## MCP Setup Workflow
 
-First inspect the live surface:
+Design one group per platform, market and coherent measurement scope. Keep branded
+and category queries separate, use local-language terms, and record the keyword
+source. Confirm the proposed setup and any required collection approval before
+starting paid work. Create one group and verify a small set before bulk setup.
 
-```bash
-npx -y @socialseal/cli tools schema --function group-management
-npx -y @socialseal/cli data export-options
+```text
+socialseal_create_tracking_group {
+  "workspaceId": "<workspace-id>",
+  "name": "TikTok / US / category searches",
+  "platform": "tiktok",
+  "description": "Category search tracking for US TikTok"
+}
+socialseal_add_tracking_group_items {
+  "workspaceId": "<workspace-id>",
+  "group_id": <group-id>,
+  "items": [{ "name": "<keyword>", "type": "keyword", "value": "<keyword>", "region": "US" }]
+}
+socialseal_get_tracking_group_completeness {
+  "workspaceId": "<workspace-id>",
+  "group_id": <group-id>,
+  "expected_items": [{ "track_type": "search", "track_value": "<keyword>", "region": "US" }],
+  "include_refresh_status": true
+}
 ```
 
-Create each group:
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function group-management \
-  --workspace-id <workspace-id> \
-  --body '{"action":"create","name":"TikTok / US / category searches","platform":"tiktok","description":"Category search tracking for US TikTok"}' \
-  --pretty
-```
-
-Add keyword tracking items:
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function group-management \
-  --workspace-id <workspace-id> \
-  --body '{"action":"add_items","group_id":<group-id>,"items":[{"name":"<keyword>","type":"keyword","value":"<keyword>","region":"US"}]}' \
-  --pretty
-```
-
-Check completeness:
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function group-management \
-  --workspace-id <workspace-id> \
-  --body '{"action":"completeness","group_id":<group-id>,"expected_items":[{"track_type":"search","track_value":"<keyword>","region":"US"}],"include_refresh_status":true}' \
-  --pretty
-```
-
-For MCP, use the same sequence through the live MCP tools: schema/help → create group → add items → completeness. Do not guess MCP tool names.
+Search adds use canonical Topic resolution; preserve returned conflicts and
+approval/idempotency requirements. Completeness reads stored memberships and
+refresh status; it does not collect evidence or prove freshness. Do not declare
+setup complete until expected items are present.
 
 ## Keyword Design Rules
 

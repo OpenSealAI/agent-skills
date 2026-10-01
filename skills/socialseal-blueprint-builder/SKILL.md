@@ -69,26 +69,29 @@ Good to have:
 Generate (tracking-group scope):
 
 ```text
-socialseal_call_tool {
-  "toolName": "vnext-blueprints-generate",
+socialseal_generate_blueprint {
   "workspaceId": "<workspace-id>",
-  "body": {
-    "workspaceId": "<workspace-id>",
-    "opportunityKey": "<opportunity-key>",
-    "scopeType": "tracking_group",
-    "trackingGroupId": <group-id>,
-    "timePeriod": "30d",
-    "promotedCandidateTarget": 12,
-    "title": "<blueprint-title>"
-  }
+  "opportunityKey": "<opportunity-key>",
+  "scopeType": "tracking_group",
+  "trackingGroupId": <group-id>,
+  "timePeriod": "30d",
+  "promotedCandidateTarget": 12,
+  "title": "<blueprint-title>"
 }
 ```
 
 Read the latest version and shot-lift:
 
 ```text
-socialseal_call_tool { "toolName": "vnext-blueprints-read", "workspaceId": "<workspace-id>", "body": { "opportunityKey": "<opportunity-key>" } }
-socialseal_call_tool { "toolName": "vnext-blueprints-shots-read", "workspaceId": "<workspace-id>", "body": { "blueprintId": "<blueprint-id>", "signedUrlSeconds": 3600 } }
+socialseal_get_blueprint {
+  "workspaceId": "<workspace-id>",
+  "opportunityKey": "<opportunity-key>"
+}
+socialseal_get_blueprint_shots {
+  "workspaceId": "<workspace-id>",
+  "blueprintId": "<blueprint-id>",
+  "signedUrlSeconds": 3600
+}
 ```
 
 ## Output

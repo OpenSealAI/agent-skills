@@ -23,7 +23,8 @@ Select the action matching the supplied target and requested deliverable from th
 - Ranked-search creator discovery: use the requested ranked-search population and retain its sampling caveats. It is not a substitute for account posts.
 - Account tracking: only create the explicitly requested ongoing commitment, retaining required authorization.
 
-A generic `socialseal_call_tool` remains for identified compatibility and rare-operation callers. `socialseal_list_available_tools` and `socialseal_get_tool_schema` can help those callers find a retained backend target. They are not mandatory steps before direct actions, and a semantic resolver is not a prerequisite.
+Load individually named operations through host tool search. An unavailable action
+is a specific capability limitation; it does not authorise a backend-selector fallback.
 
 Named-account examples (Instagram currently):
 
@@ -37,28 +38,30 @@ Creator reads use stored snapshots. A fresh request returns `FRESH_COLLECTION_RE
 ## Discover the action for the job
 
 Use a named action directly when its schema is already available. Otherwise use
-`socialseal_list_available_tools` and `socialseal_get_tool_schema`. Discovery and
-skills are references, not mandatory gates for every read or edit.
+the host's tool search to load the matching operation and its live input schema.
+Discovery and skills are references, not mandatory gates for every read or edit.
 
 - Content calendars and posting schedules: `socialseal-social-plan-builder` guides composition and revision; do not assume a calendar-generation tool.
-- New video/editor/UGC briefs: `socialseal_generate_brief` (compatibility target `vnext-briefs-generate`). Existing blueprint/version or supported scope is sufficient to begin; reference selection can use `socialseal_generate_blueprint` when needed.
+- New video/editor/UGC briefs: `socialseal_generate_brief`. Existing blueprint/version or supported scope is sufficient to begin; reference selection can use `socialseal_generate_blueprint` when needed.
 - Existing brief: `socialseal_get_brief`, `socialseal_update_brief`, `socialseal_export_brief`. A formatting or copy edit does not need new evidence collection.
-- Brief discovery spans `vnext` and `video-production`; omit category if a filtered listing misses it. A missing named action does not prove the compatibility target is unavailable.
+- Tracking setup: `socialseal_create_tracking_group`, `socialseal_add_tracking_group_items`, then `socialseal_get_tracking_group_completeness`. Read existing groups before proposing setup.
+- Search demand: `socialseal_start_search_journey` and `socialseal_get_search_journey_run`; Google AI uses `socialseal_start_google_ai_search`, `socialseal_list_google_ai_search_runs`, and `socialseal_get_google_ai_search_results`.
+- Source-video assets: `socialseal_extract_video_assets` with stored identifiers. For a supplied public URL, use `socialseal_analyse_public_video`.
 
-Inspect the exact live input schema before an unfamiliar mutation. The compatibility
-dispatcher accepts **`toolName`**, not `function`:
+Inspect the exact live input schema before an unfamiliar mutation. Arguments go
+directly on the named action, without a backend-function selector or body envelope:
 
 ```text
-socialseal_get_tool_schema { "toolName": "vnext-briefs-generate" }
-socialseal_call_tool {
-  "toolName": "vnext-briefs-generate",
+socialseal_generate_brief {
   "workspaceId": "<workspace-id>",
-  "body": { "opportunityKey": "<opportunity-key>", "blueprintId": "<blueprint-id>" }
+  "opportunityKey": "<opportunity-key>",
+  "blueprintId": "<blueprint-id>"
 }
 ```
 
-Prefer named actions when exposed. Preserve backend authorisation, admission and
-funding controls; tool discovery is not approval for additional paid work.
+If host discovery confirms an action is unavailable, report that precise limitation
+and preserve completed work. Preserve backend authorisation, admission and funding
+controls; tool discovery is not approval for additional paid work.
 
 ## Workspace and identity
 

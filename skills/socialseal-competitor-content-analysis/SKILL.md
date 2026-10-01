@@ -65,7 +65,7 @@ npx -y @socialseal/cli video extract \
 
 Alternative identifiers include `--video-id`, `--video-uid`, or `--platform-video-id`. Use the CLI help to choose the correct one.
 
-MCP equivalent: `socialseal_call_tool` with `function: "tracked-video-extract"` and a body of `{ "ensureAnalysis": true, "includeAssets": true, "items": [{ "videoUid": "<video-uid>" }] }`. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
+MCP equivalent: `socialseal_extract_video_assets` with `{ "workspaceId": "<workspace-id>", "ensureAnalysis": true, "items": [{ "videoUid": "<video-uid>" }] }`. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
 
 Evidence note: surfaced exemplars are anecdotal evidence for creative direction, not proof a pattern will perform. A pattern needs multiple exemplars or an explicit reason; frame adaptations as hypotheses to test. See `references/evidence-and-confidence.md`.
 

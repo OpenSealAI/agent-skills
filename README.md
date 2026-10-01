@@ -138,11 +138,15 @@ This repo does not automate posting, scheduling, inbox/comment/DM management, ac
 
 ## Integration modes
 
-- **MCP mode (preferred):** the hosted SocialSeal connector, or the local developer fallback `@socialseal/mcp-server`, exposes stable meta-tools (`socialseal_list_available_tools`, `socialseal_get_tool_schema`, `socialseal_call_tool`, `socialseal_get_tool_status`, `socialseal_export_report`, `socialseal_export_tracking_data`). Backend function targets are invoked through `socialseal_call_tool`.
-- **CLI mode:** the public `@socialseal/cli` mirrors the same surface via `tools list` / `tools schema` / `tools call` plus first-class `data export-*` commands.
+- **MCP mode (preferred):** use the hosted SocialSeal connector, or the local developer fallback `@socialseal/mcp-server`. Select the named operation from the host's tool catalogue and pass its typed arguments directly.
 - **File mode:** use user-provided SocialSeal exports.
 
 Always inspect the live registry/schema before mutating calls. See [references/mcp-and-cli-usage.md](references/mcp-and-cli-usage.md) and [references/production-pipeline.md](references/production-pipeline.md). For how to cite evidence in human-readable terms and how confident to be about it, see [references/socialseal-data-contract.md](references/socialseal-data-contract.md) and [references/evidence-and-confidence.md](references/evidence-and-confidence.md); for the strategy concepts the skills assume, see [references/strategy-foundations.md](references/strategy-foundations.md).
+
+The prepared 0.8.2 bundle requires the coordinated MCP release with named
+tracking-group completeness. Deploy that reviewed catalogue before refreshing
+installed bundles, then verify each supported host. Repository publication and
+installed host versions are separate; report an unavailable operation precisely.
 
 ## Skill taxonomy
 

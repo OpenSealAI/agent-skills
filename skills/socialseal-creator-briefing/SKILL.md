@@ -68,13 +68,14 @@ Good to have:
 Example for an existing blueprint (inspect the live schema first):
 
 ```text
-socialseal_call_tool {
-  "toolName": "vnext-briefs-generate",
+socialseal_generate_brief {
   "workspaceId": "<workspace-id>",
-  "body": {
-    "opportunityKey": "<opportunity-key>",
-    "blueprintId": "<blueprint-id>",
-    "brandContext": { "brandName": "<brand>", "platform": "tiktok", "notes": "<approved facts, audience job and production constraints>" }
+  "opportunityKey": "<opportunity-key>",
+  "blueprintId": "<blueprint-id>",
+  "brandContext": {
+    "brandName": "<brand>",
+    "platform": "tiktok",
+    "notes": "<approved facts, audience job and production constraints>"
   }
 }
 ```

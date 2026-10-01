@@ -2,7 +2,14 @@
 
 ## MCP mode
 
-Use MCP mode when the agent can access the SocialSeal MCP server. The server exposes stable meta-tools; backend functions are invoked through `socialseal_call_tool`. The loop is: `socialseal_list_workspaces` -> `socialseal_list_available_tools` -> `socialseal_get_tool_schema` (before any mutating call) -> `socialseal_call_tool` -> `socialseal_get_tool_status` for async runs. There is no group-evidence/search-results MCP tool; reach enriched rows via `socialseal_export_report` (`search_results_enriched`) or `socialseal_export_tracking_data`. See `../references/mcp-and-cli-usage.md`.
+Use MCP mode when the agent can access the SocialSeal MCP server. Load named
+operations through the host's tool search and inspect their live schemas. Resolve
+the authorised workspace with `socialseal_get_current_workspace` or
+`socialseal_list_workspaces`, then call the operation with typed top-level arguments.
+Use `socialseal_get_tool_status` or the operation's named read for async runs;
+polling does not authorise restarting paid work. Reach enriched evidence rows via
+`socialseal_export_report` (`search_results_enriched`) or
+`socialseal_export_tracking_data`. See `../references/mcp-and-cli-usage.md`.
 
 ### ChatGPT and Codex
 
@@ -21,10 +28,6 @@ for any local `.app.json` mapping; do not invent or commit a placeholder ID.
 
 Claude Cowork uses the hosted endpoint as a custom connector. Claude Code may use
 the local stdio `@socialseal/mcp-server` developer fallback documented in the README.
-
-## CLI mode
-
-Use CLI mode when the agent has terminal access and the SocialSeal CLI is installed. The agent should run the CLI help command first, export data to local CSV/JSON, and save raw exports before analysis.
 
 ## Export-file mode
 

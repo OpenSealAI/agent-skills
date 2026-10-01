@@ -66,10 +66,9 @@ socialseal_export_tracking_data {
 Completeness check before movement claims:
 
 ```text
-socialseal_call_tool {
-  "toolName": "group-management",
+socialseal_get_tracking_group_completeness {
   "workspaceId": "<workspace-id>",
-  "body": { "action": "completeness", "group_id": <group-id> }
+  "group_id": <group-id>
 }
 ```
 

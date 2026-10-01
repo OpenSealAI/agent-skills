@@ -52,39 +52,56 @@ Good to have:
 
 ## Signal Sources (live tools)
 
-Three complementary sources, all invoked through the standard MCP/CLI surface (`references/mcp-and-cli-usage.md`):
+Three complementary sources, all invoked through the named MCP surface (`references/mcp-and-cli-usage.md`):
 
 1. **Search journeys** expand and score keywords for a subject and return staged keywords with `score`, `stage` (e.g. awareness/consideration), `language`, `englishGloss`, `confidence`, and a `scoresByPlatform.snapshotDate`. Re-running over time turns the score and the surfacing into a velocity signal.
 
 ```text
-socialseal_call_tool {
-  "toolName": "search-journey-run",
+socialseal_start_search_journey {
   "workspaceId": "<workspace-id>",
-  "body": { "subject": "<destination or activity>", "subjectType": "topic", "region": "<region>", "locale": "<locale>", "seedKeywords": ["<seed-1>", "<seed-2>"], "maxKeywords": 40, "executionMode": "async" }
+  "subject": "<destination or activity>",
+  "subjectType": "topic",
+  "region": "<region>",
+  "locale": "<locale>",
+  "seedKeywords": [
+    "<seed-1>",
+    "<seed-2>"
+  ],
+  "maxKeywords": 40
 }
 ```
 
 Heavy journeys can time out synchronously; use `executionMode: "async"` and poll:
 
 ```text
-socialseal_get_tool_status { "id": "<run-uuid>", "kind": "journey_run" }
+socialseal_get_search_journey_run { "workspaceId": "<workspace-id>", "runId": "<run-uuid>" }
 ```
 
 2. **Google AI search runs** capture how AI answers/citations treat a destination's queries. They return a numeric `runId`.
 
 ```text
-socialseal_call_tool {
-  "toolName": "google-ai-search",
+socialseal_start_google_ai_search {
   "workspaceId": "<workspace-id>",
-  "body": { "queries": ["<query-1>", "<query-2>"], "countryCode": "<cc>", "searchLanguage": "<lang>" }
+  "queries": [
+    "<query-1>",
+    "<query-2>"
+  ],
+  "countryCode": "<cc>",
+  "searchLanguage": "<lang>"
 }
 ```
 
 Read status/results by numeric run id with the dedicated read function (the generic status route may 403 for numeric AI runs):
 
 ```text
-socialseal_call_tool { "toolName": "get-google-ai-search-runs", "workspaceId": "<workspace-id>", "body": { "runId": <run-id> } }
-socialseal_call_tool { "toolName": "get-google-ai-search-results", "workspaceId": "<workspace-id>", "body": { "runId": <run-id> } }
+socialseal_list_google_ai_search_runs {
+  "workspaceId": "<workspace-id>",
+  "runId": <run-id>
+}
+socialseal_get_google_ai_search_results {
+  "workspaceId": "<workspace-id>",
+  "runId": <run-id>
+}
 ```
 
 3. **Tracking exports** give rank and surfacing over time for established keywords. Compare windows to read velocity.

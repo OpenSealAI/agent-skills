@@ -84,20 +84,26 @@ socialseal_export_tracking_data { "workspaceId": "<workspace-id>", "body": { "gr
 Bridge languages with a search journey. It returns staged keywords each carrying `language`, `englishGloss`, and `canonicalKeyword`, which is the explicit local-to-English map you can use to find the English equivalent of a local trend (and discover gaps):
 
 ```text
-socialseal_call_tool {
-  "toolName": "search-journey-run",
+socialseal_start_search_journey {
   "workspaceId": "<workspace-id>",
-  "body": { "subject": "<route or topic>", "subjectType": "topic", "region": "<region>", "locale": "<locale>", "seedKeywords": ["<local-language seed>", "<english seed>"], "maxKeywords": 30, "executionMode": "async" }
+  "subject": "<route or topic>",
+  "subjectType": "topic",
+  "region": "<region>",
+  "locale": "<locale>",
+  "seedKeywords": [
+    "<local-language seed>",
+    "<english seed>"
+  ],
+  "maxKeywords": 30
 }
 ```
 
-Heavy journeys can time out synchronously; start with `executionMode: "async"` and poll:
+The named start action queues an async journey; poll without starting another run:
 
 ```text
-socialseal_get_tool_status { "id": "<run-uuid>", "kind": "journey_run" }
+socialseal_get_search_journey_run { "workspaceId": "<workspace-id>", "runId": "<run-uuid>" }
 ```
 
-CLI equivalent: `npx -y @socialseal/cli tools call --function search-journey-run --async --body @journey.json --workspace-id <workspace-id>` then `tools status <run-uuid> --kind journey_run`.
 
 ## Workflow
 

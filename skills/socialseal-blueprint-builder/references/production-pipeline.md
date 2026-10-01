@@ -15,9 +15,8 @@ For an approved concept with a usable blueprint or supported scope, go directly 
 `socialseal_generate_brief`, then `socialseal_get_brief` / `socialseal_export_brief`.
 Use `socialseal_update_brief` for ordinary revisions. A new research pass is needed
 only when the evidence or scope requires it; a calendar-only or document-formatting
-request does not require the full pipeline. If a named action is absent, inspect
-the compatibility target using `socialseal_get_tool_schema` and invoke it with
-`socialseal_call_tool` (`toolName`, `body`, `workspaceId`). Preserve actual funding,
+request does not require the full pipeline. If a named action is absent, use host tool search to load its live schema. If it
+remains unavailable, report the missing operation and preserve completed work. Preserve actual funding,
 pending and missing-data states rather than silently switching to manual authoring.
 
 ## The opportunity spine

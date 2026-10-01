@@ -72,56 +72,48 @@ Good to have:
 Preview exemplars for a tracking-group scope:
 
 ```text
-socialseal_call_tool {
-  "toolName": "vnext-blueprints-generate",
+socialseal_generate_blueprint {
   "workspaceId": "<workspace-id>",
-  "body": {
-    "workspaceId": "<workspace-id>",
-    "opportunityKey": "<opportunity-key>",
-    "scopeType": "tracking_group",
-    "trackingGroupId": <group-id>,
-    "timePeriod": "30d",
-    "promotedCandidateTarget": 12,
-    "previewOnly": true
-  }
+  "opportunityKey": "<opportunity-key>",
+  "scopeType": "tracking_group",
+  "trackingGroupId": <group-id>,
+  "timePeriod": "30d",
+  "promotedCandidateTarget": 12,
+  "previewOnly": true
 }
 ```
 
 Semantic exploration with a prompt (topic scope):
 
 ```text
-socialseal_call_tool {
-  "toolName": "vnext-blueprints-generate",
+socialseal_generate_blueprint {
   "workspaceId": "<workspace-id>",
-  "body": {
-    "workspaceId": "<workspace-id>",
-    "opportunityKey": "<opportunity-key>",
-    "scopeType": "topic",
-    "pillarId": "<pillar-id>",
-    "retrievalPrompt": "first-timer walkthroughs that answer cost and timing",
-    "previewOnly": true
-  }
+  "opportunityKey": "<opportunity-key>",
+  "scopeType": "topic",
+  "pillarId": "<pillar-id>",
+  "retrievalPrompt": "first-timer walkthroughs that answer cost and timing",
+  "previewOnly": true
 }
 ```
 
 Extract Video DNA for promoted exemplars:
 
 ```text
-socialseal_call_tool {
-  "toolName": "tracked-video-extract",
+socialseal_extract_video_assets {
   "workspaceId": "<workspace-id>",
-  "body": {
-    "ensureAnalysis": true,
-    "includeAssets": true,
-    "items": [{ "videoUid": "<video-uid>" }]
-  }
+  "ensureAnalysis": true,
+  "items": [
+    {
+      "videoUid": "<video-uid>"
+    }
+  ]
 }
 ```
 
 Poll analysis status:
 
 ```text
-socialseal_get_tool_status { "id": "<video-uid>", "kind": "video_analysis", "includeResults": true }
+socialseal_get_tool_status { "workspaceId": "<workspace-id>", "id": "<video-uid>", "kind": "video_analysis", "includeResults": true }
 ```
 
 ## Output

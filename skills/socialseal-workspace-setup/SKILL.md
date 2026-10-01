@@ -84,202 +84,69 @@ If the workspace already exists and you can list workspaces, do that before aski
 
 ## Tooling
 
-Both MCP and CLI work. Prefer MCP when available: discover with `socialseal_list_workspaces` and `socialseal_list_available_tools`, read `socialseal_get_tool_schema` before mutating calls, then `socialseal_call_tool`. The CLI mirrors this with `tools list` / `tools schema` / `tools call`. See `references/mcp-and-cli-usage.md`.
-
-## CLI Setup Workflow
-
-Use `npx -y @socialseal/cli` unless the `socialseal` binary is already installed. Prefer machine-readable flags when available.
-
-### 1. Discover the current CLI surface
-
-Run these first. Do not rely on stale command memory.
-
-```bash
-npx -y @socialseal/cli --help
-npx -y @socialseal/cli workspace --help
-npx -y @socialseal/cli tools --help
-npx -y @socialseal/cli data --help
-```
-
-Then inspect the relevant tool schemas:
-
-```bash
-npx -y @socialseal/cli tools list
-npx -y @socialseal/cli tools schema --function group-management
-npx -y @socialseal/cli tools schema --function search-journey-run
-npx -y @socialseal/cli data export-options
-```
-
-### 2. Select the workspace
-
-List accessible workspaces:
-
-```bash
-npx -y @socialseal/cli workspace list --pretty
-```
-
-Show the current default:
-
-```bash
-npx -y @socialseal/cli workspace current --pretty
-```
-
-Set the default workspace by ID, slug, or exact name:
-
-```bash
-npx -y @socialseal/cli workspace use <workspace-id-or-slug-or-exact-name>
-```
-
-If using scoped keys or automation, still pass `--workspace-id <workspace-id>` explicitly to later commands. This avoids accidental fallback to a personal/default workspace.
-
-### 3. Design the group structure before creating groups
-
-Use one group per platform and coherent measurement scope. A good group name encodes platform, market, and type.
-
-Recommended group split:
-
-- `TikTok / US / category searches`
-- `TikTok / US / branded searches`
-- `Instagram / US / category searches`
-- `YouTube / US / category searches`
-- `Google AI / US / category questions`
-
-Rules:
-
-- Do not mix platforms in one group.
-- Do not mix branded and category keywords in one group.
-- Do not mix markets/languages unless the reporting question explicitly needs a combined view.
-- Use local-language search phrases for non-English markets.
-
-### 4. Create a tracking group
-
-Supported platform values include `tiktok`, `instagram`, `youtube`, `ig_reels`, `yt_shorts`, `douyin`, `xhs`, and `google_ai`.
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function group-management \
-  --workspace-id <workspace-id> \
-  --body '{"action":"create","name":"TikTok / US / category searches","platform":"tiktok","description":"Category search tracking for US TikTok keywords"}' \
-  --pretty
-```
-
-Save the returned numeric tracking group ID as `<group-id>`. Downstream export commands use numeric group IDs, not brand-group UUIDs.
-
-### 5. Add tracking items to the group
-
-For keyword payloads, use `group_id` and item objects. Omit item platform to inherit the group platform, or pass it explicitly if needed.
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function group-management \
-  --workspace-id <workspace-id> \
-  --body '{"action":"add_items","group_id":<group-id>,"items":[{"name":"<keyword one>","type":"keyword","value":"<keyword one>","region":"US"},{"name":"<keyword two>","type":"keyword","value":"<keyword two>","region":"US"}]}' \
-  --pretty
-```
-
-Use real user search language, not internal marketing phrasing. For travel/hospitality and many consumer categories, useful keywords often express planning help, comparisons, timing, location, first-timer questions, or practical detail.
-
-### 6. Check setup completeness
-
-Use completeness to confirm expected memberships and optionally refresh visibility.
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function group-management \
-  --workspace-id <workspace-id> \
-  --body '{"action":"completeness","group_id":<group-id>,"expected_items":[{"track_type":"search","track_value":"<keyword one>","region":"US"},{"track_type":"search","track_value":"<keyword two>","region":"US"}],"include_refresh_status":true}' \
-  --pretty
-```
-
-Do not declare setup complete until the group has the expected items.
-
-### 7. Run or inspect a baseline search journey
-
-A search journey helps validate subject, region, and keyword direction before or after group creation.
-
-Start a run:
-
-```bash
-npx -y @socialseal/cli tools call \
-  --function search-journey-run \
-  --workspace-id <workspace-id> \
-  --body '{"subject":"<brand-or-topic>","subjectType":"brand","region":"US","executionMode":"async"}' \
-  --pretty
-```
-
-Poll an async journey run:
-
-```bash
-npx -y @socialseal/cli tools status <run-uuid> \
-  --kind journey_run \
-  --workspace-id <workspace-id>
-```
-
-Use `subjectType: "brand"` for a brand, `"topic"` for a category/topic. If the CLI schema shows additional fields such as `locale`, `platformKeys`, `seedKeywords`, `contentPillars`, or `maxKeywords`, use them when relevant.
-
-#### Fast discovery when no tracking group exists
-
-Do not stop at "there is no group" and do not proceed with generic content. Offer:
-
-1. **Focused one-off journey:** quickest way to discover or validate a small query
-   set for an immediate brief. It does not create reusable tracking on its own.
-2. **Reusable setup:** create clean groups/items, run the journey, refresh, and verify
-   exports so future planning and measurement reuse the evidence.
-
-Before a journey, inspect the live `search-journey-run` schema and any exposed
-preflight/credit information. Show the proposed subject, region, seeds, platform
-scope, and focused/full option. Obtain the user's choice before consuming credits.
-After the run, preserve the journey output and route it to opportunity analysis; do
-not reduce it to a list of hashtags.
-
-### 8. Verify export data flow
-
-List export options:
-
-```bash
-npx -y @socialseal/cli data export-options
-```
-
-For enriched ranked search rows:
-
-```bash
-npx -y @socialseal/cli data export-search-results \
-  --group-ids <group-id> \
-  --workspace-id <workspace-id> \
-  --out ./exports/search-results-<group-id>.csv \
-  --timeout 120000
-```
-
-For group evidence that automatically routes social and Google AI groups to the correct export shape:
-
-```bash
-npx -y @socialseal/cli data export-group-evidence \
-  --group-id <group-id> \
-  --workspace-id <workspace-id> \
-  --out ./exports/group-evidence-<group-id>.csv \
-  --timeout 120000
-```
-
-A valid setup should produce a file with usable rows or a clear, explainable reason for no rows, such as a new group with no completed refresh yet.
+Use the host's tool search to load each named operation and inspect its live
+schema. Resolve the workspace with `socialseal_get_current_workspace` or
+`socialseal_list_workspaces`; pass that exact workspace ID throughout. Read existing
+groups before proposing new setup. See `references/mcp-and-cli-usage.md`.
 
 ## MCP Setup Workflow
 
-Use the same logical workflow through MCP. Do not invent MCP tool names.
+Design one group per platform, market and coherent measurement scope. Keep branded
+and category queries separate, use local-language terms, and record the keyword
+source. Confirm the proposed setup and any required collection approval before
+starting paid work. Create one group and verify a small set before bulk setup.
 
-1. List available MCP tools from the SocialSeal server.
-2. Identify tools corresponding to:
-   - workspace list/current/select
-   - tool/function schema or help
-   - tracking group creation
-   - tracking item add/bulk add
-   - group completeness/status
-   - search journey start/status
-   - search results or group evidence export
-3. Read tool schema before calling mutating actions.
-4. Create one group first, add a small keyword set, and verify completeness before bulk creation.
-5. Export evidence after setup to confirm the workspace produces downstream data.
+```text
+socialseal_create_tracking_group {
+  "workspaceId": "<workspace-id>",
+  "name": "TikTok / US / category searches",
+  "platform": "tiktok",
+  "description": "Category search tracking for US TikTok"
+}
+socialseal_add_tracking_group_items {
+  "workspaceId": "<workspace-id>",
+  "group_id": <group-id>,
+  "items": [{ "name": "<keyword>", "type": "keyword", "value": "<keyword>", "region": "US" }]
+}
+socialseal_get_tracking_group_completeness {
+  "workspaceId": "<workspace-id>",
+  "group_id": <group-id>,
+  "expected_items": [{ "track_type": "search", "track_value": "<keyword>", "region": "US" }],
+  "include_refresh_status": true
+}
+```
 
-If MCP lacks a setup operation that the CLI supports, use the CLI for that operation and continue with MCP for reads/exports.
+Search adds use canonical Topic resolution; preserve returned conflicts and
+approval/idempotency requirements. Completeness reads stored memberships and
+refresh status; it does not collect evidence or prove freshness. Do not declare
+setup complete until expected items are present.
+
+For a baseline search journey, inspect the live `socialseal_start_search_journey`
+schema and available preflight/credit information. Show subject, region, seeds and
+platform scope; obtain the user's focused/full choice before consuming credits.
+Use a focused one-off journey for an immediate brief, or reusable group setup when
+future measurement is requested. Preserve the journey output for opportunity
+analysis rather than reducing it to hashtags.
+
+```text
+socialseal_start_search_journey {
+  "workspaceId": "<workspace-id>", "subject": "<brand-or-topic>",
+  "subjectType": "brand", "region": "US"
+}
+socialseal_get_search_journey_run {
+  "workspaceId": "<workspace-id>", "runId": "<run-uuid>"
+}
+socialseal_export_report {
+  "workspaceId": "<workspace-id>",
+  "reportType": "search_results_enriched", "format": "csv",
+  "payload": { "groupIds": [<group-id>] }
+}
+```
+
+Use `subjectType: "topic"` for a category. Poll the returned run, preserving pending,
+funding and missing-data states; do not restart it to poll. Read the complete export,
+including chunks when needed, and report actual coverage. A new group may have no
+completed evidence yet; do not claim setup produced fresh collection.
 
 ## Done Means
 
