@@ -80,9 +80,9 @@ claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
 ### Cursor and Grok Bot
 
 The Cursor-format package at `.cursor-plugin/plugin.json` connects to the hosted
-SocialSeal MCP server and includes the focused `socialseal-creator-evaluation`
-skill. Routine social-search, profile, and post requests use the live tools directly;
-they do not require a tracking group or the broader production skills in this repo.
+SocialSeal MCP server and includes all 23 skills through Cursor's default discovery
+of `skills/*/SKILL.md`. Routine social-search, profile, and post requests use the
+live tools directly; they do not require a tracking group or the production skills.
 Follow the tools' current schemas, account permissions, collection quotes, and
 approval requirements. A SocialSeal account is required; available operations depend
 on that account's entitlements.
@@ -112,9 +112,9 @@ Grok bot template; recipients must connect their own SocialSeal account.
 npx skills add OpenSealAI/agent-skills
 ```
 
-The Claude plugin manifest lives at `.claude-plugin/plugin.json` and remains
-skills-only for Claude plugin compatibility. Live tools should use the hosted
-connector for Cowork or the local stdio MCP developer fallback for Claude Code. The
+The Claude plugin manifest lives at `.claude-plugin/plugin.json`; the root
+`.mcp.json` declares the hosted HTTP MCP server. Cowork uses the hosted connector;
+Claude Code can also use the local stdio MCP developer fallback. The
 native ChatGPT/Codex package instead lives at `.codex-plugin/plugin.json` and bundles
 the hosted MCP connection through `.mcp.json`.
 
@@ -202,7 +202,7 @@ This repository is structured for:
 
 - Agent Skills / skills.sh: `skills/<skill-name>/SKILL.md`
 - ChatGPT/Codex plugin: `.codex-plugin/plugin.json`, `.mcp.json`, and `skills/`
-- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and the creator-evaluation skill; marketplace review and Grok compatibility pending
+- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and all 23 skills; marketplace review and Grok compatibility pending
 - Claude Code plugin marketplace: `.claude-plugin/plugin.json` plus direct `skills/` children
 - Hermes project usage through the same `SKILL.md` files
 

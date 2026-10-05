@@ -22,6 +22,5 @@
     "Douyin"
   ],
   "logo": "assets/socialseal-logo.png",
-  "skills": ["skills/socialseal-creator-evaluation"],
   "mcpServers": ".mcp.json"
 }

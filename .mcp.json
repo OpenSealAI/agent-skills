@@ -1,6 +1,7 @@
 {
   "mcpServers": {
     "socialseal": {
+      "type": "http",
       "url": "https://mcp.socialseal.co/mcp"
     }
   }
