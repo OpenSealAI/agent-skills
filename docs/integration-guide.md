@@ -26,8 +26,8 @@ for any local `.app.json` mapping; do not invent or commit a placeholder ID.
 
 ### Claude
 
-Claude Cowork uses the hosted endpoint as a custom connector. Claude Code may use
-the local stdio `@socialseal/mcp-server` developer fallback documented in the README.
+Claude Cowork uses the hosted endpoint as a custom connector. Claude Code uses the
+same endpoint through the plugin's `.mcp.json` and signs in with `/mcp`.
 
 ## Export-file mode
 

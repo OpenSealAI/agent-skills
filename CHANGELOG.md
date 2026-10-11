@@ -1,5 +1,10 @@
 # Changelog
 
+## Claude plugin 0.8.3 (unreleased)
+
+- Claude Code signs in to the bundled hosted connector with `/mcp`; remove the local stdio device-login guidance that stored a key on the user's machine.
+- Add the Claude directory listing icon and privacy policy URL.
+
 ## 0.8.2 (unreleased)
 
 - Use named MCP operations and typed arguments across active skills and bundled references.

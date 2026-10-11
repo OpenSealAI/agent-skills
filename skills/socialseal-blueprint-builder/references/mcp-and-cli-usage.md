@@ -1,7 +1,7 @@
 # SocialSeal MCP and File-Mode Usage
 
-MCP is the supported agent interface. Use the connected hosted server in Cowork;
-local stdio MCP is a developer fallback. Do not direct users to install or use the
+MCP is the supported agent interface. Use the connected hosted server in Cowork
+and Claude Code. Do not direct users to install or use the
 retired standalone SocialSeal CLI. The historical filename of this reference is
 retained for existing skill links.
 
@@ -146,8 +146,8 @@ If tool discovery and connection status confirm no SocialSeal access in Cowork, 
 `https://mcp.socialseal.co/mcp`, then connect/sign in. Do not ask a non-technical
 Cowork user to install Node.js or run shell commands.
 
-Developers can use the local `@socialseal/mcp-server` stdio server. Its
-`socialseal_start_login` / `socialseal_poll_login` actions handle device login.
+In Claude Code, the plugin bundles the same hosted connector; ask the user to run
+`/mcp`, select `socialseal`, and sign in.
 
 If live access is unavailable, use supplied exports and approved documents. State
 their dates and limitations; file mode cannot start live collection or run the

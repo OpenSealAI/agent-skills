@@ -71,11 +71,8 @@ Install the skills plugin:
 /plugin install socialseal-agent-skills@socialseal-skills
 ```
 
-For local developer MCP usage, install the local stdio server separately. This is a developer fallback, not the default Cowork setup, and it requires Node.js and `npx`:
-
-```bash
-claude mcp add --transport stdio socialseal -- npx -y @socialseal/mcp-server
-```
+The plugin bundles the hosted SocialSeal connector. Run `/mcp`, select `socialseal`,
+and sign in to SocialSeal in the browser window that opens.
 
 ### Cursor and Grok Bot
 
@@ -113,8 +110,8 @@ npx skills add OpenSealAI/agent-skills
 ```
 
 The Claude plugin manifest lives at `.claude-plugin/plugin.json`; the root
-`.mcp.json` declares the hosted HTTP MCP server. Cowork uses the hosted connector;
-Claude Code can also use the local stdio MCP developer fallback. The
+`.mcp.json` declares the hosted HTTP MCP server, which Cowork and Claude Code both
+use. The
 native ChatGPT/Codex package instead lives at `.codex-plugin/plugin.json` and bundles
 the hosted MCP connection through `.mcp.json`.
 
