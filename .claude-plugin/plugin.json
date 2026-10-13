@@ -1,12 +1,16 @@
 {
   "name": "socialseal-agent-skills",
+  "displayName": "SocialSeal",
   "description": "Turn TikTok, Instagram, Xiaohongshu/RedNote, Douyin, and social-search demand into short-form video ideas, creator briefs, content plans, and discoverability insights.",
   "version": "0.8.3",
   "author": {
     "name": "SocialSeal contributors"
   },
   "homepage": "https://github.com/OpenSealAI/agent-skills",
+  "documentationUrl": "https://app.socialseal.co/docs/mcp-connector",
+  "supportUrl": "https://app.socialseal.co/docs/mcp-connector",
   "privacyPolicyUrl": "https://app.socialseal.co/privacy",
+  "termsOfServiceUrl": "https://app.socialseal.co/terms",
   "repository": "https://github.com/OpenSealAI/agent-skills",
   "license": "MIT",
   "keywords": [
