@@ -14,7 +14,7 @@ Who the content is for: the specific viewer whose search and hesitation the cont
 A durable theme the brand will keep making content about, tied to real search demand. 3-5 pillars, each mapping to a cluster of viewer jobs and keywords (e.g. "first-timer planning", "cost and value", "neighborhood guides").
 
 - Why it matters: pillars are the unit that maps to tracking groups and to blueprint scopes.
-- Derive with SocialSeal: cluster the tracked keyword set and surfaced content; group recurring viewer jobs into candidate pillars; validate each pillar has search demand and a presence gap worth filling.
+- Derive with SocialSeal: cluster the tracked keyword set and surfaced content; group recurring viewer jobs into candidate pillars; check each pillar has a presence gap worth filling and at least one positive demand signal (Google volume, platform autocomplete, surfaced-result response or engagement), then rank the pillars by those signals. See "Relative demand" in `evidence-and-confidence.md`.
 
 ### Brand voice
 How the brand sounds and what it will and will not say: tone, reading level, point of view, and hard constraints (claims it cannot make, words to avoid). For UGC/creator content this is creator-led and social-native, not ad copy.
@@ -58,7 +58,7 @@ What success looks like in SocialSeal terms: improved discoverability or share o
 
 Strategy is ready enough to start production when:
 - there are named personas tied to viewer jobs (not just demographics)
-- there are 3-5 content pillars, each with real tracked search demand
+- there are 3-5 content pillars, each backed by at least one positive demand signal and ranked
 - there is a brand voice / constraints note
 - there is a brand utility bank with exclusions and claim confidence
 - there is at least one measurable goal (pillar/keyword + market + platform + baseline)

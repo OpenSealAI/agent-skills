@@ -41,7 +41,7 @@ Assess two halves and report each as ready / partial / missing.
 
 ### Strategy foundations
 - **Target personas:** named viewers with a job-to-be-done and hesitations, not just demographics.
-- **Content pillars:** 3-5 durable themes, each tied to real tracked search demand.
+- **Content pillars:** 3-5 durable themes, each backed by at least one positive demand signal and ranked against the others.
 - **Brand voice:** tone, point of view, and hard constraints (claims to avoid).
 - **Brand utility bank:** products/services actually offered, exclusions, real tips,
   itineraries, routes, timings, prices, proof, and facts needing confirmation.
@@ -65,7 +65,7 @@ Assess two halves and report each as ready / partial / missing.
 2. **Explain the gap.** For each missing foundation, give a one or two sentence plain-language explanation of what it is and why it matters. Do not assume the term is understood.
 3. **Propose a SocialSeal-backed way to define it.** Concretely:
    - **Personas:** run a search journey on the category, read which questions/jobs surface, cluster keywords, and propose 2-4 personas grounded in real search behavior for the user to confirm.
-   - **Pillars:** cluster the tracked keyword set and surfaced content into 3-5 candidate pillars relevant to the user's brand and product USPs, each validated for search demand and a presence gap.
+   - **Pillars:** cluster the tracked keyword set and surfaced content into 3-5 candidate pillars relevant to the user's brand and product USPs, each checked for a presence gap and ranked by the demand signals available (see "Relative demand" in `references/evidence-and-confidence.md`). Missing Google volume is not missing demand.
    - **Brand voice:** ask for existing guidelines; if none, draft a short voice note from how the brand talks on their website and in existing social videos, or from high-surfacing creator tone in the category, then confirm.
    - **Brand utility bank:** inspect approved project materials, product/service pages,
      itineraries, call notes, existing content, and asset metadata. Draft a table of
