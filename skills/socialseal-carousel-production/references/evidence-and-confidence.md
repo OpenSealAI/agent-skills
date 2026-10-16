@@ -28,7 +28,7 @@ Safe phrasing:
 
 Practical rules:
 - always state the denominator and the scope (platform, market, language, keyword set, date range)
-- do not infer total demand, total supply, or audience size from surfaced results
+- do not infer total demand, total supply, or audience size from surfaced results; comparing queries against each other within one scope is still valid (see "Relative demand" below)
 - a keyword with zero surfaced owned content is a presence gap, not proof of audience demand or its absence
 - if the keyword set changed between periods, comparisons are directional only; say so
 
@@ -48,6 +48,34 @@ Practical rules:
 - the blueprint engine compiles best practices from exemplar evidence; that raises confidence but does not convert anecdote into proof
 - avoid the words "proof", "proven", "guaranteed", or "will work" for creative bets; use "evidence suggests", "worth testing", "consistent with"
 
+## Relative demand: rank with the signals you have
+
+SocialSeal has no single, exact figure for social search volume. That is a reason to label confidence, not a reason to withhold prioritisation. When the user is choosing between topics, keywords, hooks, titles or wordings, always return an ordered ranking built from the demand signals available, say which signals each position rests on, and recommend a choice.
+
+Start from the summaries the tools already compute: each keyword from `socialseal_list_keywords` carries `demandSignals` (`evidenceLevel` strong/indicative/untested, the signals present, and `googleSearchVolume.state`, where `not_collected` means never fetched, not zero), and each Explore snapshot carries `signalRanking` (terms ordered by observed components, with an `evidenceLevel`, even when the calibrated index is null).
+
+Signals that correlate with demand (use every one that is present):
+
+| Signal | Where it appears | What it tells you |
+| --- | --- | --- |
+| Google search volume and monthly trend | `seoMetrics.searchVolume`, `seoMetrics.trend`, `seoMetrics.monthlySearches` on `socialseal_list_keywords`; Explore component `googleDemand` | Monthly Google searches in that market, plus direction and seasonality. Strong evidence of intent; it is Google, not a social platform. |
+| Platform autocomplete | keyword `sources` containing `tiktok_suggest`, `tiktok_autocomplete`, `youtube_autocomplete` or `google_autocomplete`; Explore component `recommendationSalience` (higher = more prominent suggestion) | People type this phrasing on that platform. Prefer an autocomplete phrasing over an invented variant of the same question. |
+| Search-result response | how many relevant videos surface for the query and how prominently; Explore component `searchResultResponse` | How much content the platform serves for the query. |
+| Engagement on surfaced results | views/likes/saves of the top surfaced videos for the query; Explore component `searchResultEngagement` | Audience attention on content for that query. Compare only within the same platform, market and capture window, deduplicating videos. |
+| Explore relative demand index | `diagnostics.relativeDemand.terms[].index` (0-100) on an Explore snapshot | Calibrated composite of the components above. When `index` is null (term state `insufficient_evidence` or `partial`, snapshot `indexState` `thin`), the calibration gate failed, but each term's `components.*.rawValue` is still an observation: use the snapshot's `signalRanking`, which orders terms by those observations. |
+
+Ranking rules:
+
+- Always produce an order. Low confidence or near-ties are fine; say so.
+- A candidate with any positive signal ranks above one with none. Before ranking a wording you or the user proposed, check it with `socialseal_check_keyword_demand` (free: live Google/YouTube autocomplete plus stored Google volume). If it is still untested, rank it last, or recommend one of the observed alternative wordings the check returns.
+- Missing Google volume (`seoMetrics: null`) is unknown, not zero, and not "no demand". Rank with the other signals.
+- Compare like with like: same platform, market, language and capture window. Do not add Google searches to social views; rank on each signal separately, then combine the ranks, giving weight to agreement between independent signals.
+- Label each ranked item **Strong** (two or more independent signals agree), **Indicative** (one signal) or **Untested** (no signal yet), and name the signals.
+- Keep the scope caveat to one line. Never present a relative ranking as total market demand or audience size.
+- If a paid check (search journey or Explore for Google Ads volume and TikTok autocomplete) would settle a close call, offer it after giving the ranking, not instead of it.
+
+Example: "Rank 1, `costa rica hot springs` [US]: Strong, 3,600 Google searches/month (falling since January) and in TikTok autocomplete. Rank 2, `best time to visit costa rica` [US]: Indicative, TikTok autocomplete only. Rank 5, `costa rica trip deposit` [US]: Untested, no signal yet; use it as a supporting line inside a higher-ranked video rather than as the title."
+
 ## One-line confidence labels
 
 Attach a confidence basis to recommendations:
@@ -66,4 +94,4 @@ Attach a confidence basis to recommendations:
 - **Model interpretations:** `likelyReasonItRanks`, inferred intent and blueprint practices are interpretations of evidence. They are not measured causal effects, independent corroboration or performance guarantees. A detected face supports "face present", not "faces caused the result".
 - **Topic versus claim support:** a popular activity does not establish suitability for a birthday, infant, product or market. Support each recommendation's particular scope using relevant audience and product/service facts, or label the inference and unresolved fact.
 
-Use scoped wording such as "the videos returned for these queries accumulated more views" rather than "this audience has more demand". Inspect relevant examples before selecting a creative treatment. If a prerequisite is missing, explain the narrow gap and continue with supported work; do not repeatedly run the same failing operation or fabricate a substitute statistic.
+Use scoped wording such as "the videos returned for these queries accumulated more views" rather than "this audience has more demand". Scoped wording changes how a ranking is phrased, not whether you give one. Inspect relevant examples before selecting a creative treatment. If a prerequisite is missing, explain the narrow gap and continue with supported work; do not repeatedly run the same failing operation or fabricate a substitute statistic.

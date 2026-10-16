@@ -45,7 +45,7 @@ Discovery and skills are references, not mandatory gates for every read or edit.
 - New video/editor/UGC briefs: `socialseal_generate_brief`. Existing blueprint/version or supported scope is sufficient to begin; reference selection can use `socialseal_generate_blueprint` when needed.
 - Existing brief: `socialseal_get_brief`, `socialseal_update_brief`, `socialseal_export_brief`. A formatting or copy edit does not need new evidence collection.
 - Tracking setup: `socialseal_create_tracking_group`, `socialseal_add_tracking_group_items`, then `socialseal_get_tracking_group_completeness`. Read existing groups before proposing setup.
-- Search demand: `socialseal_start_search_journey` and `socialseal_get_search_journey_run`; Google AI uses `socialseal_start_google_ai_search`, `socialseal_list_google_ai_search_runs`, and `socialseal_get_google_ai_search_results`.
+- Demand signals: read what the workspace already holds before collecting more: `socialseal_list_keywords` (`demandSignals`, `seoMetrics`, autocomplete `sources`), Explore snapshots via `socialseal_explore_get` (`relativeDemand`), and tracked-query results. Compare candidate wordings, hooks or titles with `socialseal_check_keyword_demand` (free autocomplete check plus stored volume). Expand or validate keyword candidates with `socialseal_start_search_journey` and `socialseal_get_search_journey_run`. Google AI uses `socialseal_start_google_ai_search`, `socialseal_list_google_ai_search_runs`, and `socialseal_get_google_ai_search_results`. Rank candidates with whatever signals exist; see "Relative demand" in `evidence-and-confidence.md`.
 - Source-video assets: `socialseal_extract_video_assets` with stored identifiers. For a supplied public URL, use `socialseal_analyse_public_video`.
 
 Inspect the exact live input schema before an unfamiliar mutation. Arguments go
@@ -98,6 +98,15 @@ Retain the returned lineage/run identity and poll with `socialseal_explore_get`
 preview or start is unavailable after host discovery, report that exact capability
 limitation and preserve completed work.
 
+When a snapshot exists, read `diagnostics.relativeDemand.terms[]`. `index` (0-100)
+ranks terms within that snapshot. A null `index`, a term state of
+`insufficient_evidence` or `partial`, or a snapshot `indexState` of `thin` means the
+calibrated composite was gated, not that demand is unknown. Use the snapshot's
+`signalRanking`, which orders terms by their observed components (`googleDemand`,
+`recommendationSalience`, `searchResultResponse`, `searchResultEngagement`) and
+labels each `evidenceLevel`. `socialseal_explore_list` returns a summary view; read
+one snapshot with `socialseal_explore_get` for the full components and evidence.
+
 ## Workspace and identity
 
 Use the workspace the user named. For an unnamed workspace, resolve
@@ -124,7 +133,9 @@ then each `next_offset` until `has_more` is false. Report partial coverage if re
 stops early; do not assume omitted rows are unimportant or expose the token.
 
 Views on surfaced videos are not search volume, query-attributed engagement or
-verified local audience demand. Region describes collection context. Preserve
+verified local audience demand. Within one platform, market and capture window,
+result counts, rank and views remain valid relative demand signals for comparing
+queries. Region describes collection context. Preserve
 capture dates, denominator, duplicate-video treatment and missing values. See
 `evidence-and-confidence.md` before deriving audience/creative recommendations.
 
