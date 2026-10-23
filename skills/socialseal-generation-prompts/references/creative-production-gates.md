@@ -55,7 +55,7 @@ reference, or pause that deliverable. Do not paper over the gap.
 - **Prototype:** representative partial execution for direction approval.
 - **Draft:** complete enough to review, with known gaps.
 - **Rough cut:** video assembled in an external editor and requiring finishing.
-- **Editor handoff:** brief, sources, panel coverage, copy, and notes packaged for
+- **Editor handoff:** brief, sources, shot coverage, copy, and notes packaged for
   the editor; no assembled timeline is promised.
 - **Editor-ready:** the editor handoff plus any externally produced timeline
   required by the agreed delivery contract.

@@ -121,7 +121,7 @@ the hosted MCP connection through `.mcp.json`.
 - Design tracking groups, keyword sets, markets, platforms, and competitor scopes.
 - Analyze discoverability gaps and competitor/content patterns.
 - Shortlist creator-shop partners by search authority, monitor bilingual (local-vs-English) demand, and route resources to early demand signals.
-- Run the SocialSeal production engine: identify and analyze reference videos (Video DNA), compile best-practices blueprints, generate briefs from blueprints, and prepare source clips and editor handoffs.
+- Run the SocialSeal production engine: study reference videos, topics, competitors or creators (Video DNA, with paid analysis priced and approved first), generate briefs from a Study, and prepare source clips and editor handoffs.
 - Build social plans, creator briefs, video concepts, asset plans, and editor handoffs.
 - Read out posted content and campaign performance, track discoverability, and plan next actions.
 
@@ -164,7 +164,7 @@ installed host versions are separate; report an unavailable operation precisely.
 
 ### Production
 
-These follow the SocialSeal vNext engine: opportunity -> reference videos -> blueprint -> brief -> source-clip/editor handoff, joined by a single `opportunityKey`. See [references/production-pipeline.md](references/production-pipeline.md).
+These follow the SocialSeal vNext engine: opportunity -> Study of reference videos -> brief -> source-clip/editor handoff, joined by a single `opportunityKey`. Every brief is generated from a Study. See [references/production-pipeline.md](references/production-pipeline.md).
 
 - `socialseal-video-concepting`
 - `socialseal-reference-video-analysis`

@@ -27,7 +27,7 @@ The deliverable is not “competitor posts are doing well.” The deliverable is
 
 Measurement is a different job: if the request is to measure or compare visibility — discoverability, keyword coverage, share of voice, or rank statistics for a brand vs a competitor — route to `socialseal-discoverability-tracking`. This skill extracts content patterns (Video DNA); it does not produce visibility metrics.
 
-When the goal is to produce content (not just analysis), route into the production engine instead of stopping at a pattern matrix: use `socialseal-reference-video-analysis` to select and analyze exemplars and `socialseal-blueprint-builder` to compile a grounded blueprint. This skill is for the strategy-side pattern read; the engine turns those patterns into briefs and evidence for editor handoffs. See `references/production-pipeline.md`.
+When the goal is to produce content (not just analysis), route into the production engine instead of stopping at a pattern matrix: use `socialseal-reference-video-analysis` to study and analyze exemplars and `socialseal-creator-briefing` to generate a brief from that Study. This skill is for the strategy-side pattern read; the engine turns those patterns into briefs and evidence for editor handoffs. See `references/production-pipeline.md`.
 
 For carousels or other non-video formats, inspect the actual post/slide assets when
 the ranked result exposes them. If only metadata is available, label the format read
@@ -53,7 +53,7 @@ socialseal_export_report {
 }
 ```
 
-Extract individual video analysis/assets with `socialseal_extract_video_assets` using `{ "workspaceId": "<workspace-id>", "ensureAnalysis": true, "items": [{ "videoUid": "<video-uid>" }] }`. Inspect the live schema for supported stored identifiers and preserve analysis costs and continuation. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
+Get Video DNA for sampled videos with a Study: `socialseal_start_study` using `{ "workspaceId": "<workspace-id>", "subject": { "kind": "videos", "videoUids": ["<video-uid>"] } }` (or a `competitor` subject), then read per-video evidence with `socialseal_get_study`. Any new analysis is priced first; run it only after the user approves the price. Use `socialseal_extract_video_assets` for frames and source assets of stored videos. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
 
 Evidence note: surfaced exemplars are anecdotal evidence for creative direction, not proof a pattern will perform. A pattern needs multiple exemplars or an explicit reason; frame adaptations as hypotheses to test. See `references/evidence-and-confidence.md`.
 
@@ -112,8 +112,8 @@ Don't:
 
 ## Troubleshooting
 
-- If `socialseal_extract_video_assets` cannot resolve an ID, inspect its live schema for the supported stored identifiers and preserve the unresolved item. Use `socialseal_analyse_public_video` for a supplied public URL under its quote/approval boundary.
-- If analysis is missing, use `--ensure-analysis --wait`.
+- If a Study skips a video or `socialseal_extract_video_assets` cannot resolve an ID, preserve the returned reason and the unresolved item. Study a supplied public URL as `{ "kind": "videos", "urls": ["<video-url>"] }` under its price/approval boundary.
+- If analysis is missing, start a Study of those videos and approve its price; poll `socialseal_get_study` while it is `enriching`.
 - If assets are unavailable, use titles/captions/metadata and label the evidence as metadata-only.
 - If examples are off-topic, resample from stricter keyword or market filters.
 

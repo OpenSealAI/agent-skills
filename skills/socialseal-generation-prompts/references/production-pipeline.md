@@ -1,93 +1,111 @@
 # SocialSeal Production Pipeline (vNext)
 
-SocialSeal can select reference evidence, synthesise a blueprint and generate a brief with retained source lineage. The source links help review; they do not establish factual accuracy, practical usefulness or future performance. Inspect the live released tools for the requested deliverable before following any later production stage.
+SocialSeal can study reference videos, compile what they show into a Study revision and generate a brief with retained source lineage. The source links help review; they do not establish factual accuracy, practical usefulness or future performance. Inspect the live released tools for the requested deliverable before following any later production stage.
 
 For a multi-stage production request, pair this engine with
 `creative-production-gates.md`: confirm brand utility, let the user choose demand and
 benchmark directions, approve material asset substitutions and a representative
 prototype, then run final QA. Engine completion is not the same as post-ready.
 
-Use this reference whenever a task touches reference videos, blueprints, briefs, or source-clip handoffs. Do not fall back to generic "write a content idea" behavior when these tools exist.
+Use this reference whenever a task touches reference videos, Studies, briefs, or source-clip handoffs. Do not fall back to generic "write a content idea" behavior when these tools exist.
+
+Every brief is generated from a Study. Blueprints and topic-only brief requests have
+retired: a brief request without a usable Study returns `study_needed` (or
+`study_required`) instead of a brief. Understanding one video is a one-video Study.
 
 ## Brief requests can enter directly
 
-For an approved concept with a usable blueprint or supported scope, go directly to
-`socialseal_generate_brief`, then `socialseal_get_brief` / `socialseal_export_brief`.
-Use `socialseal_update_brief` for ordinary revisions. A new research pass is needed
-only when the evidence or scope requires it; a calendar-only or document-formatting
-request does not require the full pipeline. If a named action is absent, use host tool search to load its live schema. If it
-remains unavailable, report the missing operation and preserve completed work. Preserve actual funding,
-pending and missing-data states rather than silently switching to manual authoring.
+For an approved concept with a usable Study revision, go directly to
+`socialseal_generate_brief` with its `studyContext`, then `socialseal_get_brief` /
+`socialseal_export_brief`. Use `socialseal_update_brief` for ordinary revisions. When
+no Study fits yet, call `socialseal_generate_brief` anyway: it starts nothing and
+returns `study_needed` with Study subjects to offer the user (see Stage 4). A
+calendar-only or document-formatting request does not require the full pipeline. If a
+named action is absent, use host tool search to load its live schema. If it remains
+unavailable, report the missing operation and preserve completed work. Preserve
+actual funding, pending and missing-data states rather than silently switching to
+manual authoring.
 
 ## The opportunity spine
 
 Every production artifact is tied together by a stable `opportunityKey` (8-128 chars). The same key flows:
 
 ```
-journey / opportunity  ->  blueprint  ->  brief  ->  editor handoff
-        (opportunityKey is the join across all of them)
+journey / opportunity  ->  Study  ->  brief  ->  editor handoff
+        (opportunityKey joins the brief and handoff; the Study is cited by studyRef + revision)
 ```
 
-A blueprint and brief for the same opportunity share one `opportunityKey`. Preserve it in the editor handoff; do not mint a new key per stage.
+A brief records the Study revision it was generated from. Preserve the `opportunityKey` and that Study reference in the editor handoff; do not mint a new key per stage.
 
-## Stage 1: Identify reference videos (evidence)
+## Stage 1: Choose what to study (evidence)
 
-The engine selects exemplar videos from real tracked data. You rarely hand-pick from scratch.
+A Study works from real videos. You rarely hand-pick from scratch. Start one with
+`socialseal_start_study` and a `subject`:
 
-Scope a blueprint generation by one of:
+- `{ "kind": "topic", "topicId": "<topic-id>" }` or `{ "kind": "topic", "keywords": [...], "question": "..." }`
+- `{ "kind": "competitor", "brandId": "<brand-id>" }` or `{ "kind": "competitor", "handle": "<handle>" }`
+- `{ "kind": "creator", "handle": "<handle>", "platformId": 1 }`
+- `{ "kind": "monitor_finding", "monitor": { ... } }` for a Monitor finding
+- `{ "kind": "saved_set", "videoListId": "<video-list-id>" }`
+- `{ "kind": "videos", "urls": [...], "videoUids": [...] }` for specific videos; one video is `{ "kind": "videos", "urls": ["<video-url>"] }`
 
-- `scopeType: "topic"` with `pillarId` (uses pillar seed terms)
-- `scopeType: "competitor"` with `competitorBrandIds[]` (uses brand aliases, mentions, handles)
-- `scopeType: "tracking_group"` with `trackingGroupId` (uses the group's search keywords)
-- `scopeType: "manual"` with `videoUids[]` (hand-picked)
-- `scopeType: "list"` with `listId` + `readinessRunId`
+Narrow with `platformIds` (1 TikTok, 2 Instagram, 3 YouTube), `regions` (country
+codes) and `windowDays`. A brief tool's `study_needed` candidates carry ready-made
+`startStudyArguments`; use them as given.
 
-Or use query-native semantic retrieval: pass a `retrievalPrompt` (2-2000 chars) on a topic/competitor/tracking_group scope. This routes through broad video retrieval and clusters candidates. `retrievalPrompt` is not allowed with manual or list scope.
-
-Refinement controls: `pinnedVideoUids[]`, `excludedVideoUids[]`, `promotedCandidateTarget` (<=24), `platformIds[]`, `region`, `language`, `timePeriod` (e.g. `30d`).
-
-Preview before committing: pass `previewOnly: true` to inspect candidate and promoted-exemplar lists (with scores, matched keywords, sources) without creating a blueprint version.
-
-For ad hoc or deeper analysis of a single video, use `socialseal_extract_video_assets` (`ensureAnalysis: true`) with an `items` array of stored identifiers to resolve Video DNA, shots and frames. For a supplied public URL, use `socialseal_analyse_public_video` under its existing quote/approval boundary.
+A matching Study is reused for free. Photo and carousel posts are studied too; a post
+that cannot be studied is skipped with a reason and the rest continue.
 
 Named tools:
-- `socialseal_generate_blueprint` (candidate selection + analysis queueing live here)
-- `socialseal_extract_video_assets` (Video DNA for stored video identifiers)
-- `socialseal_analyse_public_video` (analysis for a supplied public URL)
+- `socialseal_start_study` (start or reuse a Study; prices missing Video DNA)
+- `socialseal_get_study` (read a Study revision and its per-video evidence)
+- `socialseal_extract_video_assets` (frames and source assets for stored video identifiers; not the route for understanding a video)
 
-## Stage 2: Analyze reference videos (Video DNA)
+## Stage 2: Approve and run Video DNA
 
-When `socialseal_generate_blueprint` selects promoted exemplars that lack completed analysis, it queues analysis automatically and returns `status: "draft"` with a summary like "Analysis queued. Blueprint will generate once promoted exemplar analysis completes." Poll the blueprint until analysis lands.
+Starting or reusing a Study is free. Video DNA for videos that lack it is priced first:
 
-For explicit analysis, `socialseal_extract_video_assets` returns structured analysis: hook, content style, video structure, specific attributes, production qualities, transcript/audio/visual analysis, plus signed frame and asset URLs.
+- `ready`: the Study exists from existing evidence; nothing to approve.
+- `approval_required`: nothing has run or been charged. Show the user the returned `price` (USD for a wallet workspace, credits for a subscription) and wait for approval.
+- After approval, resend the same request with `maxCostUsd` (wallet) or `approvedCredits` (subscription) set to that price, plus an `idempotencyKey` you keep. Retrying with the same key returns the same Study and never charges twice.
+- `price_changed`: the price rose above the approved amount and nothing ran. Show the new price and get approval again.
+- `funding_required`: nothing ran. Share the returned funding link (never invent one) and keep its `operationId`; after a top-up, resend with the same idempotency key.
+- `enriching`: Video DNA is running and is charged once, only for videos that succeed. Poll `socialseal_get_study` with the `studyRef`.
 
-Do not assert visual/format claims you have not seen. Label evidence as metadata-only when analysis is not available.
+Do not assert visual/format claims you have not seen. Label evidence as metadata-only when Video DNA is not available.
 
-## Stage 3: Compile a blueprint (best practices + evidence)
+## Stage 3: Read the Study (findings + evidence)
 
-`socialseal_generate_blueprint` compiles selected exemplars into a blueprint version with:
-- `best_practices[]`: the grounded, reusable mechanisms
-- `evidence[]`: the exemplar references behind each practice
-- `selected_video_uids` / `selected_candidates` with scores and matched keywords
+`socialseal_get_study` returns a Study revision with:
+- findings: the grounded, reusable mechanisms, including the action finding a brief is made from
+- coverage: how many videos have Video DNA and what is missing
+- per-video evidence: hooks, CTAs, shots, beats, style and metrics (photo evidence by one-based slide)
+- `briefContext`: the `studyContext` for a brief, present only when the revision can support one
 
 Status semantics (never fabricate):
-- `draft`: queued / analysis pending
-- `generated`: ready
-- `missing_data`: no qualifying evidence for the scope. The engine writes an explicit `missing_data` version with a summary (e.g. "no tracking group keywords found for this scope") instead of inventing content. Surface that to the user and fix the scope.
+- `enriching`: Video DNA is still running; read again for the next revision
+- `ready` with `briefContext`: usable for a brief
+- `ready` without `briefContext`: this revision has no briefable action finding. Surface that to the user and study more videos or a broader subject instead of inventing content.
 
-Read and shots:
-- `socialseal_get_blueprint`: history and a specific version
-- `socialseal_get_blueprint_shots`: shot-lift rows and pinned shot assets (signed URLs); these define the blueprint's panels/shots
-- `socialseal_refresh_blueprint_shots`: queue a refresh of shot assets
-
-A blueprint is the source of truth for the brief and editor handoff. Use each shot panel's `panelId` in a coverage table linking approved source clips to shots. This table is a handoff document, not a persisted SocialSeal mapping.
+A Study is the evidence behind the brief and editor handoff. Cite its `studyRef` and revision, not a reconstructed summary.
 
 ## Stage 4: Generate the brief
 
-`socialseal_generate_brief` produces a brief grounded in a blueprint:
-- from an existing blueprint: pass `blueprintId` (+ optional `blueprintVersion`)
-- from scope: pass `scopeType` + scope fields and the engine resolves/creates the blueprint
-- from a prompt: pass `retrievalPrompt` (cannot be combined with `blueprintId`/`blueprintVersion`)
+`socialseal_generate_brief` (or `socialseal_start_brief_run` for a polled run) produces a brief grounded in a Study:
+- from a Study: pass `studyContext` (`{ "studyRef", "revision", "findingId": "action" }`, as `briefContext` returns it)
+- as the next member of a series: `socialseal_start_brief_run` with `continuesBriefId` + `continuationId`; the saved brief supplies its Study revision
+
+Without a usable Study the brief tools start and charge nothing. They return:
+
+```text
+{ "status": "study_needed", "message", "nextStep", "reuse", "perVideoCredits",
+  "candidates": [{ "kind", "label", "reason", "preview", "startStudyArguments", "estimatedPrice" }] }
+```
+
+1. If `reuse` carries a recent Study's `studyContext` that fits the request, offer it first; it costs nothing to reuse.
+2. Otherwise offer the ranked candidates as plain choices: a topic, a competitor, a creator, or specific videos. Show each `label`, `reason`, `preview` (video and account counts, platforms, markets, freshness) and `estimatedPrice` (an upper bound).
+3. Start only the subject the user picks, with its `startStudyArguments`, and apply Stage 2: run paid Video DNA only after the user approves the returned price.
+4. When `socialseal_get_study` returns `briefContext`, retry the brief with it as `studyContext`.
 
 Optional `brandContext` (brandName, productName, campaignGoal, notes, locale, platform) carries a concise summary of approved audience needs, product/service facts with source references and creative constraints. Read relevant documents first and pass supported context; do not assume the engine retrieves those documents or verifies every supplied claim.
 
@@ -97,11 +115,11 @@ Read and export:
 
 For multiple concepts, generate and export the individual briefs. Creative packs have retired.
 
-Use the engine path for new briefs to retain evidence and version lineage, then check the result. Manual authoring is appropriate for an explicit user choice, unavailable generation or unresolved `missing_data`; document the reason. Engine-generated does not mean better than manual or ready for production.
+Use the engine path for new briefs to retain evidence and version lineage, then check the result. Manual authoring is appropriate for an explicit user choice, unavailable generation, a declined Study or unresolved `missing_data`; document the reason. Engine-generated does not mean better than manual or ready for production.
 
 ## Stage 5: Prepare source clips and an editor handoff
 
-SocialSeal retains the source-clip library, blueprint evidence, and brief exports.
+SocialSeal retains the source-clip library, Study evidence, and brief exports.
 Asset Studio generation, clip-to-shot mapping APIs, generated-asset sharing, and
 FCPXML export have retired. Do not promise a rendered video or timeline from these
 retired tools; use the user's editor for assembly and finishing.
@@ -111,9 +129,9 @@ retired tools; use the user's editor for assembly and finishing.
    then upload the bytes to its signed storage target. Call
    `socialseal_finalize_source_clip_upload` with the returned `clipId`, `fileName`,
    `storagePath`, `mimeType`, `sizeBytes`, and `rightsAttested: true`.
-3. Use `socialseal-asset-planning` to prepare a coverage table of real `panelId`s,
-   approved clips, trim suggestions, rights, and missing-footage decisions. Do not
-   claim the table creates backend mappings.
+3. Use `socialseal-asset-planning` to prepare a coverage table of the brief's shot-list
+   steps, approved clips, trim suggestions, rights, and missing-footage decisions. Do
+   not claim the table creates backend mappings.
 4. Hand off the exported brief, approved coverage table, source files or signed
    download links, and delivery specs to the user's editor. Confirm source access;
    signed URLs may expire. Preserve hook order and evidence-backed claims.
@@ -124,13 +142,12 @@ Do not upload footage the workspace does not have rights to.
 
 ## End-to-end (happy path)
 
-1. Pick or define the opportunity and `opportunityKey` and scope.
-2. `socialseal_generate_blueprint` with `previewOnly: true` to inspect candidate exemplars; refine with pins/exclusions/prompt.
-3. `socialseal_generate_blueprint` (commit) -> poll `socialseal_get_blueprint` until `generated`.
-4. `socialseal_get_blueprint_shots` to get panels/shots.
-5. `socialseal_generate_brief` from the `blueprintId`; `socialseal_export_brief` for the markdown brief.
-6. Fill the source-clip library using `socialseal_prepare_source_clip_upload` and `socialseal_finalize_source_clip_upload`, and document approved panel coverage.
-7. Export the brief and hand off source clips, coverage, and delivery specs to the editor.
+1. Pick or define the opportunity, its `opportunityKey` and the Study subject.
+2. `socialseal_start_study` with that subject; on `approval_required`, show the price and get the user's approval.
+3. Resend with `maxCostUsd` or `approvedCredits` and an `idempotencyKey` -> poll `socialseal_get_study` until it returns `briefContext`.
+4. `socialseal_generate_brief` with that `studyContext`; `socialseal_export_brief` for the markdown brief.
+5. Fill the source-clip library using `socialseal_prepare_source_clip_upload` and `socialseal_finalize_source_clip_upload`, and document approved shot coverage.
+6. Export the brief and hand off source clips, coverage, and delivery specs to the editor.
 
 ## Carousel branch
 
@@ -142,11 +159,12 @@ prototype approval, slide rendering, and phone-size QA.
 
 ## Hard rules
 
-- Reuse one `opportunityKey` across the blueprint, brief, and editor handoff.
-- Treat `missing_data` as a real outcome. Fix scope or evidence; never paper over it with invented best practices.
-- Use real blueprint `panelId`s to identify shots in the coverage table.
+- Reuse one `opportunityKey` across the brief and editor handoff, and cite the Study revision behind them.
+- Never start paid Video DNA without the user's approval of the returned price; never retry a paid start with a new idempotency key.
+- Treat `missing_data` and a Study without `briefContext` as real outcomes. Fix the subject or evidence; never paper over them with invented best practices.
+- Use the brief's shot-list steps to identify shots in the coverage table.
 - Only finalize clips with `rightsAttested: true`.
 - Call the exported brief and source-clip package an editor handoff; only call a video post-ready after editor finishing and final QA pass.
-- Never call a brief, blueprint, shot list, outline, placeholder set, or unverified
+- Never call a brief, Study, shot list, outline, placeholder set, or unverified
   asset treatment finished content.
-- Never put literal workspace IDs, blueprint IDs, clip IDs, or share tokens in shared/public artifacts; use placeholders.
+- Never put literal workspace IDs, Study refs, clip IDs, or share tokens in shared/public artifacts; use placeholders.

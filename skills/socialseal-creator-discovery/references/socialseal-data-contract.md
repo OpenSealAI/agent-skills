@@ -45,7 +45,7 @@ These map directly to enriched export columns:
 
 ## Machine ids (internal / traceability only)
 
-`search_result_id`, `video_uid`, `platform_video_id`, numeric `group_id`/`tracking_item_id`, `blueprintId`, `clipId`, `assetId`, and share tokens are needed for tool calls, joins, dedupe, and follow-up extraction. Keep them, but treat them as an **optional internal traceability note**, not the user-facing citation. Do not lead a sentence a human reads with an id. If a traceability column is useful in a table, label it clearly (e.g. a final `ref (video_uid)` column) and keep the human-readable citation primary. Never put literal ids/tokens in shared or public artifacts; use placeholders.
+`search_result_id`, `video_uid`, `platform_video_id`, numeric `group_id`/`tracking_item_id`, `studyRef`, `clipId`, `assetId`, and share tokens are needed for tool calls, joins, dedupe, and follow-up extraction. Keep them, but treat them as an **optional internal traceability note**, not the user-facing citation. Do not lead a sentence a human reads with an id. If a traceability column is useful in a table, label it clearly (e.g. a final `ref (video_uid)` column) and keep the human-readable citation primary. Never put literal ids/tokens in shared or public artifacts; use placeholders.
 
 ## Enriched ranked search export columns
 
