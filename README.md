@@ -128,7 +128,7 @@ the hosted MCP connection through `.mcp.json`.
 ## What this does not do
 
 Asset Studio video generation and CapCut/FCPXML export skills have retired, and so
-has `socialseal-blueprint-builder`: Blueprints are gone and every brief is generated
+has the Blueprint builder skill: Blueprints are gone and every brief is generated
 from a Study. Use
 brief exports and rights-cleared source clips for an editor handoff; SocialSeal
 does not assemble or render that video.
