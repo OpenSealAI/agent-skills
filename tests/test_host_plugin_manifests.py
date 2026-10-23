@@ -27,10 +27,10 @@ def selected_cursor_skills(manifest):
 
 
 class HostPluginManifestTests(unittest.TestCase):
-    def test_cursor_selects_all_23_canonical_skills(self):
+    def test_cursor_selects_all_22_canonical_skills(self):
         manifest = json.loads((ROOT / ".cursor-plugin/plugin.json").read_text())
         canonical = {path.resolve() for path in ROOT.glob("skills/*/SKILL.md")}
-        self.assertEqual(len(canonical), 23)
+        self.assertEqual(len(canonical), 22)
         self.assertEqual(selected_cursor_skills(manifest), canonical)
 
     def test_selected_skills_have_complete_local_resources(self):

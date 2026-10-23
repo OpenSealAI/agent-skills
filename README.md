@@ -77,7 +77,7 @@ and sign in to SocialSeal in the browser window that opens.
 ### Cursor and Grok Bot
 
 The Cursor-format package at `.cursor-plugin/plugin.json` connects to the hosted
-SocialSeal MCP server and includes all 23 skills through Cursor's default discovery
+SocialSeal MCP server and includes all 22 skills through Cursor's default discovery
 of `skills/*/SKILL.md`. Routine social-search, profile, and post requests use the
 live tools directly; they do not require a tracking group or the production skills.
 Follow the tools' current schemas, account permissions, collection quotes, and
@@ -127,7 +127,9 @@ the hosted MCP connection through `.mcp.json`.
 
 ## What this does not do
 
-Asset Studio video generation and CapCut/FCPXML export skills have retired. Use
+Asset Studio video generation and CapCut/FCPXML export skills have retired, and so
+has `socialseal-blueprint-builder`: Blueprints are gone and every brief is generated
+from a Study. Use
 brief exports and rights-cleared source clips for an editor handoff; SocialSeal
 does not assemble or render that video.
 
@@ -167,8 +169,7 @@ installed host versions are separate; report an unavailable operation precisely.
 These follow the SocialSeal vNext engine: opportunity -> Study of reference videos -> brief -> source-clip/editor handoff, joined by a single `opportunityKey`. Every brief is generated from a Study. See [references/production-pipeline.md](references/production-pipeline.md).
 
 - `socialseal-video-concepting`
-- `socialseal-reference-video-analysis`
-- `socialseal-blueprint-builder`
+- `socialseal-reference-video-analysis` (studies reference videos, topics, competitors or creators)
 - `socialseal-creator-briefing`
 - `socialseal-asset-planning`
 - `socialseal-generation-prompts`
@@ -199,7 +200,7 @@ This repository is structured for:
 
 - Agent Skills / skills.sh: `skills/<skill-name>/SKILL.md`
 - ChatGPT/Codex plugin: `.codex-plugin/plugin.json`, `.mcp.json`, and `skills/`
-- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and all 23 skills; marketplace review and Grok compatibility pending
+- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and all 22 skills; marketplace review and Grok compatibility pending
 - Claude Code plugin marketplace: `.claude-plugin/plugin.json` plus direct `skills/` children
 - Hermes project usage through the same `SKILL.md` files
 
