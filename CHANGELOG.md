@@ -2,6 +2,7 @@
 
 ## Claude plugin 0.8.3 (unreleased)
 
+- Collect Instagram and TikTok accounts with the single `socialseal_collect_account` action (SOC-952); quote first and confirm the paying workspace.
 - Claude Code signs in to the bundled hosted connector with `/mcp`; remove the local stdio device-login guidance that stored a key on the user's machine.
 - Add the Claude directory listing name, icon, and documentation, support, privacy and terms links.
 
