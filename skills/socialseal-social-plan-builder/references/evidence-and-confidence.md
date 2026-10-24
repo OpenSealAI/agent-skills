@@ -45,7 +45,7 @@ Safe phrasing:
 Practical rules:
 - a pattern needs multiple exemplars or an explicit reason a single example matters; one video is an anecdote
 - frame creative recommendations as hypotheses to test and measure, not guarantees
-- the blueprint engine compiles best practices from exemplar evidence; that raises confidence but does not convert anecdote into proof
+- a Study compiles findings from exemplar evidence; that raises confidence but does not convert anecdote into proof
 - avoid the words "proof", "proven", "guaranteed", or "will work" for creative bets; use "evidence suggests", "worth testing", "consistent with"
 
 ## Relative demand: rank with the signals you have
@@ -91,7 +91,7 @@ Attach a confidence basis to recommendations:
 - **Collection region/market:** where the search was collected; not verified viewer residence, audience demographics or local purchase intent.
 - **Search-result totals:** scope them to the selected queries, platform, market and capture dates. Deduplicate video identities when aggregating across queries; retain repeated rows only for explicitly query-level presence/rank analysis. Report incomplete export coverage without assuming missing rows are irrelevant.
 - **Save/engagement rates:** state the numerator and denominator. A saves/views ratio is not a conversion rate or proof of planning intent; an average of per-video rates differs from a ratio of totals. Missing counters remain unknown, not zero.
-- **Model interpretations:** `likelyReasonItRanks`, inferred intent and blueprint practices are interpretations of evidence. They are not measured causal effects, independent corroboration or performance guarantees. A detected face supports "face present", not "faces caused the result".
+- **Model interpretations:** `likelyReasonItRanks`, inferred intent and Study findings are interpretations of evidence. They are not measured causal effects, independent corroboration or performance guarantees. A detected face supports "face present", not "faces caused the result".
 - **Topic versus claim support:** a popular activity does not establish suitability for a birthday, infant, product or market. Support each recommendation's particular scope using relevant audience and product/service facts, or label the inference and unresolved fact.
 
 Use scoped wording such as "the videos returned for these queries accumulated more views" rather than "this audience has more demand". Scoped wording changes how a ranking is phrased, not whether you give one. Inspect relevant examples before selecting a creative treatment. If a prerequisite is missing, explain the narrow gap and continue with supported work; do not repeatedly run the same failing operation or fabricate a substitute statistic.

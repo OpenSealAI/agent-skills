@@ -18,7 +18,7 @@ An unsupported platform, missing argument, missing evidence, authorization denia
 Select the action matching the supplied target and requested deliverable from the live catalogue. Its description and schema state platforms, inputs, side effects, evidence/freshness limits, collection costs, and continuation. Use the actual schema rather than inventing parameters from a remembered name.
 
 - Existing tracking groups: read the existing authorized group. Do not create groups or run collection to answer a read.
-- Supplied video URL: use the URL-analysis action with that URL. Apply the operation's quote/approval boundary if new analysis is needed.
+- Supplied video URL: start a one-video Study with that URL (`socialseal_start_study`, subject `{ "kind": "videos", "urls": ["<video-url>"] }`), then read it with `socialseal_get_study`. Apply the Study's price/approval boundary if new Video DNA is needed.
 - Named creator: read the profile and recent account posts with the requested platform/count. Timeline ordering, pinned posts, mixed media, timestamp provenance, and pagination determine whether a latest-post claim is supported. Return the service's aggregates and denominators; missing values remain distinct from zero. Retrieve accessible brand context independently for fit evaluation.
 - Ranked-search creator discovery: use the requested ranked-search population and retain its sampling caveats. It is not a substitute for account posts.
 - Account tracking: only create the explicitly requested ongoing commitment, retaining required authorization.
@@ -42,11 +42,11 @@ the host's tool search to load the matching operation and its live input schema.
 Discovery and skills are references, not mandatory gates for every read or edit.
 
 - Content calendars and posting schedules: `socialseal-social-plan-builder` guides composition and revision; do not assume a calendar-generation tool.
-- New video/editor/UGC briefs: `socialseal_generate_brief`. Existing blueprint/version or supported scope is sufficient to begin; reference selection can use `socialseal_generate_blueprint` when needed.
+- New video/editor/UGC briefs: `socialseal_generate_brief` with a Study revision's `studyContext`. Without a usable Study it returns `study_needed` with Study subjects to offer the user; start the chosen one with `socialseal_start_study`, then retry.
 - Existing brief: `socialseal_get_brief`, `socialseal_update_brief`, `socialseal_export_brief`. A formatting or copy edit does not need new evidence collection.
 - Tracking setup: `socialseal_create_tracking_group`, `socialseal_add_tracking_group_items`, then `socialseal_get_tracking_group_completeness`. Read existing groups before proposing setup.
 - Demand signals: read what the workspace already holds before collecting more: `socialseal_list_keywords` (`demandSignals`, `seoMetrics`, autocomplete `sources`), Explore snapshots via `socialseal_explore_get` (`relativeDemand`), and tracked-query results. Compare candidate wordings, hooks or titles with `socialseal_check_keyword_demand` (free autocomplete check plus stored volume). Expand or validate keyword candidates with `socialseal_start_search_journey` and `socialseal_get_search_journey_run`. Google AI uses `socialseal_start_google_ai_search`, `socialseal_list_google_ai_search_runs`, and `socialseal_get_google_ai_search_results`. Rank candidates with whatever signals exist; see "Relative demand" in `evidence-and-confidence.md`.
-- Source-video assets: `socialseal_extract_video_assets` with stored identifiers. For a supplied public URL, use `socialseal_analyse_public_video`.
+- Understanding videos (one or many), a topic, competitor or creator: `socialseal_start_study`, then `socialseal_get_study`. Source-video frames and assets: `socialseal_extract_video_assets` with stored identifiers.
 
 Inspect the exact live input schema before an unfamiliar mutation. Arguments go
 directly on the named action, without a backend-function selector or body envelope:
@@ -55,13 +55,39 @@ directly on the named action, without a backend-function selector or body envelo
 socialseal_generate_brief {
   "workspaceId": "<workspace-id>",
   "opportunityKey": "<opportunity-key>",
-  "blueprintId": "<blueprint-id>"
+  "studyContext": { "studyRef": "<study-ref>", "revision": 2, "findingId": "action" }
 }
 ```
 
 If host discovery confirms an action is unavailable, report that precise limitation
 and preserve completed work. Preserve backend authorisation, admission and funding
 controls; tool discovery is not approval for additional paid work.
+
+## Studies and paid Video DNA
+
+`socialseal_start_study` starts or reuses a Study free. Video DNA for videos that
+lack it is priced first and returns `approval_required` with the price; nothing runs.
+After the user approves, resend with the approved amount and a stable key:
+
+```text
+socialseal_start_study {
+  "workspaceId": "<workspace-id>",
+  "subject": { "kind": "videos", "urls": ["<video-url>"] },
+  "maxCostUsd": "<approved-usd-price>",
+  "idempotencyKey": "<stable-request-key>"
+}
+```
+
+A subscription workspace sends `approvedCredits` instead of `maxCostUsd`. Other
+statuses: `ready` (nothing to approve), `price_changed` (nothing ran; see below),
+`funding_required` (share the returned funding link and keep its `operationId`),
+`enriching` (poll `socialseal_get_study`). Keep the key for timeouts, uncertain
+outcomes and retries of the unchanged request. A wallet `price_changed` carries no
+price: request a fresh quote without approval fields, get approval for the returned
+price, then resend with it and a new `idempotencyKey`. A subscription
+`price_changed` carries the new credit price to approve; follow its `nextStep`.
+When the completed Study returns `briefContext`, pass it as `studyContext` to the
+brief tools; without one it has no briefable finding.
 
 ## Explore acquisition preview and start
 
@@ -115,7 +141,7 @@ ownership. Use `socialseal_list_workspaces` to find a named workspace or resolve
 ambiguity. Reuse the workspace from the lookup that returned a group/item ID.
 
 - A numeric tracking-group ID is not a brand-group UUID.
-- Reuse the opportunity identity and returned blueprint/brief versions across stages.
+- Reuse the opportunity identity, the Study `studyRef`/revision and returned brief versions across stages.
 - Keep real internal IDs for tool calls; use human-readable citations in deliverables. Never expose credentials or signed read tokens in shared artifacts.
 
 ## Research exports and interpretation
@@ -144,9 +170,9 @@ capture dates, denominator, duplicate-video treatment and missing values. See
 Use the returned job identity and the action's documented read/status tool.
 Video search uses `socialseal_get_video_search`; video analysis can use
 `socialseal_get_tool_status` with `kind: "video_analysis"` and the returned stored
-identifier. Blueprint/brief versions use their corresponding read actions.
-Pending/draft is not completed; `missing_data` is an evidence gap, not a generated
-deliverable. Inspect typed errors and correct the indicated input once evidence
+identifier. A Study uses `socialseal_get_study` with its `studyRef`; brief versions
+use their corresponding read actions. Pending/draft/`enriching` is not completed;
+`missing_data` and `study_needed` are evidence gaps, not a generated deliverable. Inspect typed errors and correct the indicated input once evidence
 supports it. Do not cycle arbitrary parameters, replace pending paid operations,
 or mislabel an MCP-host approval failure as SocialSeal billing or job failure.
 

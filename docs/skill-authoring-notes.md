@@ -8,7 +8,7 @@ This repo follows the Agent Skills open specification:
 - Frontmatter is trimmed to spec-recognized keys: `name`, `description`, `license`, and `metadata` (we keep `metadata.socialseal.phase` and `metadata.tags`). Do not add non-spec top-level keys such as `version`, `author`, or `compatibility`.
 - Skills are concise and rely on progressive disclosure.
 - Detailed examples and schemas live in `references/` or `templates/`.
-- Never put literal IDs/UUIDs, tokens, or emails in any file; the validator blocks them. Use placeholders like `<workspace-id>`, `<blueprint-id>`, `<opportunity-key>`.
+- Never put literal IDs/UUIDs, tokens, or emails in any file; the validator blocks them. Use placeholders like `<workspace-id>`, `<study-ref>`, `<opportunity-key>`.
 
 Resource packaging (self-contained skills):
 
