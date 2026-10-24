@@ -79,10 +79,15 @@ socialseal_start_study {
 ```
 
 A subscription workspace sends `approvedCredits` instead of `maxCostUsd`. Other
-statuses: `ready` (nothing to approve), `price_changed` (approve the new price),
+statuses: `ready` (nothing to approve), `price_changed` (nothing ran; see below),
 `funding_required` (share the returned funding link and keep its `operationId`),
-`enriching` (poll `socialseal_get_study`). When `socialseal_get_study` returns
-`briefContext`, pass it as `studyContext` to the brief tools.
+`enriching` (poll `socialseal_get_study`). Keep the key for timeouts, uncertain
+outcomes and retries of the unchanged request. A wallet `price_changed` carries no
+price: request a fresh quote without approval fields, get approval for the returned
+price, then resend with it and a new `idempotencyKey`. A subscription
+`price_changed` carries the new credit price to approve; follow its `nextStep`.
+When the completed Study returns `briefContext`, pass it as `studyContext` to the
+brief tools; without one it has no briefable finding.
 
 ## Explore acquisition preview and start
 

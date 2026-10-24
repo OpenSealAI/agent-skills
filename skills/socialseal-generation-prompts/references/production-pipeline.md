@@ -67,8 +67,10 @@ Starting or reusing a Study is free. Video DNA for videos that lack it is priced
 
 - `ready`: the Study exists from existing evidence; nothing to approve.
 - `approval_required`: nothing has run or been charged. Show the user the returned `price` (USD for a wallet workspace, credits for a subscription) and wait for approval.
-- After approval, resend the same request with `maxCostUsd` (wallet) or `approvedCredits` (subscription) set to that price, plus an `idempotencyKey` you keep. Retrying with the same key returns the same Study and never charges twice.
-- `price_changed`: the price rose above the approved amount and nothing ran. Show the new price and get approval again.
+- After approval, resend the same request with `maxCostUsd` (wallet) or `approvedCredits` (subscription) set to that price, plus an `idempotencyKey` you keep. After a timeout or an uncertain outcome, retry the unchanged request with the same key: it returns the same Study and never charges twice.
+- `price_changed`: the price rose above the approved amount; nothing ran or was charged. Recovery depends on the workspace:
+  - Wallet (USD): the response carries no `price`. Send the request again without approval fields (no `maxCostUsd` or `idempotencyKey`) to get a fresh quote, show the user the returned `price`, and once they approve it resend with that `maxCostUsd` and a new `idempotencyKey`, as the response's `nextStep` directs. The original key stays bound to the old maximum, so raising it under that key is rejected.
+  - Subscription (credits): the response carries the new `price`. Show it, get approval again, then resend with that `approvedCredits` as its `nextStep` directs.
 - `funding_required`: nothing ran. Share the returned funding link (never invent one) and keep its `operationId`; after a top-up, resend with the same idempotency key.
 - `enriching`: Video DNA is running and is charged once, only for videos that succeed. Poll `socialseal_get_study` with the `studyRef`.
 
@@ -144,7 +146,7 @@ Do not upload footage the workspace does not have rights to.
 
 1. Pick or define the opportunity, its `opportunityKey` and the Study subject.
 2. `socialseal_start_study` with that subject; on `approval_required`, show the price and get the user's approval.
-3. Resend with `maxCostUsd` or `approvedCredits` and an `idempotencyKey` -> poll `socialseal_get_study` until it returns `briefContext`.
+3. Resend with `maxCostUsd` or `approvedCredits` and an `idempotencyKey` -> poll `socialseal_get_study` while it is `enriching`. If the completed Study has no `briefContext`, explain the evidence gap (no briefable finding) instead of briefing.
 4. `socialseal_generate_brief` with that `studyContext`; `socialseal_export_brief` for the markdown brief.
 5. Fill the source-clip library using `socialseal_prepare_source_clip_upload` and `socialseal_finalize_source_clip_upload`, and document approved shot coverage.
 6. Export the brief and hand off source clips, coverage, and delivery specs to the editor.
@@ -160,7 +162,7 @@ prototype approval, slide rendering, and phone-size QA.
 ## Hard rules
 
 - Reuse one `opportunityKey` across the brief and editor handoff, and cite the Study revision behind them.
-- Never start paid Video DNA without the user's approval of the returned price; never retry a paid start with a new idempotency key.
+- Never start paid Video DNA without the user's approval of the returned price. Keep the original idempotency key for timeouts, uncertain outcomes, funding retries and any retry of an unchanged accepted request; use a new key only for a newly approved price after a confirmed `price_changed`, as the response directs.
 - Treat `missing_data` and a Study without `briefContext` as real outcomes. Fix the subject or evidence; never paper over them with invented best practices.
 - Use the brief's shot-list steps to identify shots in the coverage table.
 - Only finalize clips with `rightsAttested: true`.
