@@ -1,10 +1,16 @@
 # Changelog
 
-## Claude plugin 0.8.3 (unreleased)
+## Claude plugin 0.9.0 (unreleased)
+
+Breaking: the Blueprint and single-video analysis tools are gone, so the Claude plugin version moves past 0.8.3 and Claude Code refreshes cached 0.8.3 installs.
 
 - Generate every brief from a Study (SOC-1023, SOC-1025): pass a Study revision as `studyContext`, or continue a series with `continuesBriefId` and `continuationId`. On `study_needed`, offer the returned reuse Study or candidate subjects, start the one the user picks with `socialseal_start_study`, run paid Video DNA only after the user approves its price (`maxCostUsd` or `approvedCredits`, with an `idempotencyKey`), then retry the brief. Requires MCP catalogue `2026-10-24.study-only-briefs.v1`.
+- Recover from a wallet `price_changed` as the response directs: it carries no price, so get a fresh quote without approval fields, have the user approve the returned price, then resend with a new `idempotencyKey`. Keep the original key for timeouts, uncertain outcomes and retries of an unchanged accepted request.
 - Study supplied videos with `socialseal_start_study` and `socialseal_get_study`; `socialseal_analyse_public_video` and `socialseal_get_video_evidence` have been removed.
 - Retire `socialseal-blueprint-builder` (SOC-1024; 22 skills): the Blueprint tools and `socialseal_save_brief` have been removed. Asset planning and generation prompts follow the brief's shot-list steps instead of blueprint panels, and the validator rejects guidance that names the removed tools.
+
+## Claude plugin 0.8.3 (unreleased)
+
 - Collect Instagram and TikTok accounts with the single `socialseal_collect_account` action (SOC-952); quote first and confirm the paying workspace.
 - Claude Code signs in to the bundled hosted connector with `/mcp`; remove the local stdio device-login guidance that stored a key on the user's machine.
 - Add the Claude directory listing name, icon, and documentation, support, privacy and terms links.

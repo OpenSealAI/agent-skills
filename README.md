@@ -146,6 +146,8 @@ The prepared 0.8.2 bundle requires the coordinated MCP release with named
 tracking-group completeness. Deploy that reviewed catalogue before refreshing
 installed bundles, then verify each supported host. Repository publication and
 installed host versions are separate; report an unavailable operation precisely.
+Claude plugin 0.9.0 removes the Blueprint and single-video analysis guidance and
+requires the Study-only MCP catalogue (`2026-10-24.study-only-briefs.v1`).
 
 ## Skill taxonomy
 

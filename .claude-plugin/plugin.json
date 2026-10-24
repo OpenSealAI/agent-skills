@@ -2,7 +2,7 @@
   "name": "socialseal-agent-skills",
   "displayName": "SocialSeal",
   "description": "Turn TikTok, Instagram, Xiaohongshu/RedNote, Douyin, and social-search demand into short-form video ideas, creator briefs, content plans, and discoverability insights.",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "author": {
     "name": "SocialSeal contributors"
   },
