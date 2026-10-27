@@ -145,7 +145,7 @@ Do not upload footage the workspace does not have rights to.
 ## End-to-end (happy path)
 
 1. Pick or define the opportunity, its `opportunityKey` and the Study subject.
-2. `socialseal_start_study` with that subject; on `approval_required`, show the price and get the user's approval.
+2. `socialseal_start_study` with that subject and a new `idempotencyKey`; on `approval_required`, show the price and get the user's approval, then resend with the approved amount and the same key.
 3. Resend with `maxCostUsd` or `approvedCredits` and an `idempotencyKey` -> poll `socialseal_get_study` while it is `enriching`. If the completed Study has no `briefContext`, explain the evidence gap (no briefable finding) instead of briefing.
 4. `socialseal_generate_brief` with that `studyContext`; `socialseal_export_brief` for the markdown brief.
 5. Fill the source-clip library using `socialseal_prepare_source_clip_upload` and `socialseal_finalize_source_clip_upload`, and document approved shot coverage.

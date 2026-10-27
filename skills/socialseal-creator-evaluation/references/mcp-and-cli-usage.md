@@ -65,9 +65,12 @@ controls; tool discovery is not approval for additional paid work.
 
 ## Studies and paid Video DNA
 
-`socialseal_start_study` starts or reuses a Study free. Video DNA for videos that
-lack it is priced first and returns `approval_required` with the price; nothing runs.
-After the user approves, resend with the approved amount and a stable key:
+`socialseal_start_study` starts or reuses a Study free. Every call carries an
+`idempotencyKey`: generate one per intended request and keep it from the price
+request through approval, top-ups, timeouts and retries; a new key starts new
+billable work. Video DNA for videos that lack it is priced first and returns
+`approval_required` with the price; nothing runs. After the user approves, resend
+with the approved amount and the same key:
 
 ```text
 socialseal_start_study {
