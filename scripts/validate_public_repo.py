@@ -53,7 +53,6 @@ trigger_expectations = {
     "socialseal-social-plan-builder": ["content plan", "videos and carousels"],
     "socialseal-video-concepting": ["video ideas", "hooks", "first frames"],
     "socialseal-reference-video-analysis": ["real social examples", "benchmark videos", "video dna"],
-    "socialseal-blueprint-builder": ["creative best practices", "socialseal blueprint"],
     "socialseal-creator-briefing": ["create, rewrite, or improve", "social-first language"],
     "socialseal-asset-planning": ["footage/image bank", "which assets to use"],
     "socialseal-generation-prompts": ["generated b-roll", "storyboard frames"],
@@ -107,7 +106,6 @@ for p in root.glob('skills/*/SKILL.md'):
 # SOC-349 removed persisted shot mappings and the generated-video editSpec.
 # Guard the concrete stale instructions; external editor work remains supported.
 retired_instruction_patterns = {
-    "skills/socialseal-blueprint-builder/SKILL.md": [r"\beditSpec\b", r"panels used for clip mapping", r"blueprint, brief, and asset"],
     "skills/socialseal-generation-prompts/SKILL.md": [r"upload/map", r"upload and mapping"],
     "references/mcp-and-cli-usage.md": [r"Video and asset studio"],
     "skills/socialseal-orchestrator/SKILL.md": [r"blueprint, brief, and asset"],
@@ -128,7 +126,7 @@ for resource_type in ("references", "templates"):
         if not canonical.is_file() or bundled.read_bytes() != canonical.read_bytes():
             errors.append(f"{bundled.relative_to(root)}: differs from canonical {resource_type} resource")
 
-expected=23
+expected=22
 found=len(list(root.glob('skills/*/SKILL.md')))
 if found != expected:
     errors.append(f'expected {expected} skills, found {found}')

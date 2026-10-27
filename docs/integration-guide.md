@@ -43,18 +43,17 @@ Use export-file mode when the user provides CSV/JSON. The agent should inspect c
 4b. Bilingual demand monitoring (local-vs-English split, micro-trends)
 4c. Predictive demand routing (early signals for resource allocation and tour onboarding)
 5. Social plan builder
-6. Video concepting (define scope / retrievalPrompt)
-7. Reference video analysis (identify + analyze exemplars)
-8. Blueprint builder (compile best-practices blueprint)
-9. Creator briefing (generate brief from blueprint)
-10. Asset planning (plan clips for blueprint shots)
-11. Generation prompts (write prompts for external tools to fill shot gaps)
-12. Source-clip preparation and editor handoff (brief, approved panel coverage, footage, and delivery specs)
-13. Performance readout
-14. Discoverability tracking
-15. Content adjustment, management reporting, and follow-up planning
+6. Video concepting (define the Study subject)
+7. Reference video analysis (start a Study, approve any Video DNA price, read its evidence)
+8. Creator briefing (generate the brief from the Study)
+9. Asset planning (plan clips for the brief's shots)
+10. Generation prompts (write prompts for external tools to fill shot gaps)
+11. Source-clip preparation and editor handoff (brief, approved shot coverage, footage, and delivery specs)
+12. Performance readout
+13. Discoverability tracking
+14. Content adjustment, management reporting, and follow-up planning
 
-The production stages (6-12) are joined by a single `opportunityKey`. See `../references/production-pipeline.md`.
+The production stages (6-11) are joined by a single `opportunityKey`. See `../references/production-pipeline.md`.
 For an approved carousel concept, branch after evidence/benchmark selection into
 `socialseal-carousel-production`: visual direction -> asset choices -> prototype ->
 rendered/verified slides.

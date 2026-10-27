@@ -38,8 +38,8 @@
       "id": "supplied-video",
       "request": "Analyse this public video URL: <video-url>",
       "outcomes": [
-        "Preserve the supplied URL",
-        "Use the collection cost/authorization boundary only if new work is needed"
+        "Preserve the supplied URL and study it as a one-video Study",
+        "Use the Study price/approval boundary only if new Video DNA is needed"
       ]
     },
     {

@@ -13,7 +13,7 @@ Who the content is for: the specific viewer whose search and hesitation the cont
 ### Content pillar
 A durable theme the brand will keep making content about, tied to real search demand. 3-5 pillars, each mapping to a cluster of viewer jobs and keywords (e.g. "first-timer planning", "cost and value", "neighborhood guides").
 
-- Why it matters: pillars are the unit that maps to tracking groups and to blueprint scopes.
+- Why it matters: pillars are the unit that maps to tracking groups and to Study subjects.
 - Derive with SocialSeal: cluster the tracked keyword set and surfaced content; group recurring viewer jobs into candidate pillars; check each pillar has a presence gap worth filling and at least one positive demand signal (Google volume, platform autocomplete, surfaced-result response or engagement), then rank the pillars by those signals. See "Relative demand" in `evidence-and-confidence.md`.
 
 ### Brand voice
