@@ -53,7 +53,15 @@ For a single keyword check, a supplied video, a named creator or a read of exist
 
 ## 2. Research the brand yourself
 
-Do the desk research before asking the user anything. Use the brand's website, pricing and product pages, help centre, public announcements, any documents the user has shared, and its social accounts. From these, draft a **diagnostic**:
+Do the desk research before asking the user anything. Sources, in order of weight:
+
+1. What the user has said or shared in this conversation.
+2. What the workspace already holds: notes, the existing Strategy, earlier research.
+3. Public sources: the brand's website, pricing and product pages, help centre, announcements and social accounts.
+
+Public pages often lag behind the business. Where they disagree with the user or the workspace, keep the more recent source and list the difference in the diagnostic for the user to settle.
+
+From these, draft a **diagnostic**:
 
 - **What they sell and how they earn:** products, prices, the customer, what a good lead or sale looks like.
 - **Markets and languages:** where they operate and sell today, in the order the evidence suggests.
@@ -74,13 +82,25 @@ Show the diagnostic and ask the user to correct it. Then ask only what research 
 
 Do not ask for personas, pillars or keywords. Finding those is the audit.
 
+**End your turn here and wait for the user's reply.** The audience and the objective decide what the audit researches, so the research in step 4 starts once they have answered.
+
 ## Credits
 
 Some of the tools require credits. Check the available credits before starting, and scope your audit research appropriately. If available credits are insufficient for a quality audit, inform the user about the upgrade or overage options. Do not silently degrade the quality or fall back to assumptions.
 
 ## 4. The audit
 
-Each step names what to save, so a stopped audit can resume.
+Each step names what to save, so a stopped audit can resume. Every step below is part of the audit: run all of them for the chosen niches. If the work has to pause, save the map with its progress and tell the user which steps are left.
+
+### When the brand sells to businesses
+
+Buyers who are marketers, founders or operators research differently from consumers, so adjust the audit:
+
+- **Anchor on the buyer's problem** and on the category and comparison searches they make when choosing a tool or a supplier.
+- **Expect small, specific demand.** Rank niches by intent and fit with the growth objective, ahead of volume. A thin demand map points to a small, specific audience; use keyword demand checks, video searches and AI answers to fill in the picture.
+- **Weight AI answers and YouTube heavily.** Professional buyers ask AI assistants and watch longer explainers. Which brands and sources each engine names is central evidence here.
+- **Look for gaps in proof:** comparisons nobody has run, how-to content with real numbers, and data only this brand holds.
+- **Keep the baseline tight:** a handful of high-intent searches, plus the buyer questions asked of the AI engines.
 
 ### Set up the brand and competitors
 
@@ -178,6 +198,8 @@ Progress: <steps done / steps left>
 
 ### The Brand Strategy
 
+The Strategy rests on observed gaps. Draft it once each chosen niche has its AI answers read across the four engines and at least one Study, and the gaps-and-edge step is written from that evidence. Until then, keep building the map.
+
 Draft the Strategy from the confirmed diagnostic and the map, then save it with `socialseal_propose_brand_strategy` (`expectedBaseRevisionId: null` when none exists).
 
 | Strategy field | Fill it from |
@@ -218,7 +240,9 @@ Don't:
 ## Verification checklist
 
 - [ ] The workspace, existing Strategy and core notes were read first.
-- [ ] A researched diagnostic was shown, and the user confirmed or corrected it.
+- [ ] A researched diagnostic was shown, and the user confirmed or corrected it before the audit research began.
+- [ ] Differences between public pages and what the user or workspace says were listed and settled.
+- [ ] Each chosen niche has a Study, and its gaps come from evidence.
 - [ ] The user's north star metric or growth objectives are recorded.
 - [ ] AI answers were read across Google AI, ChatGPT, Gemini and Claude for the chosen niches.
 - [ ] Each chosen niche has its gaps and the brand's edge written down.
