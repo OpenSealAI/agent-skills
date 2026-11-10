@@ -77,7 +77,7 @@ and sign in to SocialSeal in the browser window that opens.
 ### Cursor and Grok Bot
 
 The Cursor-format package at `.cursor-plugin/plugin.json` connects to the hosted
-SocialSeal MCP server and includes all 22 skills through Cursor's default discovery
+SocialSeal MCP server and includes all 24 skills through Cursor's default discovery
 of `skills/*/SKILL.md`. Routine social-search, profile, and post requests use the
 live tools directly; they do not require a tracking group or the production skills.
 Follow the tools' current schemas, account permissions, collection quotes, and
@@ -156,6 +156,8 @@ requires the Study-only MCP catalogue (`2026-10-24.study-only-briefs.v1`).
 - `socialseal-strategy-readiness` (diagnoses strategy + setup readiness and guides the user to define what is missing)
 
 ### Strategy
+- `socialseal-growth-audit` (first work after connecting: maps audience niches, jobs, worries and demand, saves the audience map, and proposes a Brand Strategy for approval)
+- `socialseal-growth-planning` (turns the audit into recorded decisions, a six-week plan, first briefs and a weekly routine)
 - `socialseal-workspace-setup`
 - `socialseal-tracking-group-design`
 - `socialseal-opportunity-analysis`
@@ -202,7 +204,7 @@ This repository is structured for:
 
 - Agent Skills / skills.sh: `skills/<skill-name>/SKILL.md`
 - ChatGPT/Codex plugin: `.codex-plugin/plugin.json`, `.mcp.json`, and `skills/`
-- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and all 22 skills; marketplace review and Grok compatibility pending
+- Cursor-format package: `.cursor-plugin/plugin.json`, `.mcp.json`, and all 24 skills; marketplace review and Grok compatibility pending
 - Claude Code plugin marketplace: `.claude-plugin/plugin.json` plus direct `skills/` children
 - Hermes project usage through the same `SKILL.md` files
 
