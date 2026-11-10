@@ -3,10 +3,10 @@ name: socialseal-growth-audit
 description: >-
   Use this skill when a founder, growth lead or operator asks for a growth strategy
   audit, has just connected SocialSeal and wants to know where to grow next, or needs
-  audience niches, jobs, worries, demand size and trends mapped for a start-up's
-  markets before deciding on product, partnerships or marketing. Run the audit with
+  audience niches, jobs, worries, demand size, content gaps and the brand's edge
+  mapped for a start-up's markets. Research the brand first, run the audit with
   SocialSeal tools, save the audience map to the workspace, and propose a Brand
-  Strategy for the user to approve. Do not use it for a single keyword check, a
+  Strategy for the user to confirm. Do not use it for a single keyword check, a
   one-off video analysis, or reading existing tracking groups.
 license: MIT
 metadata:
@@ -25,169 +25,203 @@ metadata:
 
 ## Overview
 
-The growth audit is the first piece of work after connecting SocialSeal. It answers one question for a start-up: **where should we grow next, and what is the evidence?**
+The growth audit is the first piece of work after connecting SocialSeal. It answers one question for a start-up: **where is the audience we can win, and what can we say to them that nobody else is saying?**
 
-It ends with three things saved in the workspace, so the next session starts from them and not from a blank page:
+It ends with three things saved in the workspace, so the next session starts from them:
 
-1. An **audience map**: niches, the demand behind each, the jobs and worries people bring, and who wins those searches today.
-2. A **Brand Strategy** the user has approved and published.
-3. A **baseline**: the searches that matter, tracked weekly, so change can be measured later.
+1. An **audience map**: niches, the demand behind each, the jobs and worries people bring, who answers them today, the gaps in those answers, and the brand's edge for each gap.
+2. A **Brand Strategy** the user has confirmed and published.
+3. A **baseline**: the searches that matter, tracked weekly, so change can be measured.
 
 Then hand over to `socialseal-growth-planning`.
 
-Read `references/evidence-and-confidence.md` before making claims from the data, and `references/mcp-and-cli-usage.md` for access, schemas, quotes and polling.
+Read `references/evidence-and-confidence.md` before making claims from the data, and `references/mcp-and-cli-usage.md` for access, schemas and polling.
 
 ## When to use
 
-- A new workspace, or one with no published Brand Strategy, where the user wants direction and not one answer.
-- A decision is coming: a market or segment to enter, growth that has stalled, organic against paid, a creator programme, agency against in-house.
+- A new workspace, or one with no published Brand Strategy, where the user wants direction.
+- Growth has stalled, a new market or segment is on the table, or the team is choosing where to put its effort.
 - The user asks what their audience searches for, worries about or wants, across one or more markets.
 
-Use the direct tools instead, without this skill, for a single keyword check, a supplied video, a named creator or a read of existing tracking.
+For a single keyword check, a supplied video, a named creator or a read of existing tracking, use the direct tools.
 
-## Start: read before you ask
+## 1. Read what is already saved
 
-1. `socialseal_get_current_workspace` for the workspace, credits and what is already set up. With several workspaces, confirm which one by name before any paid or saved work.
+1. `socialseal_get_current_workspace` for the workspace, credits and what is set up. With several workspaces, confirm which one by name.
 2. `socialseal_get_brand_strategy`. `state=missing` or `state=no_brand` is normal here.
-3. `socialseal_get_core_workspace_notes`. If a note with key `growth/audience-map` exists, the audit has been started: read it, say what is done, and continue from the first unfinished step. Do not start again.
+3. `socialseal_get_core_workspace_notes`. If a note with key `growth/audience-map` exists, the audit has been started: read it, say what is done, and continue from the first unfinished step.
 
-Then ask the user only for what the tools cannot know. Five things, in one message:
+## 2. Research the brand yourself
 
-- **The decision** they face in the next 90 days.
-- **What they sell**, how they earn, and what a good lead or sale looks like.
-- **Markets and languages**, in priority order.
-- **Three to five competitors**, and their own social accounts.
-- **Who must not be attracted**, even if they search a lot.
+Do the desk research before asking the user anything. Use the brand's website, pricing and product pages, help centre, public announcements, any documents the user has shared, and its social accounts. From these, draft a **diagnostic**:
+
+- **What they sell and how they earn:** products, prices, the customer, what a good lead or sale looks like.
+- **Markets and languages:** where they operate and sell today, in the order the evidence suggests.
+- **Competitors:** three to five, with why each is one.
+- **Own accounts:** each social account found, by platform, with who it seems to speak to.
+- **The brand's edge:** stated USPs, a distinct point of view, and any data, access or experience only they have.
+- **Who the content should not attract:** a proposal, with the reasoning. For example people the product cannot serve, a price band it does not cover, or a market it does not ship to.
+
+Mark each line as found (with its source) or inferred.
+
+## 3. Confirm with the user
+
+Show the diagnostic and ask the user to correct it. Then ask only what research cannot answer:
+
+- **Their north star metric or growth objectives:** what they are trying to move, and by when.
+- **Anything the diagnostic got wrong or missed,** especially the edge and the excluded audiences.
+- **What they have already tried** on social, and what they concluded.
 
 Do not ask for personas, pillars or keywords. Finding those is the audit.
 
-## Budget and approval
+## Credits
 
-- State the plan and its estimated credits before the first paid step, and get one go-ahead for that scope. Read each tool's returned price; do not quote prices from memory.
-- Free first: `socialseal_check_keyword_demand` and `socialseal_explore_preview_start` cost nothing and narrow what is worth paying for.
-- Approve a returned price with the field that tool names, and send one `idempotencyKey` per intended request. Reuse the key on a retry; a new key starts new billable work.
-- If a tool refuses a cost cap or quote, relay its exact reason and next step. Do not retry with invented parameters.
-- Instagram collection costs several times more than TikTok or YouTube. Say so when the user's buyers are on Instagram, and track a tighter set there.
+Some of the tools require credits. Check the available credits before starting, and scope your audit research appropriately. If available credits are insufficient for a quality audit, inform the user about the upgrade or overage options. Do not silently degrade the quality or fall back to assumptions.
 
-## The audit
+## 4. The audit
 
-Work through the steps in order. Each step names what to save, so a stopped audit can resume.
+Each step names what to save, so a stopped audit can resume.
 
-### 1. Set up the brand and competitors
+### Set up the brand and competitors
 
-Create the primary Brand and the competitors (`socialseal_create_brand`, `socialseal_create_brand_group`, `socialseal_add_brand_group_member`), and register owned handles as aliases. Skip what `socialseal_get_current_workspace` shows already exists.
+Create the primary Brand and the confirmed competitors (`socialseal_create_brand`, `socialseal_create_brand_group`, `socialseal_add_brand_group_member`), and register owned handles as aliases. Skip what already exists.
 
-### 2. Size demand
+### Size demand
 
 For two or three anchors per market and language (the category, the problem, a competitor):
 
 - Check candidate wordings with `socialseal_check_keyword_demand`.
-- Preview a demand map with `socialseal_explore_preview_start`, then run it with `socialseal_explore_start` and read it with `socialseal_explore_get`.
+- Preview a demand map with `socialseal_explore_preview_start`, run it with `socialseal_explore_start` and read it with `socialseal_explore_get`.
 
 Rank wordings as Strong, Indicative or Untested. Missing search volume is not missing demand.
 
-### 3. Find niches
+### Find niches
 
-Group the demand into candidate niches: a segment with its own searches. For the most promising, use `socialseal_search_videos` to see who ranks today: brands, creators or nobody in particular. Flag niches where results are thin or off-topic.
+Group the demand into candidate niches: a segment with its own searches. For the most promising, use `socialseal_search_videos` to see who ranks today: brands, creators or nobody in particular.
 
-Agree three to five niches with the user before going deeper.
+Propose three to five niches that fit the growth objective, and say why each.
 
-### 4. Jobs and worries
+### Jobs and worries
 
 For each chosen niche:
 
 - `socialseal_start_search_journey` for the stages people search through on the way to a decision.
-- `socialseal_start_google_ai_search` for the questions AI answers get asked and which sources they cite.
-- `socialseal_start_study` on the top videos, to see what the winning content answers. Creative analysis is priced per new video: show the price and run it only on approval.
+- AI answers across **Google AI, ChatGPT, Gemini and Claude** with `socialseal_start_google_ai_search`: the questions asked, what each engine answers, and which sources it cites.
+- `socialseal_start_study` on the top videos, to see what the winning content answers and how.
 
-Search data shows what people ask, not why. Say this, and recommend the user holds three to five short customer calls to test the worries. There is no comment-mining tool; do not imply one.
+Searches show what people ask. The answers they currently get, in the videos that rank and in AI answers, give strong clues to why they ask and what would reassure them. Read both sides. Customer conversations the user has had can confirm the picture.
 
-### 5. Competitors
+### Find the gaps and the brand's edge
 
-Track competitor accounts where the user wants ongoing comparison (`socialseal_track_account`), or collect once (`socialseal_collect_account`, quote first). Note what they post and which of their videos rank for the niches.
+This step turns research into strategy. For each niche, compare what people ask with what they are told today:
 
-### 6. Set the baseline
+- **Answer gaps:** questions the ranking videos and AI answers leave unanswered, answer vaguely, answer for another market or language, answer with out-of-date facts, or get wrong.
+- **Content gaps:** searches where results are thin, off-topic, held by one creator, or missing a format the audience uses elsewhere.
+- **Presence gaps:** searches where competitors appear and the brand does not, and the reverse.
 
-Track the searches that define each chosen niche, weekly, on the platforms that matter: select them in Explore and use `socialseal_explore_preview_activation` then `socialseal_explore_activate_searches`, or `socialseal_track_search_or_hashtag` for searches found outside Explore. Keep the set big enough to see change and small enough to afford.
+Then match each gap to the brand's edge from the diagnostic:
+
+- a **USP** that answers the worry directly,
+- a **point of view** that disagrees usefully with the common answer,
+- **data, access or experience** nobody else can show.
+
+A gap the brand can answer better than anyone is an opportunity. A gap with no edge behind it is a note for later, and a strong edge with no gap needs a different niche. Rank the opportunities by demand, how weak the current answers are, and how strong the edge is.
+
+Where the edge is thin, say so and propose what would build it: data the brand could publish, a comparison it could run, a stance it could take.
+
+### Competitors
+
+Track competitor accounts where ongoing comparison is useful (`socialseal_track_account`), or collect once (`socialseal_collect_account`). Note what they post, which of their videos rank for the niches, and which gaps they leave open.
+
+### Set the baseline
+
+Track the searches that define each chosen niche, weekly, on the platforms that matter: select them in Explore and use `socialseal_explore_preview_activation` then `socialseal_explore_activate_searches`, or `socialseal_track_search_or_hashtag` for searches found outside Explore.
 
 The first refresh of these searches is the "before" picture. Record the date.
 
-## Write it down
+## 5. Write it down
 
 ### The audience map
 
-Save one note with `socialseal_create_workspace_note`: `type: "fact"`, `key: "growth/audience-map"`, `pinnedToCore: true`. Update the same note as the audit progresses; do not create a second one.
+Save one note with `socialseal_create_workspace_note`: `type: "fact"`, `key: "growth/audience-map"`, `pinnedToCore: true`. Update the same note as the audit progresses.
 
 ```markdown
 # Audience map · <brand> · <date>
 
-Decision this audit serves: <the user's decision>
+Growth objective: <north star metric or objectives, and by when>
 Scope: <markets, languages, platforms, window>
 Progress: <steps done / steps left>
+
+## The brand
+- Sells: <offer, customer, what a good lead is>
+- Edge: <USPs, point of view, unique data or access>
+- Not for: <excluded audiences, confirmed by the user>
 
 ## <Market · language>
 
 ### Niche: <name>
 - Demand: <wordings, level (Strong / Indicative / Untested), source and window>
-- Trend: <direction and evidence, or "one capture only: baseline">
+- Trend: <direction and evidence, or "one capture: baseline">
 - Jobs: <what people are trying to get done>
 - Worries: <hesitations and questions, with where each was seen>
-- Who wins today: <brands, creators, competitors; or "nobody in particular">
-- Evidence: <Explore run, journey, Study ref, tracked group>
+- Answered today by: <who ranks; what AI answers say and cite>
+- Gaps: <answer, content and presence gaps>
+- Our edge here: <the USP, point of view or data that gives a better answer>
+- Evidence: <Explore run, journey, AI search, Study ref, tracked group>
 
 ## Opportunities, ranked
-1. <niche or angle> — why, and what would prove it wrong
+1. <niche · gap · edge> — why it ranks here, and what would prove it wrong
 
-## What this audit could not tell
-- <limits: platforms not covered, thin samples, things only customer calls can answer>
+## Open questions
+- <what to confirm with customers or with the user's own account data>
 ```
 
 ### The Brand Strategy
 
-Draft the Strategy from the map and the user's five answers, then save it with `socialseal_propose_brand_strategy` (`expectedBaseRevisionId: null` when none exists).
+Draft the Strategy from the confirmed diagnostic and the map, then save it with `socialseal_propose_brand_strategy` (`expectedBaseRevisionId: null` when none exists).
 
 | Strategy field | Fill it from |
 |---|---|
 | `summary` | One positioning paragraph: who it is for, the problem, why this brand |
-| `offer` | What they sell, how they earn, what a good lead is (the user's words) |
+| `offer` | What they sell, how they earn, what a good lead is |
 | `targetAudiences` | The chosen niches, one line each |
-| `excludedAudiences` | Who must not be attracted, even where demand is large |
+| `excludedAudiences` | The confirmed "not for" list |
 | `frictions` | The worries the brand removes, each with its `source` and `confidence` |
-| `messaging` | Wordings people use (`use`), wordings to avoid, and hard rules |
+| `messaging` | The edge as rules (the claims, the point of view, the data to cite), wordings the audience uses, wordings to avoid |
 | `production` | Real limits: people, time, footage |
 | `angles` | Each ranked opportunity as a `live` angle; ideas the user turned down as `rejected` with the reason |
-| `decisionTests` | Three to six yes/no tests every idea must pass, derived from the decision and the exclusions |
+| `decisionTests` | Three to six yes/no tests every idea must pass, derived from the growth objective, the edge and the exclusions |
 
-Show the draft in plain language and ask the user to approve or change it. Publish with `socialseal_publish_brand_strategy` only after they approve that exact draft in the conversation.
+Show the draft in plain language. Publish with `socialseal_publish_brand_strategy` once the user confirms it.
 
 ## Finish
 
-Report in this order: the decision the audit served; the three to five opportunities, ranked, each with its evidence level; what was saved (the map note, the Strategy revision, the tracked searches and when the first refresh lands); credits used; and what the audit could not tell.
+Report in this order: the growth objective; the three to five opportunities, ranked, each as niche, gap and edge with its evidence level; what was saved (the map note, the Strategy, the tracked searches and when the first refresh lands); and the open questions.
 
-Then offer `socialseal-growth-planning` to turn the map into decisions, a content plan and briefs.
+Then offer `socialseal-growth-planning` to turn the opportunities into experiments.
 
 ## Do / Don't
 
 Do:
-- resume from saved state; update the one audience-map note
-- give every number its source, scope and window
-- label findings Strong, Indicative or Untested, and say when a sample is small
-- keep the user's exclusions above demand: a large audience they cannot serve is not an opportunity
-- stop and report at any step the user wants; the map is useful half-finished
+- research first; ask the user to confirm and to fill what research cannot reach
+- resume from saved state and update the one audience-map note
+- give every number its source, scope and window, and label findings Strong, Indicative or Untested
+- tie every opportunity to both a gap and an edge
+- keep the confirmed exclusions above demand: a large audience the brand cannot serve is not an opportunity
 
 Don't:
-- open with a Visibility Check or any report the user did not ask for; this audit's baseline is the tracked searches
-- invent audiences, worries or demand that no search, journey, answer or video showed
-- publish a Strategy the user has not approved, or start paid collection outside the agreed scope
-- claim a trend from one capture, or a cause from a correlation
-- create tracking for every wording found; track what the chosen niches need
+- ask the user for facts a website, a document or a tool can supply
+- invent audiences, worries, gaps or an edge that no source showed
+- present a trend from one capture, or a cause from a correlation
+- track every wording found; track what the chosen niches need
 
 ## Verification checklist
 
-- [ ] The workspace, existing Strategy and core notes were read before anything was asked or created.
-- [ ] The five inputs came from the user; nothing else was demanded up front.
-- [ ] Paid steps ran inside a scope and price the user approved.
-- [ ] One pinned note with key `growth/audience-map` holds the map, with scope, evidence levels and limits.
-- [ ] A Brand Strategy was proposed, approved by the user in the conversation, then published.
+- [ ] The workspace, existing Strategy and core notes were read first.
+- [ ] A researched diagnostic was shown, and the user confirmed or corrected it.
+- [ ] The user's north star metric or growth objectives are recorded.
+- [ ] AI answers were read across Google AI, ChatGPT, Gemini and Claude for the chosen niches.
+- [ ] Each chosen niche has its gaps and the brand's edge written down.
+- [ ] One pinned note with key `growth/audience-map` holds the map.
+- [ ] A Brand Strategy was proposed, confirmed by the user, then published.
 - [ ] Baseline searches are tracked and the date of the first refresh is recorded.
-- [ ] The final report names what the audit could not tell.

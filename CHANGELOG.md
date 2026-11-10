@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Add `socialseal-growth-audit` and `socialseal-growth-planning` (SOC-1249; 24 skills): a growth strategy audit that saves an audience map and proposes a Brand Strategy for approval, then planning that records decisions, a six-week plan, first briefs and a weekly routine. Both keep their state in workspace notes with fixed keys (`growth/audience-map`, `growth/plan`, `growth/routine`) so a later session resumes from them. Draft for prototype testing.
+- Add `socialseal-growth-audit` and `socialseal-growth-planning` (SOC-1249; 24 skills). The audit researches the brand first, asks the user to confirm the diagnostic and state their growth objectives, maps niches, jobs, worries, answer gaps and the brand's edge, saves an audience map and proposes a Brand Strategy. Planning runs exploration (cheap organic experiments across accounts, messages and formats) alongside exploitation (repeating and scaling what works through accounts, creators and paid boosting), always keeping at least 10% exploration. Both keep their state in workspace notes with fixed keys (`growth/audience-map`, `growth/plan`, `growth/routine`). Draft for prototype testing.
 
 ## Claude plugin 0.9.0 (unreleased)
 

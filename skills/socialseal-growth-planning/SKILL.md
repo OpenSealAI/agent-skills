@@ -2,11 +2,12 @@
 name: socialseal-growth-planning
 description: >-
   Use this skill when the user wants a growth plan after a growth audit: turning a
-  saved audience map and published Brand Strategy into recorded decisions, a
-  six-week content plan, a tracked set of searches, first briefs, and a weekly
-  routine they can run with their agent. Also use it when a returning user asks
-  what to do next or what changed since the plan was made. If no audience map or
-  Strategy exists yet, run socialseal-growth-audit first.
+  saved audience map and published Brand Strategy into cheap organic experiments
+  (exploration) and then scaling what works through more accounts, creators and
+  paid boosting (exploitation), with a weekly routine to run it. Also use it when a
+  returning user asks what to do next, what is working, or how to split effort
+  between testing and scaling. If no audience map or Strategy exists yet, run
+  socialseal-growth-audit first.
 license: MIT
 metadata:
   socialseal:
@@ -15,25 +16,25 @@ metadata:
     - socialseal
     - growth
     - planning
-    - decisions
+    - experiments
     - content-plan
     - routine
 ---
 
 # SocialSeal Growth Planning
 
-## Overview
+## The approach
 
-Planning turns the audit into action the user can keep running: **decide, plan, brief, then measure every week.**
+Organic social is the cheapest place to experiment. A post costs little to make, reaches a real audience within days, and the results are measurable. So the plan has two modes, run side by side:
 
-It ends with four things saved in the workspace:
+- **Exploration:** use organic posts to test, cheaply, which audience, account, message and format work.
+- **Exploitation:** repeat what works and scale it with more accounts, creators and partnerships, and paid boosting.
 
-1. The **decisions**, each as its own note, and reflected in the Brand Strategy's angle ledger.
-2. A **plan**: six weeks of content against the chosen niches.
-3. The **first briefs**, each generated from a Study.
-4. A **weekly routine** the user's agent can run without help.
+The split between the two changes with the stage. A brand with nothing proven is almost all exploration. A brand with proven winners moves most of its effort to exploitation. **Always keep at least 10% in exploration**, so the next winner is being found while the current ones are scaled.
 
-Read `references/evidence-and-confidence.md` before interpreting results, `references/mcp-and-cli-usage.md` for schemas, quotes and polling, and use `templates/social-plan-template.md` for the plan's layout.
+Planning ends with two notes saved in the workspace: the **plan** (experiments, winners, the split) and a **weekly routine** the user's agent can run.
+
+Read `references/evidence-and-confidence.md` before interpreting results, `references/mcp-and-cli-usage.md` for schemas and polling, and use `templates/social-plan-template.md` for a posting calendar's layout.
 
 ## Start: read saved state
 
@@ -42,121 +43,164 @@ Read `references/evidence-and-confidence.md` before interpreting results, `refer
 
 Then:
 
-- **No published Strategy or no audience map:** say so and offer `socialseal-growth-audit`. Do not plan from assumptions.
+- **No published Strategy or no audience map:** offer `socialseal-growth-audit`.
 - **A plan already exists:** this is a return visit. Go to "Each week".
 - **Map and Strategy, no plan:** continue below.
 
-## 1. Decide
+## Credits
 
-For each decision the audit was meant to serve, prepare one short page: the options, the evidence for each from the audience map, and what we would expect to see if the choice is right.
+Some of the tools require credits. Check the available credits before starting, and scope the plan's research and tracking appropriately. If available credits are insufficient for a quality plan, inform the user about the upgrade or overage options. Do not silently degrade the quality or fall back to assumptions.
 
-Typical decisions: which market or segment first; which niche to own; organic against paid; whether to start a creator programme; agency against in-house; a product, pricing or partnership change the worries point to.
+## Exploration
 
-The user decides. Then record it:
+Each experiment is a small bet: one audience, one account, one message, one format, a handful of posts. Design the first set from the audit's ranked opportunities.
 
-- One note per decision with `socialseal_create_workspace_note`: `type: "decision"`, `key: "growth/decision/<short-name>"`, stating the choice, the date, the evidence and what would change it.
-- Update the Strategy's `angles`: chosen angles `live`, turned-down ones `rejected` with the reason. Save with `socialseal_propose_brand_strategy`, passing the published revision as `expectedBaseRevisionId`, and publish only after the user approves the draft.
+### Decide platforms and accounts
 
-Check every recommendation against the Strategy's decision tests. If one fails, say which test and offer a version that passes.
+- **Platform:** go where the niche's searches and winning videos are. The audience map shows this per niche.
+- **One account, one audience.** Each account should serve a specific audience, in its language, on its topics. An account that speaks to everyone is recommended to no one. Where the opportunities point to different audiences or markets, plan separate accounts.
+- **TikTok accounts should sit where the audience is.** A TikTok account is ideally located in the same market as the audience it targets.
+- Start with the fewest accounts that cover the top opportunities. More come in exploitation.
 
-## 2. Check the tracked set
+Check existing accounts against this. Recommend keeping, refocusing or splitting each, and say why.
 
-Read what is tracked (`socialseal_list_tracking_groups`, `socialseal_get_tracking_group`). The decisions may have changed what matters:
+### Decide content
 
-- Add searches the chosen niches need (`socialseal_track_search_or_hashtag`, `socialseal_add_tracking_group_items`).
-- Pause what the decisions dropped, with the user's agreement.
-- Tell the user what the set costs to refresh each week, from the tools' own prices.
+Two inputs, kept separate:
 
-## 3. Plan six weeks
+- **Message: what to say.** From the audit: the gap in today's answers, and the brand's edge that fills it (a USP, a point of view, data or access only they have). Each experiment should give a better answer than the audience gets now.
+- **Format and mechanism: how to say it.** From a Study of what already wins the target search: hooks, opening move, duration, structure, on-screen text, call to action. Start one with `socialseal_start_study`, or reuse a Study from the audit.
 
-Draft the plan against the chosen niches: the searches each post targets, the format, who makes it and the cadence. Cut anything the user cannot produce; the Strategy's `production` limits are binding.
+Vary one thing at a time where possible, so a result can be read: the same message in two formats, or two messages in the same format.
 
-Save it as one note: `type: "workflow"`, `key: "growth/plan"`, `pinnedToCore: true`.
+### Brief the experiments
+
+Generate briefs from the Study with `socialseal_generate_brief` (or `socialseal_start_brief_run`), read them with `socialseal_get_brief`, share them with `socialseal_export_brief`. On `study_needed`, offer the Study or subjects it returns. A brief follows one worked example from the Study; tell the user which video.
+
+Brief two weeks ahead. Results should shape what comes after.
+
+### Make each experiment measurable
+
+Every experiment targets searches that are tracked (`socialseal_track_search_or_hashtag`, `socialseal_add_tracking_group_items`), and names what "worked" would look like before it runs.
+
+## Exploitation
+
+### What "works" means
+
+Judge each experiment on three sources together:
+
+1. **Search and tracking data in SocialSeal:** does the post, or the account, appear for the target searches; did discoverability and Share of Voice on those searches move. Attach published posts to their briefs with `socialseal_attach_brief_publication` and read `socialseal_get_brief_outcomes`; read the tracked groups for the wider picture.
+2. **Engagement:** views, saves, shares, comments, and what the comments say.
+3. **The account's own metrics and insights:** follower growth, audience location and demographics, retention, profile visits, link clicks, and the sign-ups, leads or sales behind them. SocialSeal does not see these. The user does: read them through whatever access the user's agent has, or ask the user for them.
+
+Tie the judgement to the growth objective in the audience map. A post that ranks but brings the wrong audience has not worked.
+
+### Repeat
+
+Make more of what worked: the same message and mechanism on new searches in the niche, as a series, and adapted to the next platform. Record the winning combination in the Strategy's angle ledger (`socialseal_propose_brand_strategy`, then publish once the user confirms), and mark what failed as `rejected` with the reason, so it is not retried by accident.
+
+### Scale
+
+- **More accounts:** a new account per additional audience or market that the winners justify, following the one-account-one-audience rule.
+- **Creators and partnerships:** find creators who already rank for the niche's searches, nano included (`socialseal_search_videos`, `socialseal_get_creator_profile`, `socialseal_get_creator_recent_posts`, `socialseal_collect_account`). Brief them with the winning message and mechanism. See `socialseal-creator-discovery`, `socialseal-creator-evaluation` and `socialseal-creator-briefing`.
+- **Ads and boosting:** put paid budget behind posts that have already won organically. Organic results choose the creative; paid extends its reach.
+
+## Set the split
+
+Recommend a split of effort between exploration and exploitation for the next six weeks, from where the brand is:
+
+| Stage | Signs | Exploration | Exploitation |
+|---|---|---|---|
+| Nothing proven | New accounts, or no post has moved the objective | Most of the effort | Little or none |
+| First winners | One or two combinations work repeatably | About half | About half |
+| Proven engine | Several winners, a steady cadence, results tied to the objective | At least 10% | The rest |
+
+State the reasoning, and what would move the brand to the next stage.
+
+## Write it down
+
+Save the plan as one note: `type: "workflow"`, `key: "growth/plan"`, `pinnedToCore: true`. Update it in place.
 
 ```markdown
 # Growth plan · <brand> · <start date> to <end date>
 
-Decisions this plan carries out: <links to the decision notes>
-Measured by: <tracked groups; Share of Voice and discoverability on those searches>
+Growth objective: <from the audience map>
+Stage and split: <stage> — <x>% exploration, <y>% exploitation. Next stage when: <condition>
 
-| Week | Post | Niche | Target search | Format | Maker | Brief | Published link |
-|---|---|---|---|---|---|---|---|
-| 1 | | | | | | <brief ref or "to do"> | |
+## Accounts
+| Platform | Account | Audience it serves | Market / location | Status |
+|---|---|---|---|---|
 
-## Not doing, and why
-- <what was cut>
+## Exploration: experiments
+| # | Audience / niche | Account | Message (gap + edge) | Format / mechanism (Study ref) | Target searches | "Worked" means | Posts | Result |
+|---|---|---|---|---|---|---|---|---|
+
+## Exploitation: what works
+| Winner (message + mechanism) | Evidence (search, engagement, account insights) | Repeating as | Scaling through (accounts / creators / paid) |
+|---|---|---|---|
+
+## Stopped, and why
+- <experiments that failed or were cut>
 
 ## Review dates
 - <weekly check day>; <six-week review date>
 ```
 
-## 4. Brief the first two weeks
-
-Briefs come from a Study of what already wins the target search.
-
-- Reuse an existing Study where one covers the niche; otherwise start one with `socialseal_start_study` and run creative analysis only after the user approves its price.
-- Generate each brief with `socialseal_generate_brief` (or `socialseal_start_brief_run`), read it with `socialseal_get_brief`, and share it with `socialseal_export_brief`.
-- On `study_needed`, offer the returned Study or candidate subjects; do not work around it.
-- Put each brief's reference into the plan note.
-
-A brief is one worked example from the Study, not a summary of every video. Tell the user which video it follows.
-
-## 5. Write the weekly routine
-
-Save the routine as a note the user's agent can follow: `type: "workflow"`, `key: "growth/routine"`, `pinnedToCore: true`. Keep it to what they will do:
+Save the routine as a second note: `type: "workflow"`, `key: "growth/routine"`, `pinnedToCore: true`.
 
 ```markdown
 # Weekly routine · <brand>
 
 Every <day>, about 30 minutes. Ask your agent: "Run my SocialSeal weekly routine."
 
-1. Read the plan and decisions (core notes) and the Brand Strategy.
-2. What moved on the tracked searches and competitors since last week?
-3. Link any post published this week to its brief.
-4. Read outcomes for linked posts.
-5. Brief next week's posts from the latest Study.
-6. Update the plan note: published links, what changed, what is next.
+1. Read the plan, the audience map and the Brand Strategy.
+2. Link posts published this week to their briefs; read their outcomes.
+3. Read what moved on the tracked searches and competitors.
+4. Bring in the accounts' own insights for the week.
+5. Judge each running experiment: worked, did not, or too early.
+6. Update the plan: results, new winners, what stops, next week's posts.
+7. Brief next week's posts.
 
-Monthly: a one-page readout for whoever needs it.
-Every quarter, or when a new decision comes up: run the growth audit again for that question.
+Every six weeks: review the stage and the split.
+When the objective changes or a new market opens: run the growth audit for it.
 ```
 
 ## Each week
 
 When the user returns, run the routine:
 
-1. Read `growth/plan`, the decision notes and the Strategy.
-2. Read the tracked groups for what moved. Use the tracking reads and exports available in the live catalogue; if a Monitor report read is offered, prefer it.
-3. For posts published since last time, attach each to its brief with `socialseal_attach_brief_publication`, then read `socialseal_get_brief_outcomes`.
-4. Say what moved, what did not, and what cannot be told yet. Outcomes are observations, not proof that the post caused the change.
-5. Recommend the next week's work and update the plan note in place with `socialseal_update_workspace_note`.
-
-The user's own numbers (sign-ups, leads, sales) are theirs to add. Do not claim them.
+1. Read `growth/plan`, `growth/audience-map` and the Strategy.
+2. Attach new posts to their briefs and read `socialseal_get_brief_outcomes`.
+3. Read the tracked groups for what moved, using the tracking reads and exports in the live catalogue; prefer a Monitor report read where one is offered.
+4. Get the accounts' own insights, through the agent's access or from the user.
+5. Say what worked, what did not and what is too early to call. Outcomes are observations; a before-and-after alone does not show cause.
+6. Move winners to exploitation, stop what failed, propose the next experiments, and update the plan note with `socialseal_update_workspace_note`.
 
 ## Finish
 
-Report: the decisions recorded; the plan's first two weeks; the briefs ready and the video each follows; what is tracked and its weekly cost; the routine and the next review date.
+Report: the stage and the recommended split; the accounts and who each serves; the first experiments and what would count as working; the briefs ready; what is tracked; the routine and the next review date.
 
 ## Do / Don't
 
 Do:
 - keep one plan note and update it; a returning agent reads it first
-- tie every planned post to a tracked search, so it can be measured
-- record what was cut and why
-- state weekly tracking cost before adding to the set
+- tie every experiment to an audience, an account, tracked searches and a stated test of "worked"
+- keep the message (gap and edge) separate from the format (Study)
+- judge on search data, engagement and the account's own insights together
+- keep at least 10% of effort in exploration at every stage
 
 Don't:
 - plan without a published Strategy and a saved audience map
-- record a decision the user has not made
-- promise results, or read a cause into a before-and-after
-- generate every brief up front; brief two weeks ahead
-- add platforms or markets the decisions did not choose
+- run one account for several audiences
+- scale a post with paid budget before it has worked organically
+- call a result from a single post, or read a cause into a before-and-after
+- brief more than two weeks ahead
 
 ## Verification checklist
 
 - [ ] The Strategy and core notes were read first; a missing map or Strategy was routed to the audit.
-- [ ] Each decision is a note with its evidence and date, and the Strategy's angle ledger matches.
-- [ ] One pinned note with key `growth/plan` holds the six weeks, each post tied to a tracked search.
-- [ ] The first two weeks have briefs generated from a Study, and the plan names them.
-- [ ] One pinned note with key `growth/routine` tells the user's agent what to do each week.
-- [ ] Tracking cost and the next review date were stated.
+- [ ] Platforms and accounts are decided, each account serving one named audience.
+- [ ] Each experiment names its message (gap and edge), its format (Study), its target searches and what "worked" means.
+- [ ] The stage and the exploration and exploitation split are stated, with at least 10% exploration.
+- [ ] One pinned note with key `growth/plan` and one with key `growth/routine` are saved.
+- [ ] Return visits judge results on search data, engagement and the accounts' own insights.
