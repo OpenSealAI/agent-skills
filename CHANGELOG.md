@@ -1,5 +1,11 @@
 # Changelog
 
+## Claude plugin 0.10.0
+
+- Add `socialseal-growth-audit` and `socialseal-growth-planning` (SOC-1249, SOC-1257; 24 skills). The audit researches the brand first, asks the user to confirm the diagnostic and state their growth objectives, maps niches, jobs, worries, answer gaps and the brand's edge, saves an audience map and proposes a Brand Strategy. Planning runs exploration (cheap organic experiments across accounts, messages and formats) alongside exploitation (repeating and scaling what works through accounts, creators and paid boosting), always keeping at least 10% exploration. Both keep their state in workspace notes with fixed keys (`growth/audience-map`, `growth/plan`, `growth/routine`).
+- Prototype fixes (10–11 Nov runs in ChatGPT, Claude Code and claude.ai): the audit asks for a numeric objective, weekly production capacity and where accounts post from; asks each AI engine through the `engine` argument with three to five buyer questions per niche; studies at least 6 on-topic videos; takes the baseline's first capture; keeps pinned notes short; and flags pinned notes that contradict the Strategy. Planning looks notes up by key, and generates and reviews one brief before the rest.
+- Claude listing: describe the Growth workflow; drop the Cursor manifest's `logo` field, which held the directory check.
+
 ## Claude plugin 0.9.0 (unreleased)
 
 Breaking: the Blueprint and single-video analysis tools are gone, so the Claude plugin version moves past 0.8.3 and Claude Code refreshes cached 0.8.3 installs.

@@ -46,6 +46,8 @@ if codex_manifest_path.is_file() and mcp_manifest_path.is_file() and discovery_p
 trigger_expectations = {
     "socialseal-orchestrator": ["multi-stage", "production"],
     "socialseal-strategy-readiness": ["content plan", "product truths", "exclusions"],
+    "socialseal-growth-audit": ["growth strategy audit", "audience niches"],
+    "socialseal-growth-planning": ["growth plan", "after a growth audit"],
     "socialseal-workspace-setup": ["there is no tracking group", "baseline/search journey"],
     "socialseal-tracking-group-design": ["what keywords or queries to track", "no group"],
     "socialseal-opportunity-analysis": ["what are people searching for", "content gaps"],
@@ -126,7 +128,7 @@ for resource_type in ("references", "templates"):
         if not canonical.is_file() or bundled.read_bytes() != canonical.read_bytes():
             errors.append(f"{bundled.relative_to(root)}: differs from canonical {resource_type} resource")
 
-expected=22
+expected=24
 found=len(list(root.glob('skills/*/SKILL.md')))
 if found != expected:
     errors.append(f'expected {expected} skills, found {found}')
