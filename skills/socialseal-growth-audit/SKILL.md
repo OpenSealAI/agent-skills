@@ -49,7 +49,7 @@ For a single keyword check, a supplied video, a named creator or a read of exist
 
 1. `socialseal_get_current_workspace` for the workspace, credits and what is set up. With several workspaces, confirm which one by name.
 2. `socialseal_get_brand_strategy`. `state=missing` or `state=no_brand` is normal here.
-3. `socialseal_get_core_workspace_notes`. If a note with key `growth/audience-map` exists, the audit has been started: read it, say what is done, and continue from the first unfinished step. If the core notes don't show it, look it up by key with `socialseal_search_workspace_notes` before starting afresh.
+3. `socialseal_get_core_workspace_notes`. If a note with key `growth/audience-map` exists, compare its scope and growth objective with what the user is asking for. If they match, the audit has been started: read it, say what is done, and continue from the first unfinished step. If the user asks about a new market, segment or objective, run the audit for that scope and add it to the same map. If the core notes don't show it, look it up by key with `socialseal_search_workspace_notes` before starting afresh.
 
 Pinned notes that contradict a published Strategy, or that a newer note replaces, mislead every later session. List them in the diagnostic and propose updating or unpinning each.
 
