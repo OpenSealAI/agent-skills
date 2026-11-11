@@ -148,6 +148,7 @@ installed bundles, then verify each supported host. Repository publication and
 installed host versions are separate; report an unavailable operation precisely.
 Claude plugin 0.9.0 removes the Blueprint and single-video analysis guidance and
 requires the Study-only MCP catalogue (`2026-10-24.study-only-briefs.v1`).
+Claude plugin 0.10.0 adds the Growth audit and planning skills.
 
 ## Skill taxonomy
 
@@ -157,7 +158,7 @@ requires the Study-only MCP catalogue (`2026-10-24.study-only-briefs.v1`).
 
 ### Strategy
 - `socialseal-growth-audit` (first work after connecting: maps audience niches, jobs, worries and demand, saves the audience map, and proposes a Brand Strategy for approval)
-- `socialseal-growth-planning` (turns the audit into recorded decisions, a six-week plan, first briefs and a weekly routine)
+- `socialseal-growth-planning` (turns the audit into exploration and exploitation: accounts, organic experiments, first briefs and a weekly routine, always keeping at least 10% exploration)
 - `socialseal-workspace-setup`
 - `socialseal-tracking-group-design`
 - `socialseal-opportunity-analysis`

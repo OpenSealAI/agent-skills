@@ -49,7 +49,9 @@ For a single keyword check, a supplied video, a named creator or a read of exist
 
 1. `socialseal_get_current_workspace` for the workspace, credits and what is set up. With several workspaces, confirm which one by name.
 2. `socialseal_get_brand_strategy`. `state=missing` or `state=no_brand` is normal here.
-3. `socialseal_get_core_workspace_notes`. If a note with key `growth/audience-map` exists, the audit has been started: read it, say what is done, and continue from the first unfinished step.
+3. `socialseal_get_core_workspace_notes`. If a note with key `growth/audience-map` exists, the audit has been started: read it, say what is done, and continue from the first unfinished step. If the core notes don't show it, look it up by key with `socialseal_search_workspace_notes` before starting afresh.
+
+Pinned notes that contradict a published Strategy, or that a newer note replaces, mislead every later session. List them in the diagnostic and propose updating or unpinning each.
 
 ## 2. Research the brand yourself
 
@@ -76,7 +78,9 @@ Mark each line as found (with its source) or inferred.
 
 Show the diagnostic and ask the user to correct it. Then ask only what research cannot answer:
 
-- **Their north star metric or growth objectives:** what they are trying to move, and by when.
+- **Their north star metric or growth objectives:** what they are trying to move, by how much, and by when. Ask for a number; a target without one can't be judged later.
+- **What they can produce:** how many videos a week, and who posts them.
+- **Where their accounts post from:** the handle or URL of each own account, and the country the TikTok account and the person posting are in. TikTok shows posts to people near where they are posted from.
 - **Anything the diagnostic got wrong or missed,** especially the edge and the excluded audiences.
 - **What they have already tried** on social, and what they concluded.
 
@@ -126,8 +130,8 @@ Propose three to five niches that fit the growth objective, and say why each.
 For each chosen niche:
 
 - `socialseal_start_search_journey` for the stages people search through on the way to a decision.
-- AI answers across **Google AI, ChatGPT, Gemini and Claude** with `socialseal_start_google_ai_search`: the questions asked, what each engine answers, and which sources it cites.
-- `socialseal_start_study` on the top videos, to see what the winning content answers and how.
+- AI answers across **Google AI, ChatGPT, Gemini and Claude** with `socialseal_start_google_ai_search`, one call per engine through its `engine` argument (`google_ai`, `chatgpt`, `gemini`, `claude`). Ask three to five buyer questions per niche, worded as the buyer would ask them. Read what each engine answers and which sources it cites. Read the results with `socialseal_get_google_ai_search_results`, filtered by `engine`.
+- `socialseal_start_study` on the top videos for the niche's searches, to see what the winning content answers and how. A Study needs at least 6 videos; choose videos that match the niche, and drop off-topic ones before starting.
 
 Searches show what people ask. The answers they currently get, in the videos that rank and in AI answers, give strong clues to why they ask and what would reassure them. Read both sides. Customer conversations the user has had can confirm the picture.
 
@@ -157,13 +161,15 @@ Track competitor accounts where ongoing comparison is useful (`socialseal_track_
 
 Track the searches that define each chosen niche, weekly, on the platforms that matter: select them in Explore and use `socialseal_explore_preview_activation` then `socialseal_explore_activate_searches`, or `socialseal_track_search_or_hashtag` for searches found outside Explore.
 
-The first refresh of these searches is the "before" picture. Record the date.
+The first refresh of these searches is the "before" picture. Tracking a search schedules it; to take the first capture now, refresh each new search once with `socialseal_refresh_tracking_item` (quote first). Record the date, and the next refresh date each search reports.
 
 ## 5. Write it down
 
 ### The audience map
 
 Save one note with `socialseal_create_workspace_note`: `type: "fact"`, `key: "growth/audience-map"`, `pinnedToCore: true`. Update the same note as the audit progresses.
+
+Keep the map under about 6,000 characters, so it fits in the core notes every session reads first. Put long evidence (video lists, AI answer excerpts, full demand tables) in a second, unpinned note with key `growth/audience-map-evidence`, and link to it from the map.
 
 ```markdown
 # Audience map · <brand> · <date>
@@ -176,6 +182,8 @@ Progress: <steps done / steps left>
 - Sells: <offer, customer, what a good lead is>
 - Edge: <USPs, point of view, unique data or access>
 - Not for: <excluded audiences, confirmed by the user>
+- Accounts: <platform, handle, posting location, who it speaks to>
+- Production: <videos a week, who posts>
 
 ## <Market · language>
 
@@ -243,9 +251,10 @@ Don't:
 - [ ] A researched diagnostic was shown, and the user confirmed or corrected it before the audit research began.
 - [ ] Differences between public pages and what the user or workspace says were listed and settled.
 - [ ] Each chosen niche has a Study, and its gaps come from evidence.
-- [ ] The user's north star metric or growth objectives are recorded.
+- [ ] The user's north star metric or growth objectives are recorded, with a number and a date.
+- [ ] Own accounts, their posting location and weekly production capacity are recorded.
 - [ ] AI answers were read across Google AI, ChatGPT, Gemini and Claude for the chosen niches.
 - [ ] Each chosen niche has its gaps and the brand's edge written down.
 - [ ] One pinned note with key `growth/audience-map` holds the map.
 - [ ] A Brand Strategy was proposed, confirmed by the user, then published.
-- [ ] Baseline searches are tracked and the date of the first refresh is recorded.
+- [ ] Baseline searches are tracked, each has a first capture, and the date is recorded.

@@ -51,11 +51,16 @@ class HostPluginManifestTests(unittest.TestCase):
 
     def test_host_manifest_assets_are_inside_package(self):
         manifest = json.loads((ROOT / ".cursor-plugin/plugin.json").read_text())
-        for field in ("logo", "mcpServers"):
+        for field in ("mcpServers",):
             with self.subTest(field=field):
                 path = (ROOT / manifest[field]).resolve()
                 self.assertTrue(path.is_relative_to(ROOT))
                 self.assertTrue(path.is_file())
+
+    def test_cursor_manifest_names_no_image_file(self):
+        # The Claude directory scan holds a plugin whose manifests point code at an image file.
+        manifest = json.loads((ROOT / ".cursor-plugin/plugin.json").read_text())
+        self.assertNotIn("logo", manifest)
 
     def test_hosted_mcp_uses_explicit_http_transport(self):
         # https://claude.com/docs/plugins/pre-submission-checklist

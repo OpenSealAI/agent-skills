@@ -39,7 +39,9 @@ Read `references/evidence-and-confidence.md` before interpreting results, `refer
 ## Start: read saved state
 
 1. `socialseal_get_current_workspace`, then `socialseal_get_brand_strategy`.
-2. `socialseal_get_core_workspace_notes`, looking for the notes with keys `growth/audience-map`, `growth/plan` and `growth/routine`.
+2. `socialseal_get_core_workspace_notes`, looking for the notes with keys `growth/audience-map`, `growth/plan` and `growth/routine`. If one is missing from the core notes, look it up by key with `socialseal_search_workspace_notes` before concluding it doesn't exist.
+
+The plan needs three facts from the audit: the growth objective as a number and a date, how many videos a week the team can make, and where each own account posts from. If the audience map doesn't hold them, ask the user for them before designing experiments.
 
 Then:
 
@@ -77,7 +79,7 @@ Vary one thing at a time where possible, so a result can be read: the same messa
 
 Generate briefs from the Study with `socialseal_generate_brief` (or `socialseal_start_brief_run`), read them with `socialseal_get_brief`, share them with `socialseal_export_brief`. On `study_needed`, offer the Study or subjects it returns. A brief follows one worked example from the Study; tell the user which video.
 
-Brief two weeks ahead. Results should shape what comes after.
+Generate the first brief, read it with the user, and adjust before generating the rest, so one correction doesn't have to be made in every brief. Brief two weeks ahead. Results should shape what comes after.
 
 ### Make each experiment measurable
 
@@ -119,7 +121,7 @@ State the reasoning, and what would move the brand to the next stage.
 
 ## Write it down
 
-Save the plan as one note: `type: "workflow"`, `key: "growth/plan"`, `pinnedToCore: true`. Update it in place.
+Save the plan as one note: `type: "workflow"`, `key: "growth/plan"`, `pinnedToCore: true`. Update it in place. Keep it under about 6,000 characters so it fits in the core notes; move finished experiments to "Stopped, and why" in one line each.
 
 ```markdown
 # Growth plan · <brand> · <start date> to <end date>
