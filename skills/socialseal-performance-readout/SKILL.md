@@ -43,7 +43,7 @@ socialseal_export_report {
 
 Use `socialseal_export_tracking_data` for a group/item time-window export. For Google AI evidence, use the named results read and retain its actual coverage. See `references/mcp-and-cli-usage.md`.
 
-Attribution: cite movement in human-readable terms, the `"keyword" [market, platform]`, the video title/URL, `@author_handle`, and where it ranked; keep `video_uid`/`search_result_id` as an internal traceability note. Use `first_seen_at`/`last_seen_at` for resurfacing language and never infer platform age when `published_at` is blank. See `references/socialseal-data-contract.md`.
+Attribution: cite movement in human-readable terms, the `"keyword" [market, platform]`, the video title linked to its public URL, `@author_handle`, and where it ranked. Link each example video, creator and competitor account, one link per table row, or write `source: workspace data, no public link`. Keep `video_uid`/`search_result_id` as an internal traceability note. Use `first_seen_at`/`last_seen_at` for resurfacing language and never infer platform age when `published_at` is blank. See `references/socialseal-data-contract.md`.
 
 Evidence tiers: movement in discoverability/coverage/SOV is a hard observation, not a noisy estimate; attribute day-to-day change to a shifting search reality, not measurement error. But the figures are scoped to high-ranking videos for the tracked queries, so do not generalize past that scope. See `references/evidence-and-confidence.md`.
 

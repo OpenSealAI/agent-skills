@@ -53,7 +53,7 @@ socialseal_export_report {
 }
 ```
 
-Get Video DNA for sampled videos with a Study: `socialseal_start_study` using `{ "workspaceId": "<workspace-id>", "subject": { "kind": "videos", "videoUids": ["<video-uid>"] }, "idempotencyKey": "<request-key>" }` (or a `competitor` subject), then read per-video evidence with `socialseal_get_study`. Any new analysis is priced first; run it only after the user approves the price. Use `socialseal_extract_video_assets` for frames and source assets of stored videos. Attribution: cite every example by video title/URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
+Get Video DNA for sampled videos with a Study: `socialseal_start_study` using `{ "workspaceId": "<workspace-id>", "subject": { "kind": "videos", "videoUids": ["<video-uid>"] }, "idempotencyKey": "<request-key>" }` (or a `competitor` subject), then read per-video evidence with `socialseal_get_study`. Any new analysis is priced first; run it only after the user approves the price. Use `socialseal_extract_video_assets` for frames and source assets of stored videos. Attribution: cite every example by video title linked to its public URL, `@author_handle`, and `"keyword" [market, platform]`; keep `video_uid`/`search_result_id` as an internal traceability note only, and avoid platform-age claims when `published_at` is blank (see `references/socialseal-data-contract.md` and `references/mcp-and-cli-usage.md`).
 
 Evidence note: surfaced exemplars are anecdotal evidence for creative direction, not proof a pattern will perform. A pattern needs multiple exemplars or an explicit reason; frame adaptations as hypotheses to test. See `references/evidence-and-confidence.md`.
 
@@ -77,7 +77,7 @@ Evidence note: surfaced exemplars are anecdotal evidence for creative direction,
 Create a content-pattern matrix:
 
 - keyword/topic (as `"keyword" [market, platform]`)
-- example (video title/URL, `@handle`)
+- example (video title linked to its public URL, `@handle`; one link per row)
 - account/entity type
 - format
 - hook/first-frame pattern
@@ -99,7 +99,7 @@ Do:
 - distinguish viewed video/slide evidence from metadata-only inference
 - identify account type: owned, creator, media, affiliate/partner, competitor
 - adapt the mechanism, not the wording
-- cite examples by title/URL and `@handle`; keep `video_uid` as a traceability note
+- link every example and competitor account to the public URL the tool returns, or write `source: workspace data, no public link`; keep `video_uid` as a traceability note
 
 Don't:
 

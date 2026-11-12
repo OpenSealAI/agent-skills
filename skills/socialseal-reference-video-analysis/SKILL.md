@@ -66,7 +66,7 @@ Good to have:
 4. **Approve and run.** After the user approves the price, resend the request that produced it with `maxCostUsd` (wallet workspace) or `approvedCredits` (subscription) set to it and the same `idempotencyKey`. After a timeout or uncertain outcome, retry the unchanged request with the same key; it is never charged twice. On `price_changed`, nothing ran: a wallet response carries no price, so request a fresh quote without approval fields, get approval for the returned price and resend with a new `idempotencyKey`; a subscription response carries the new credit price to approve, then follow its `nextStep`. On `funding_required`, share the returned funding link and keep its `operationId`.
 5. **Read Video DNA.** Poll `socialseal_get_study` with the `studyRef` while it is `enriching`. Read the findings, coverage and per-video evidence: hooks, CTAs, shots, beats, style and metrics (photo evidence by slide). Use `socialseal_extract_video_assets` only when you need frames or source assets for stored videos.
 6. **Group observed mechanisms if needed.** Compare the returned per-video evidence locally and label this as your synthesis, separately from the Study's own findings.
-7. **Record evidence.** For every exemplar capture the human-readable citation (video title/URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) and the Study's `studyRef`/revision as an internal traceability note. Separate observed features from `likelyReasonItRanks` and other model hypotheses; do not cite those interpretations as independent corroboration. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
+7. **Record evidence.** For every exemplar capture the human-readable citation (video title linked to its public URL, `@author_handle`, and the `"keyword" [market, platform]` it surfaced for) plus the analyzed DNA. Keep `video_uid` (and `search_result_id` where it came from a ranked row) and the Study's `studyRef`/revision as an internal traceability note. Separate observed features from `likelyReasonItRanks` and other model hypotheses; do not cite those interpretations as independent corroboration. Remember exemplars are anecdotal creative evidence, not proof a mechanism will perform; see `references/evidence-and-confidence.md`.
 
 ## Tool Calls (MCP-first)
 
@@ -103,7 +103,7 @@ socialseal_get_study { "workspaceId": "<workspace-id>", "studyRef": "<study-ref>
 
 ## Output
 
-- a list of studied exemplars cited by video title/URL, `@handle`, and the `"keyword" [market, platform]` (with `video_uid`/`search_result_id` kept as a traceability note), plus metrics
+- a list of studied exemplars, one link per exemplar, cited by video title linked to its public URL, `@handle`, and the `"keyword" [market, platform]` (with `video_uid`/`search_result_id` kept as a traceability note), plus metrics
 - Video DNA per exemplar: hook, first frame, structure, hero/supporting shots, useful details or mood cues, production qualities, caption/CTA style, account type
 - format and lens labels (aspirational vs utility/practical) with the evidence behind each
 - a note on which exemplars are analyzed vs metadata-only, from the Study's coverage
@@ -116,7 +116,7 @@ Do:
 - reuse an existing Study before starting a new one
 - get the user's benchmark/analysis-depth choice and price approval before paid DNA work
 - inspect actual analysis/frames before claiming a visual or format pattern
-- cite exemplars by title/URL and `@handle`; keep `video_uid`/`search_result_id` and the `studyRef` as a traceability note
+- link every exemplar to the public URL the tool returns, or write `source: workspace data, no public link`; cite by title and `@handle`; keep `video_uid`/`search_result_id` and the `studyRef` as a traceability note
 - separate owned, creator, media, affiliate, and competitor exemplars
 
 Don't:
