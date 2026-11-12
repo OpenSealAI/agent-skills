@@ -55,7 +55,7 @@ excuse to select one route silently and build a large batch.
 7. **Present the concept decision.** Show the top 2-3 routes with trade-offs and ask
    the user to select, combine, or adjust them. Record the approved route and facts;
    do not produce every route unless requested.
-8. **Hand off.** Send approved concepts to `socialseal-reference-video-analysis` (start the Study and approve any Video DNA) and then `socialseal-creator-briefing` (generate the brief from it).
+8. **Hand off.** Send approved concepts to `socialseal-reference-video-analysis` (start the Study and approve any Video DNA) and then `socialseal-creator-briefing` (quote and run the brief engine from it). When the user asked for briefs, run the engine for the approved concepts rather than writing the briefs by hand.
 
 ## Output
 
@@ -79,6 +79,7 @@ Do:
 Don't:
 - generate generic viral ideas detached from the keyword gap
 - treat a concept as final content; it must be grounded by a Study first
+- write the briefs by hand once concepts are approved; send them to the brief engine
 - copy competitor hooks directly
 - use scripted ad language
 

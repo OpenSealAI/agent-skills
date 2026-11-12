@@ -37,7 +37,7 @@ This skill turns measurement into decisions. It should not summarize the readout
 3. **Write concrete changes.** Use owner-ready language: “Add two utility walkthroughs for X,” not “do more useful content.”
 4. **Prioritize.** Impact, confidence, effort, and speed to learn.
 5. **Define measurement.** State the tracking group, keyword/topic, and signal for each change.
-6. **Create brief queue.** Convert high-priority changes into creator briefs or video concepts.
+6. **Create brief queue.** Convert high-priority changes into creator briefs (through the SocialSeal brief engine, see `socialseal-creator-briefing`) or video concepts.
 
 ## Output
 

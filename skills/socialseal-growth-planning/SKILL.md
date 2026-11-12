@@ -77,7 +77,7 @@ Vary one thing at a time where possible, so a result can be read: the same messa
 
 ### Brief the experiments
 
-Generate briefs from the Study with `socialseal_generate_brief` (or `socialseal_start_brief_run`), read them with `socialseal_get_brief`, share them with `socialseal_export_brief`. On `study_needed`, offer the Study or subjects it returns. A brief follows one worked example from the Study; tell the user which video.
+Generate briefs from the Study through the brief engine: quote with `socialseal_generate_brief` (or `socialseal_start_brief_run`) and `quoteOnly: true`, then run it with the same `idempotencyKey` and no `quoteOnly`. Scope the brief count to the workspace's credits and tell the user the upgrade options if short. Hand-write a brief only when the engine can't run, and say why. Read them with `socialseal_get_brief`, share them with `socialseal_export_brief`. On `study_needed`, offer the Study or subjects it returns. A brief follows one worked example from the Study; tell the user which video.
 
 Generate the first brief, read it with the user, and adjust before generating the rest, so one correction doesn't have to be made in every brief. Brief two weeks ahead. Results should shape what comes after.
 
