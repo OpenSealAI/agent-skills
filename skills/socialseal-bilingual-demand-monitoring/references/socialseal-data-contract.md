@@ -26,7 +26,7 @@ Cite the **query** as the keyword plus its market and platform:
 
 Cite the **video** by its title, linked to its public URL, and the creator handle:
 
-- `["3 mistakes first-timers make in Tokyo"](<video_url>) by @creator` — not `video_uid abc...` or `search_result_id 8842`.
+- `["3 mistakes first-timers make in Tokyo"](<video_url>) by [@creator](<creator_profile_url>)` (when the tool returns no public link: `by @creator (source: workspace data, no public link)`) — not `video_uid abc...` or `search_result_id 8842`.
 
 Cite the **group/scope** by its name:
 

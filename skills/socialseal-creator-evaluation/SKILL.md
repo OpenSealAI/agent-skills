@@ -13,7 +13,7 @@ Retrieve accessible brand context before asking for missing information. Complet
 
 Report:
 
-- Requested and returned counts, eligibility rule (all supported post types versus videos), publication ordering, the creator's profile URL, the public URL of each post cited (or `source: workspace data, no public link`), post type, collection time, and coverage. Pinned placement is not publication order. Unknown or historically substituted dates cannot establish recency. One provider page does not prove completeness.
+- Requested and returned counts, eligibility rule (all supported post types versus videos), publication ordering, the creator's profile URL and the public URL of each post cited (each with `source: workspace data, no public link` when the tool returns none), post type, collection time, and coverage. Pinned placement is not publication order. Unknown or historically substituted dates cannot establish recency. One provider page does not prove completeness.
 - Average views over available view values only, with denominator and coverage. Zero is available; missing is unknown.
 - The returned engagement formula, available components, denominator, and aggregation method. Distinguish mean per-post rates from a ratio of totals; do not silently substitute one for the other.
 - Brand-fit observations grounded in creator/content and brand evidence, then clearly labelled inference and missing context. Public views do not establish private audience demographics or unique reach.

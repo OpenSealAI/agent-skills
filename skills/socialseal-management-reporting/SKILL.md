@@ -34,8 +34,8 @@ Management reporting is not the full analysis. It is the decision layer: what ch
 
 1. **Write the headline first.** One sentence with the overall state and decision implication.
 2. **Select 3-5 metrics.** Discoverability, keyword coverage, SOV, owned/creator split, or priority topic movement.
-3. **Translate to business language.** Define terms briefly; avoid internal tool jargon and internal IDs. Cite examples by video title linked to its public URL, `@handle`, and `"keyword" [market, platform]`.
-4. **Use examples sparingly.** 2-3 examples that show the pattern, each with its link.
+3. **Translate to business language.** Define terms briefly; avoid internal tool jargon and internal IDs. Cite examples by video title linked to its public URL (or `source: workspace data, no public link`), `@handle`, and `"keyword" [market, platform]`.
+4. **Use examples sparingly.** 2-3 examples that show the pattern, each with its link or `source: workspace data, no public link`.
 5. **State decisions and risks.** Budget, production capacity, market focus, tracking gaps, or approval needs.
 6. **List next priorities.** What the team will do before the next report.
 
