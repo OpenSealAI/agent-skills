@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased (no plugin version bump; parallel PRs share the next bump)
+
+- Save and reuse target segments (agent-skills#10). `references/creative-production-gates.md` gains "Save and reuse target segments": when a conversation identifies a target segment or buyer, offer to save it as a Strategy draft (`socialseal_propose_brand_strategy`) or a pinned workspace note (`socialseal_create_workspace_note`), and read the Strategy and workspace notes (`socialseal_get_brand_strategy`, `socialseal_get_core_workspace_notes`, `socialseal_search_workspace_notes`) before choosing who to write for, naming the segment used as `Writing for: <segment> (source: ...)`. Creator briefing, video concepting, the social plan builder and growth planning read first and name the segment; opportunity and competitor analysis and strategy readiness offer to save what they find.
+
 ## Claude plugin 0.10.0
 
 - Add `socialseal-growth-audit` and `socialseal-growth-planning` (SOC-1249, SOC-1257; 24 skills). The audit researches the brand first, asks the user to confirm the diagnostic and state their growth objectives, maps niches, jobs, worries, answer gaps and the brand's edge, saves an audience map and proposes a Brand Strategy. Planning runs exploration (cheap organic experiments across accounts, messages and formats) alongside exploitation (repeating and scaling what works through accounts, creators and paid boosting), always keeping at least 10% exploration. Both keep their state in workspace notes with fixed keys (`growth/audience-map`, `growth/plan`, `growth/routine`).

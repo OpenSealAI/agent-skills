@@ -53,7 +53,7 @@ Good to have:
 
 ## Tool discovery and generation
 
-1. **Resolve the requested work and workspace.** For an existing brief, read it and preserve its identity; do not regenerate for a caption tweak, formatting request or ordinary edit. For new briefs, load `socialseal_generate_brief` through host tool search and inspect its live schema. If discovery confirms it is unavailable, report the missing operation and preserve completed work. Do not infer missing capability from one failed lookup.
+1. **Resolve the requested work, workspace and audience.** For an existing brief, read it and preserve its identity; do not regenerate for a caption tweak, formatting request or ordinary edit. Choose who the brief is for before the Study: read the Strategy and saved workspace notes as set out in "Save and reuse target segments" in `references/creative-production-gates.md`, and open the brief with `Writing for: <segment> (source: ...)`. For new briefs, load `socialseal_generate_brief` through host tool search and inspect its live schema. If discovery confirms it is unavailable, report the missing operation and preserve completed work. Do not infer missing capability from one failed lookup.
 2. **Choose a Study.** Reuse an existing `opportunityKey` and pass the Study revision as `studyContext` (`briefContext` from `socialseal_get_study`). For the next brief in a series, use `socialseal_start_brief_run` with `continuesBriefId` and a new `continuationId`. Without a usable Study, call the brief tool with the topic, competitor or creator the brief is about: it starts and charges nothing, and returns `study_needed`. Then:
    - offer a fitting `reuse` Study first, since reusing it is free;
    - otherwise offer the ranked `candidates` (a topic, competitor, creator or specific videos) with each `reason`, `preview` and `estimatedPrice`, and let the user choose;
@@ -61,7 +61,7 @@ Good to have:
    - on `price_changed`, follow the recovery in `references/production-pipeline.md` (a wallet response needs a fresh quote and a new key);
    - poll `socialseal_get_study` while it is `enriching`; when the completed Study returns `briefContext`, retry the brief with it, and when it has none, explain the evidence gap (no briefable finding) instead of briefing.
    For manually selected videos, study them as `{ "kind": "videos", "urls": [...] }` (or `videoUids`). Do not ask the user for internal IDs that can be discovered. Respect the tool's actual access, funding and approval result.
-3. **Carry the creative agreement.** Use the supported `brandContext` fields for concise approved audience needs, product/service facts with source references, voice/CTA, exclusions, length and asset constraints. Project documents are not automatically inputs to the engine: read the relevant material and pass the supported summary. Distinguish unknown facts from approved claims; do not promise automatic document retrieval or verification.
+3. **Carry the creative agreement.** Use the supported `brandContext` fields for the chosen segment and its job, concise approved audience needs, product/service facts with source references, voice/CTA, exclusions, length and asset constraints. Project documents are not automatically inputs to the engine: read the relevant material and pass the supported summary. Distinguish unknown facts from approved claims; do not promise automatic document retrieval or verification.
 4. **Generate or update.** Use the named actions below with their typed arguments. If a required action is unavailable after host discovery, report that limitation; preserve actual pending, funding and missing-data states. Read returned status: pending/draft is not success, `study_needed` means no brief was made, and `missing_data` requires the stated evidence gap to be resolved or a labelled fallback. Use returned identities for subsequent reads; do not repeatedly generate while waiting or bypass an access/funding rejection.
 5. **Review and hand off.** Check the actual result against the audience job, source-supported claims, title/hook/payoff, scripts, duration/slide count and asset availability. Keep limitations explicit. Export the saved version, then use document tools for the requested presentation. Record any local edits not saved back to the canonical brief.
 
@@ -105,6 +105,7 @@ Use when the user explicitly wants manual writing, generation is unavailable, th
 
 ## Output Format
 
+- Writing for: the segment and its source (user request, workspace note or Strategy)
 - Brief title
 - Platform / market / target keyword / `opportunityKey`
 - Viewer job and content lens
@@ -148,6 +149,7 @@ Don't:
 ## Verification Checklist
 
 - [ ] Brief is generated from a Study revision, or the manual fallback is justified.
+- [ ] Saved Strategy and workspace notes were read before the audience was chosen, and the brief names the segment it was written for.
 - [ ] Any paid Video DNA ran only after the user approved its price.
 - [ ] Hooks, hero shot, and shots trace to Study evidence.
 - [ ] Engine identities and versions are retained when returned; a manual fallback has no invented IDs.

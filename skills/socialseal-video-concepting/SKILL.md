@@ -46,7 +46,7 @@ excuse to select one route silently and build a large batch.
 
 ## Workflow
 
-1. **Name the search gap.** One sentence: "People search for X, but current surfaced content lacks Y."
+1. **Choose the segment, then name the search gap.** Read the Strategy and saved workspace notes ("Save and reuse target segments" in `references/creative-production-gates.md`) and state `Writing for: <segment> (source: ...)`. Then one sentence: "People search for X, but current surfaced content lacks Y."
 2. **Select lens.** Aspirational (mood/emotion) or utility/practical (teach/plan/compare).
 3. **Generate concept families.** At least three distinct: tutorial/walkthrough, comparison, first-timer guide, POV/day-in-life, list/map/pin, mistake/avoidance, or mood montage.
 4. **For each concept, specify:** hook, first frame, arc, hero shot, supporting shots, useful detail or mood cue, CTA, and target keyword/topic.
@@ -59,7 +59,7 @@ excuse to select one route silently and build a large batch.
 
 ## Output
 
-For each concept:
+Open with `Writing for: <segment> (source: ...)`. For each concept:
 - name, viewer job, lens
 - hook options and first 3 seconds
 - arc / beats, hero shot, supporting shots

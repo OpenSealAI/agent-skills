@@ -77,6 +77,10 @@ Evidence tiers: discoverability, coverage, and share of voice are hard observati
    the audience job, evidence, brand fit, and production feasibility. Ask the user to
    select or adjust the production priority before concepting; do not silently choose
    a whole content plan from one keyword.
+10. **Save an identified segment.** When the gaps point at a buyer or segment the brand
+    is not yet writing for, name it in one line and offer to save it to the workspace,
+    as set out in "Save and reuse target segments" in
+    `references/creative-production-gates.md`.
 
 ## Output
 
