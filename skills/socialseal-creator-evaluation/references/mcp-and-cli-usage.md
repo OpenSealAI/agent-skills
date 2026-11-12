@@ -186,7 +186,8 @@ then read each one's status before you write the answer. Use the read tool for i
 kind: `socialseal_get_video_search`, `socialseal_get_study`,
 `socialseal_get_creator_collection` or `socialseal_get_account_window`,
 `socialseal_get_visibility_check`, `socialseal_explore_get`, or
-`socialseal_get_tool_status` for runs and exports. Reads are free.
+`socialseal_get_tool_status` for runs and exports, except Google AI search runs: use
+`socialseal_list_google_ai_search_runs` and `socialseal_get_google_ai_search_results`. Reads are free.
 
 - Poll the unfinished ones together, at the returned `pollAfterSeconds` or about every
   15 seconds, for up to about 3 minutes in total. Poll the same job; never start it again.
@@ -194,6 +195,8 @@ kind: `socialseal_get_video_search`, `socialseal_get_study`,
 - Work on the finished results while the others run.
 - Name each job still pending after the wait, say what the answer is missing without it,
   and give its identifier and read tool so the user can pick it up later.
+- Report a job whose status read fails or is rejected as unverified, with its identifier,
+  the read tool you used and the answer data that is missing.
 - Present partial results as partial, with the scope they cover.
 
 ## Connector setup and file mode
