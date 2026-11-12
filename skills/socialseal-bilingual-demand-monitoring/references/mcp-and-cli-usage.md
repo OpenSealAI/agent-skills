@@ -42,7 +42,7 @@ the host's tool search to load the matching operation and its live input schema.
 Discovery and skills are references, not mandatory gates for every read or edit.
 
 - Content calendars and posting schedules: `socialseal-social-plan-builder` guides composition and revision; do not assume a calendar-generation tool.
-- New video/editor/UGC briefs: `socialseal_generate_brief` with a Study revision's `studyContext`. Without a usable Study it returns `study_needed` with Study subjects to offer the user; start the chosen one with `socialseal_start_study`, then retry.
+- New video/editor/UGC briefs: the SocialSeal brief engine. Quote with `socialseal_generate_brief` (or `socialseal_start_brief_run`), `studyContext` and `quoteOnly: true` (free), then run the same call with the same `idempotencyKey` and no `quoteOnly` (omit `maxCostUsd`); poll a run with `socialseal_get_brief_run`. Without a usable Study it returns `study_needed` with Study subjects to offer the user; start the chosen one with `socialseal_start_study`, then retry. Hand-write a brief only under the declared fallback in `production-pipeline.md` (Stage 4).
 - Existing brief: `socialseal_get_brief`, `socialseal_update_brief`, `socialseal_export_brief`. A formatting or copy edit does not need new evidence collection.
 - Tracking setup: `socialseal_create_tracking_group`, `socialseal_add_tracking_group_items`, then `socialseal_get_tracking_group_completeness`. Read existing groups before proposing setup.
 - Demand signals: read what the workspace already holds before collecting more: `socialseal_list_keywords` (`demandSignals`, `seoMetrics`, autocomplete `sources`), Explore snapshots via `socialseal_explore_get` (`relativeDemand`), and tracked-query results. Compare candidate wordings, hooks or titles with `socialseal_check_keyword_demand` (free autocomplete check plus stored volume). Expand or validate keyword candidates with `socialseal_start_search_journey` and `socialseal_get_search_journey_run`. Google AI uses `socialseal_start_google_ai_search`, `socialseal_list_google_ai_search_runs`, and `socialseal_get_google_ai_search_results`. Rank candidates with whatever signals exist; see "Relative demand" in `evidence-and-confidence.md`.
@@ -55,9 +55,13 @@ directly on the named action, without a backend-function selector or body envelo
 socialseal_generate_brief {
   "workspaceId": "<workspace-id>",
   "opportunityKey": "<opportunity-key>",
-  "studyContext": { "studyRef": "<study-ref>", "revision": 2, "findingId": "action" }
+  "studyContext": { "studyRef": "<study-ref>", "revision": 2, "findingId": "action" },
+  "idempotencyKey": "<stable-request-key>",
+  "quoteOnly": true
 }
 ```
+
+Resend the same call with the same key and without `quoteOnly` to run it.
 
 If host discovery confirms an action is unavailable, report that precise limitation
 and preserve completed work. Preserve backend authorisation, admission and funding
@@ -190,6 +194,7 @@ In Claude Code, the plugin bundles the same hosted connector; ask the user to ru
 `/mcp`, select `socialseal`, and sign in.
 
 If live access is unavailable, use supplied exports and approved documents. State
-their dates and limitations; file mode cannot start live collection or run the
-brief engine. A manual brief is a labelled fallback with its evidence gaps, not a
-claim that SocialSeal generated it.
+their dates and limitations; live collection and the brief engine need the connector.
+A hand-written brief is a labelled fallback: open the answer with the reason the
+engine did not run, list its evidence gaps, and present it as hand-written rather
+than SocialSeal-generated.

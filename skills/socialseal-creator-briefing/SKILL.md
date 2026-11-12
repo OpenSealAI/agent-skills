@@ -3,9 +3,9 @@ name: socialseal-creator-briefing
 description: >-
   Use this skill when the user asks to create, rewrite, or improve a short-form video,
   creator, influencer, UGC or video-editor brief, including hooks, social-first language, shots,
-  captions, and CTAs. Prefer a brief generated from a SocialSeal Study of real
-  exemplars; use a clearly labeled manual hypothesis only when engine evidence is
-  unavailable, the user declines a Study, or the result is missing_data.
+  captions, and CTAs. Route the request to the SocialSeal brief engine (free quote,
+  then run) from a Study of real exemplars; write a hand-written brief only when the
+  engine can't run, and say why at the top of the answer.
 license: MIT
 metadata:
   socialseal:
@@ -23,7 +23,7 @@ metadata:
 
 ## Overview
 
-A SocialSeal creator brief turns grounded evidence into creator-ready direction. Use the generation tools to retain Study evidence and version identity, then review the result. Tool use is not a guarantee of factual support, useful audience advice or better creative quality. Loading this skill does not itself generate a brief. A request for a Word document, editor framework or usual brief template is a delivery-format request, not a reason to bypass the engine.
+A SocialSeal creator brief turns grounded evidence into creator-ready direction. Use the generation tools to retain Study evidence and version identity, then review the result. Tool use is not a guarantee of factual support, useful audience advice or better creative quality. Loading this skill does not itself generate a brief. A request for a Word document, editor framework or usual brief template is a delivery-format request: run the engine, then format its export.
 
 See `references/production-pipeline.md` for the pipeline, `references/mcp-and-cli-usage.md` for call patterns, and `references/content-lenses.md` for lenses. Every brief is generated from a Study revision. Use `socialseal-reference-video-analysis` when the Study subject needs choosing or its Video DNA needs approving; an existing usable Study can go directly to brief generation.
 
@@ -36,7 +36,7 @@ and non-negotiable exclusions before generating.
 - Generating a brief from a Study revision (`studyContext`).
 - Offering Study subjects when the brief tool returns `study_needed`, then retrying.
 - Exporting a generated brief as markdown.
-- Authoring a structured brief by hand when the engine is unavailable.
+- Authoring a structured brief by hand under the declared fallback (see Manual Path).
 
 ## Inputs
 
@@ -62,15 +62,17 @@ Good to have:
    - poll `socialseal_get_study` while it is `enriching`; when the completed Study returns `briefContext`, retry the brief with it, and when it has none, explain the evidence gap (no briefable finding) instead of briefing.
    For manually selected videos, study them as `{ "kind": "videos", "urls": [...] }` (or `videoUids`). Do not ask the user for internal IDs that can be discovered. Respect the tool's actual access, funding and approval result.
 3. **Carry the creative agreement.** Use the supported `brandContext` fields for concise approved audience needs, product/service facts with source references, voice/CTA, exclusions, length and asset constraints. Project documents are not automatically inputs to the engine: read the relevant material and pass the supported summary. Distinguish unknown facts from approved claims; do not promise automatic document retrieval or verification.
-4. **Generate or update.** Use the named actions below with their typed arguments. If a required action is unavailable after host discovery, report that limitation; preserve actual pending, funding and missing-data states. Read returned status: pending/draft is not success, `study_needed` means no brief was made, and `missing_data` requires the stated evidence gap to be resolved or a labelled fallback. Use returned identities for subsequent reads; do not repeatedly generate while waiting or bypass an access/funding rejection.
-5. **Review and hand off.** Check the actual result against the audience job, source-supported claims, title/hook/payoff, scripts, duration/slide count and asset availability. Keep limitations explicit. Export the saved version, then use document tools for the requested presentation. Record any local edits not saved back to the canonical brief.
+4. **Quote, then run.** Generate one `idempotencyKey` per brief. Check the workspace balance (`socialseal_get_workspace_balance`) and scope the brief count to the credits available. Call `socialseal_generate_brief` (or `socialseal_start_brief_run`) with `studyContext` and `quoteOnly: true` for the free quote, then resend it with the same key and without `quoteOnly` to run it; omit `maxCostUsd` on brief calls. On `upgrade_required`, nothing ran: relay the message and `upgradeUrl`, offer the briefs that fit the current credits, and resend with the same key after an upgrade. Poll `socialseal_get_brief_run` with the returned `runId` (or `jobId`), and retry a failed run with `socialseal_retry_brief_run`.
+5. **Generate or update.** Use the named actions below with their typed arguments. If a required action is unavailable after host discovery, take the Manual Path with that reason; preserve actual pending, funding and missing-data states. Read returned status: pending/draft is not success, `study_needed` means no brief was made, and `missing_data` requires the stated evidence gap to be resolved or a labelled fallback. Use returned identities for subsequent reads; do not repeatedly generate while waiting or bypass an access/funding rejection.
+6. **Review and hand off.** Check the actual result against the audience job, source-supported claims, title/hook/payoff, scripts, duration/slide count and asset availability. Keep limitations explicit. Export the saved version, then use document tools for the requested presentation. Record any local edits not saved back to the canonical brief.
 
 | Job | Named action |
 | --- | --- |
 | Start or reuse the Study a brief needs | `socialseal_start_study` |
 | Read the Study and its `briefContext` | `socialseal_get_study` |
-| Generate a new brief | `socialseal_generate_brief` |
-| Start a polled run, or the next brief in a series | `socialseal_start_brief_run`, then `socialseal_get_brief_run` |
+| Quote, then generate a new brief | `socialseal_generate_brief` (`quoteOnly: true`, then run) |
+| Start a polled run, or the next brief in a series | `socialseal_start_brief_run` (`quoteOnly: true`, then run), then `socialseal_get_brief_run` |
+| Retry a failed run | `socialseal_retry_brief_run` |
 | Read a saved version | `socialseal_get_brief` |
 | Revise a saved brief | `socialseal_update_brief` |
 | Export for handoff | `socialseal_export_brief` |
@@ -82,6 +84,8 @@ socialseal_generate_brief {
   "workspaceId": "<workspace-id>",
   "opportunityKey": "<opportunity-key>",
   "studyContext": { "studyRef": "<study-ref>", "revision": 2, "findingId": "action" },
+  "idempotencyKey": "<stable-request-key>",
+  "quoteOnly": true,
   "brandContext": {
     "brandName": "<brand>",
     "platform": "tiktok",
@@ -90,9 +94,11 @@ socialseal_generate_brief {
 }
 ```
 
-## Manual Path (fallback)
+Resend with the same `idempotencyKey` and no `quoteOnly` to run it.
 
-Use when the user explicitly wants manual writing, generation is unavailable, the user declines the Study a brief needs, or evidence remains `missing_data`. State the specific reason and what evidence is available; do not silently present a locally authored document as an engine-generated brief. A missing material fact needs a targeted question or omission, not invented specificity. Routine edits to an approved brief need no new generation run. Even with a Study, hooks and hero shots drawn from exemplars are indicative creative bets to test, not proof; see `references/evidence-and-confidence.md`.
+## Manual Path (declared fallback)
+
+Use when the engine can't run: the brief tools are unavailable after host discovery, the quote or run fails again after one retry with the same key, credits stay short and the user declines an upgrade, the Study has no `briefContext` or returns `missing_data`, or the user asks for a hand-written brief. Open the answer with one line naming the reason, for example "Hand-written brief: the brief engine's quote failed twice", then state what evidence is available. Label the document hand-written, leave out engine identities and versions, and offer to regenerate it through the engine once the blocker clears. A missing material fact needs a targeted question or omission, not invented specificity. Routine edits to an approved brief need no new generation run. Even with a Study, hooks and hero shots drawn from exemplars are indicative creative bets to test, not proof; see `references/evidence-and-confidence.md`.
 
 1. Restate the viewer job.
 2. Choose the content lens (aspirational vs utility/practical). Do not frame as an ad.
@@ -131,7 +137,7 @@ Do:
 
 Don't:
 - say proof, prove, persuasion, reasons to buy, or ad script
-- silently bypass available generation for a new brief; preserve an explicit manual choice or documented fallback
+- write a new brief by hand while the engine can run; a hand-written brief carries its declared reason
 - include unsupported product or performance claims
 - start paid Video DNA for a Study before the user approves its price
 - call the brief a finished video or carousel
@@ -143,11 +149,12 @@ Don't:
 - `socialseal_generate_brief` returns `missing_data`: the Study revision lacks evidence (for example fewer than three observed beats); study more videos or a broader subject first.
 - Brief feels like an ad: rewrite around a viewer question or practical-use moment.
 - Shot list is abstract: pull concrete validators from the Study's per-video shots, beats and Video DNA.
-- No engine access: use the manual path and label evidence gaps.
+- Quote or run fails: retry once with the same `idempotencyKey`; if it fails again, take the manual path, name the failure at the top of the answer and label evidence gaps.
+- `upgrade_required`: relay the returned message and `upgradeUrl`; resend with the same key after the upgrade.
 
 ## Verification Checklist
 
-- [ ] Brief is generated from a Study revision, or the manual fallback is justified.
+- [ ] Brief is generated from a Study revision after a quote, or the answer opens with the reason for the manual fallback.
 - [ ] Any paid Video DNA ran only after the user approved its price.
 - [ ] Hooks, hero shot, and shots trace to Study evidence.
 - [ ] Engine identities and versions are retained when returned; a manual fallback has no invented IDs.

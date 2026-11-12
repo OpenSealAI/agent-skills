@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Route video, creator, UGC and editor brief requests to the SocialSeal brief engine (agent-skills#12): check credits, quote with `quoteOnly: true` on `socialseal_generate_brief` or `socialseal_start_brief_run`, then run with the same `idempotencyKey` and no `quoteOnly` (omit `maxCostUsd`; the brief tools take the credit quote), and poll `socialseal_get_brief_run`. `upgrade_required` returns the upgrade link and the briefs that fit current credits. Hand-written briefs are a declared fallback, used only when the engine can't run, with the reason in the first line of the answer. Updates the orchestrator, creator briefing, video concepting, growth planning, social plan builder and content adjustment skills plus the shared pipeline and MCP references.
+- No plugin version bump here: sibling PRs are in flight; the release PR sets the version.
+
 ## Claude plugin 0.10.0
 
 - Add `socialseal-growth-audit` and `socialseal-growth-planning` (SOC-1249, SOC-1257; 24 skills). The audit researches the brand first, asks the user to confirm the diagnostic and state their growth objectives, maps niches, jobs, worries, answer gaps and the brand's edge, saves an audience map and proposes a Brand Strategy. Planning runs exploration (cheap organic experiments across accounts, messages and formats) alongside exploitation (repeating and scaling what works through accounts, creators and paid boosting), always keeping at least 10% exploration. Both keep their state in workspace notes with fixed keys (`growth/audience-map`, `growth/plan`, `growth/routine`).

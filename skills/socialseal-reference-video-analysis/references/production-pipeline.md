@@ -15,16 +15,15 @@ retired: a brief request without a usable Study returns `study_needed` (or
 
 ## Brief requests can enter directly
 
-For an approved concept with a usable Study revision, go directly to
-`socialseal_generate_brief` with its `studyContext`, then `socialseal_get_brief` /
+A request to write video, creator, UGC or editor briefs goes to the SocialSeal brief
+engine. With a usable Study revision, quote the run, then run it (see "Quote, then
+run" in Stage 4), then read and export with `socialseal_get_brief` /
 `socialseal_export_brief`. Use `socialseal_update_brief` for ordinary revisions. When
 no Study fits yet, call `socialseal_generate_brief` anyway: it starts nothing and
 returns `study_needed` with Study subjects to offer the user (see Stage 4). A
 calendar-only or document-formatting request does not require the full pipeline. If a
-named action is absent, use host tool search to load its live schema. If it remains
-unavailable, report the missing operation and preserve completed work. Preserve
-actual funding, pending and missing-data states rather than silently switching to
-manual authoring.
+named action is absent, use host tool search to load its live schema. Hand-write briefs
+only under the fallback rule at the end of Stage 4.
 
 ## The opportunity spine
 
@@ -109,6 +108,19 @@ Without a usable Study the brief tools start and charge nothing. They return:
 3. Start only the subject the user picks, with its `startStudyArguments`, and apply Stage 2: run paid Video DNA only after the user approves the returned price.
 4. When `socialseal_get_study` returns `briefContext`, retry the brief with it as `studyContext`.
 
+### Quote, then run
+
+Both brief tools take `quoteOnly: true`, which returns the price and starts nothing.
+
+1. Generate one `idempotencyKey` per intended brief and keep it through the quote, the run, retries and any upgrade.
+2. Check the workspace balance (`socialseal_get_workspace_balance`) and scope the number of briefs to the credits available.
+3. Quote: call `socialseal_generate_brief` (or `socialseal_start_brief_run`) with the Study's `studyContext` and `quoteOnly: true`.
+4. Run: resend the same call with the same `idempotencyKey` and without `quoteOnly`. Omit `maxCostUsd`; the credit quote is the price.
+5. Poll `socialseal_get_brief_run` with the returned `runId` (or `jobId`) until it completes; retry a failed run with `socialseal_retry_brief_run`.
+6. If credits fall short, the response returns `upgrade_required` with nothing run: relay its message and `upgradeUrl`, offer the briefs that fit the current credits, and resend the same request with the same key after an upgrade.
+
+Several briefs: quote and run each one under its own key.
+
 Optional `brandContext` (brandName, productName, campaignGoal, notes, locale, platform) carries a concise summary of approved audience needs, product/service facts with source references and creative constraints. Read relevant documents first and pass supported context; do not assume the engine retrieves those documents or verifies every supplied claim.
 
 Read and export:
@@ -117,7 +129,11 @@ Read and export:
 
 For multiple concepts, generate and export the individual briefs. Creative packs have retired.
 
-Use the engine path for new briefs to retain evidence and version lineage, then check the result. Manual authoring is appropriate for an explicit user choice, unavailable generation, a declined Study or unresolved `missing_data`; document the reason. Engine-generated does not mean better than manual or ready for production.
+Use the engine path for every new brief to retain evidence and version lineage, then check the result. Engine-generated does not mean better than manual or ready for production.
+
+### Declared fallback: hand-written briefs
+
+Write a brief by hand only when the engine can't produce it: the brief tools are unavailable after host tool search, the quote or run fails again after one retry with the same key, credits stay short and the user declines an upgrade, the Study returns `missing_data` or has no `briefContext`, or the user asks for a hand-written brief. Start the answer with one line naming the reason, for example "Hand-written brief: the brief engine's quote failed twice." Label the document hand-written, list its evidence gaps, and leave out engine identities and versions. Offer to regenerate it through the engine once the blocker clears.
 
 ## Stage 5: Prepare source clips and an editor handoff
 
@@ -147,7 +163,7 @@ Do not upload footage the workspace does not have rights to.
 1. Pick or define the opportunity, its `opportunityKey` and the Study subject.
 2. `socialseal_start_study` with that subject and a new `idempotencyKey`; on `approval_required`, show the price and get the user's approval, then resend with the approved amount and the same key.
 3. Resend with `maxCostUsd` or `approvedCredits` and an `idempotencyKey` -> poll `socialseal_get_study` while it is `enriching`. If the completed Study has no `briefContext`, explain the evidence gap (no briefable finding) instead of briefing.
-4. `socialseal_generate_brief` with that `studyContext`; `socialseal_export_brief` for the markdown brief.
+4. Quote the brief with `quoteOnly: true`, run `socialseal_generate_brief` with that `studyContext` and the same `idempotencyKey`; `socialseal_export_brief` for the markdown brief.
 5. Fill the source-clip library using `socialseal_prepare_source_clip_upload` and `socialseal_finalize_source_clip_upload`, and document approved shot coverage.
 6. Export the brief and hand off source clips, coverage, and delivery specs to the editor.
 
