@@ -71,6 +71,10 @@ Evidence note: surfaced exemplars are anecdotal evidence for creative direction,
 8. **Present benchmark directions.** Group the strongest patterns into 2-3 coherent
    creative routes with trade-offs and representative examples. Record the user's
    selected direction before briefing or production.
+9. **Save an identified segment.** When the examples show a buyer or segment that
+   competitors serve poorly or overlook, name it in one line and offer to save it to
+   the workspace, as set out in "Save and reuse target segments" in
+   `references/creative-production-gates.md`.
 
 ## Output
 

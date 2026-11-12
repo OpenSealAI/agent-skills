@@ -48,6 +48,40 @@ If evidence or an essential asset is missing, present choices: change the concep
 source rights-cleared material, capture/reshoot, generate a clearly labeled draft
 reference, or pause that deliverable. Do not paper over the gap.
 
+## Save and reuse target segments
+
+A segment found in one conversation (an under-served buyer, a niche rivals overlook,
+a persona confirmed from search behaviour) should steer the next conversation's
+briefs, concepts and plans. The workspace holds it between conversations.
+
+**Save.** Finish the desk research first, then name the segment in one line: who
+they are, the job or worry behind their searches, and the evidence it rests on. Offer
+to save it with a single confirmation.
+
+- Steers all of the brand's content: add it to `targetAudiences` in the Strategy.
+  Read `socialseal_get_brand_strategy`, copy the published Strategy, add the segment,
+  and save the complete result as a draft with `socialseal_propose_brand_strategy`
+  (`expectedBaseRevisionId` is the revision you read, or `null` when none exists).
+  Publish with `socialseal_publish_brand_strategy` once the user approves.
+- Steers one campaign or is still a hypothesis: save a workspace note with
+  `socialseal_create_workspace_note` (`type: "fact"` or `"decision"`, `key:
+  "segments/<segment-slug>"`, `pinnedToCore: true`). Keep it to the segment, the job,
+  the evidence and the date. Revise it with `socialseal_update_workspace_note`.
+
+**Read before choosing who to write for.** Before a brief, concept set, creator brief
+or plan slot picks its audience, read `socialseal_get_brand_strategy`
+(`targetAudiences`, `excludedAudiences`), `socialseal_get_core_workspace_notes`, and
+`socialseal_search_workspace_notes` for the topic's audience terms. Choose in this
+order: the segment the user named, a saved segment that fits the topic, then the
+Strategy's primary audience. With several saved segments, use the best fit and list
+the others as alternatives.
+
+**Say which segment.** Open the output with `Writing for: <segment> (source: user
+request, workspace note, or Strategy)`, and carry the same line into the brief's
+`brandContext.notes`. When the segment matches an excluded audience or contradicts a
+Strategy rule, flag it and propose a version that passes. With none saved, state the
+audience assumption in the same line.
+
 ## Use precise delivery states
 
 - **Plan:** priorities and intended work; no production artifact.

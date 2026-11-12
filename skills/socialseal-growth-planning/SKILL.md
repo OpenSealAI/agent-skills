@@ -43,6 +43,8 @@ Read `references/evidence-and-confidence.md` before interpreting results, `refer
 
 The plan needs three facts from the audit: the growth objective as a number and a date, how many videos a week the team can make, and where each own account posts from. If the audience map doesn't hold them, ask the user for them before designing experiments.
 
+Each experiment and brief names the niche or segment from the audience map it is written for (`Writing for: <niche> (source: audience map)`). A segment found later in a conversation is offered for saving to the map or the Strategy.
+
 Then:
 
 - **No published Strategy or no audience map:** offer `socialseal-growth-audit`.

@@ -40,7 +40,7 @@ Use this guidance when missing strategy affects requested creative production. S
 Assess two halves and report each as ready / partial / missing.
 
 ### Strategy foundations
-- **Target personas:** named viewers with a job-to-be-done and hesitations, not just demographics.
+- **Target personas:** named viewers with a job-to-be-done and hesitations, not just demographics. Check the Strategy and saved segment notes before reporting them missing, and offer to save confirmed ones (see `references/creative-production-gates.md`, "Save and reuse target segments").
 - **Content pillars:** 3-5 durable themes, each backed by at least one positive demand signal and ranked against the others.
 - **Brand voice:** tone, point of view, and hard constraints (claims to avoid).
 - **Brand utility bank:** products/services actually offered, exclusions, real tips,

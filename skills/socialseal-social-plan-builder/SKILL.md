@@ -41,7 +41,7 @@ evidence, and benchmark patterns before calling the plan production-ready.
 
 ## Workflow
 
-1. **Recover the current agreement.** Read the user's existing calendar and approved context first. Retain the date range/time zone, weekly cadence, audience priorities, voice/CTA, exclusions, owner, available assets and latest brief versions. A scheduled date does not establish that a post is published. Ask only about conflicts that prevent a useful plan; label assumptions.
+1. **Recover the current agreement.** Read the user's existing calendar and approved context first, with the Strategy and saved workspace notes ("Save and reuse target segments" in `references/creative-production-gates.md`); name the segment each slot is written for. Retain the date range/time zone, weekly cadence, audience priorities, voice/CTA, exclusions, owner, available assets and latest brief versions. A scheduled date does not establish that a post is published. Ask only about conflicts that prevent a useful plan; label assumptions.
 2. **Assess relevant evidence.** Combine scoped SocialSeal observations with supplied audience questions, verified brand/product facts and insider knowledge. Separate a topic's popularity from evidence supporting a particular audience recommendation. Views on surfaced videos are not search volume, but they, autocomplete presence and Google volume are valid relative demand signals: use them to order candidate topics and wordings (see "Relative demand" in `references/evidence-and-confidence.md`). Reuse adequate evidence instead of rerunning research merely to fill a column.
 3. **Choose content jobs and treatments.** For each candidate state who it helps, the decision/question it addresses, the hook promise, useful payoff and why this treatment fits the audience. A keyword citation alone does not make a generic idea useful. Reference formats are hypotheses to adapt, not proven recipes. Preserve the requested mix of utility, mood and other content jobs.
 4. **Set the mix before expanding.** Use the user's chosen direction and capacity. Offer alternatives only when a consequential choice remains open. Do not invent audience percentages or make every researched topic a commitment. Check a representative concept against the user's request before expanding a large batch.
@@ -56,7 +56,7 @@ A plan that can be pasted into a sheet or project tracker:
 
 - date and scheduling status (candidate / scheduled / published only with evidence)
 - pillar
-- audience/search job
+- audience segment and search job
 - target keywords/topics
 - platform/market
 - hook promise and useful payoff
