@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Check, wait for and read every search, Study and collection started in the turn before writing the final answer; name any still pending with what the answer is missing and how to pick it up later (agent-skills#11). Added to the shared MCP reference (`Before the final answer`), carried by the research skills, with a pointer in the orchestrator. No plugin version bump: sibling PRs change the same files, and the version moves once at release.
+
 ## Claude plugin 0.10.0
 
 - Add `socialseal-growth-audit` and `socialseal-growth-planning` (SOC-1249, SOC-1257; 24 skills). The audit researches the brand first, asks the user to confirm the diagnostic and state their growth objectives, maps niches, jobs, worries, answer gaps and the brand's edge, saves an audience map and proposes a Brand Strategy. Planning runs exploration (cheap organic experiments across accounts, messages and formats) alongside exploitation (repeating and scaling what works through accounts, creators and paid boosting), always keeping at least 10% exploration. Both keep their state in workspace notes with fixed keys (`growth/audience-map`, `growth/plan`, `growth/routine`).
