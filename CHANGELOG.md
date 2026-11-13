@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Cite a public URL for every video, creator or competitor claim (agent-skills#9): the shared data contract gains "Public links for every example" (link beside each claim, one link per example-table row, `source: workspace data, no public link` when the data has no URL). The orchestrator, evidence reference, competitor analysis, reference video analysis, performance readout, opportunity analysis, management reporting, creator discovery and creator evaluation skills, and the measurement readout template, apply it. Plugin version unchanged; the release PR sets it.
+
 ## Claude plugin 0.10.0
 
 - Add `socialseal-growth-audit` and `socialseal-growth-planning` (SOC-1249, SOC-1257; 24 skills). The audit researches the brand first, asks the user to confirm the diagnostic and state their growth objectives, maps niches, jobs, worries, answer gaps and the brand's edge, saves an audience map and proposes a Brand Strategy. Planning runs exploration (cheap organic experiments across accounts, messages and formats) alongside exploitation (repeating and scaling what works through accounts, creators and paid boosting), always keeping at least 10% exploration. Both keep their state in workspace notes with fixed keys (`growth/audience-map`, `growth/plan`, `growth/routine`).
