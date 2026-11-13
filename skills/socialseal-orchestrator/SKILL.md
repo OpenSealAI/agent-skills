@@ -31,4 +31,6 @@ Agree the requested delivery state: plan, brief, draft, externally edited rough 
 - New collection and external effects retain the operation's quote, approval, budget, and idempotency requirements. Reuse authorization already given for the same scope.
 - Cite scoped evidence and distinguish observations, sampled statistics, and creative inference. Every claim about a specific video, creator or competitor account, and every row of an example table, carries the public URL the tool returns for it; mark data without a URL as `source: workspace data, no public link`. See "Public links for every example" in `references/socialseal-data-contract.md`. Do not substitute unverified location imagery without the user's choice and a caveat.
 
+Before the final answer, check, wait for and read every search, Study and collection started in the turn, and name any still pending with what the answer lacks (`references/mcp-and-cli-usage.md`, "Before the final answer").
+
 For access, actual schemas, artifact reading, and polling, read `references/mcp-and-cli-usage.md`. The host discovers and composes tools directly; a semantic resolver or prescribed workflow is never a prerequisite. Keep a compact artifact/decision manifest only for a large production task.

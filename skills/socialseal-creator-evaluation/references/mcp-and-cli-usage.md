@@ -179,6 +179,26 @@ use their corresponding read actions. Pending/draft/`enriching` is not completed
 supports it. Do not cycle arbitrary parameters, replace pending paid operations,
 or mislabel an MCP-host approval failure as SocialSeal billing or job failure.
 
+### Before the final answer
+
+List every search, Study, collection, export and analysis you started in this turn,
+then read each one's status before you write the answer. Use the read tool for its
+kind: `socialseal_get_video_search`, `socialseal_get_study`,
+`socialseal_get_creator_collection` or `socialseal_get_account_window`,
+`socialseal_get_visibility_check`, `socialseal_explore_get`, or
+`socialseal_get_tool_status` for runs and exports, except Google AI search runs: use
+`socialseal_list_google_ai_search_runs` and `socialseal_get_google_ai_search_results`. Reads are free.
+
+- Poll the unfinished ones together, at the returned `pollAfterSeconds` or about every
+  15 seconds, for up to about 3 minutes in total. Poll the same job; never start it again.
+- Read the full result of every finished job and use it in the answer.
+- Work on the finished results while the others run.
+- Name each job still pending after the wait, say what the answer is missing without it,
+  and give its identifier and read tool so the user can pick it up later.
+- Report a job whose status read fails or is rejected as unverified, with its identifier,
+  the read tool you used and the answer data that is missing.
+- Present partial results as partial, with the scope they cover.
+
 ## Connector setup and file mode
 
 If tool discovery and connection status confirm no SocialSeal access in Cowork, explain the missing connection:
