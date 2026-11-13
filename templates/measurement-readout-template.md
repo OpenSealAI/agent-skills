@@ -19,6 +19,7 @@
 ## Findings
 
 ## Examples
+One linked row per video, creator or competitor account: the public URL from the tool result, or `source: workspace data, no public link`.
 
 ## Recommendations
 

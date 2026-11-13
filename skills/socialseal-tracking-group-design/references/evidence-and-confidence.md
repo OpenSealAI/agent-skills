@@ -94,4 +94,6 @@ Attach a confidence basis to recommendations:
 - **Model interpretations:** `likelyReasonItRanks`, inferred intent and Study findings are interpretations of evidence. They are not measured causal effects, independent corroboration or performance guarantees. A detected face supports "face present", not "faces caused the result".
 - **Topic versus claim support:** a popular activity does not establish suitability for a birthday, infant, product or market. Support each recommendation's particular scope using relevant audience and product/service facts, or label the inference and unresolved fact.
 
+Every example behind a claim carries its public URL from the tool result, or a `source: workspace data, no public link` note; see "Public links for every example" in `references/socialseal-data-contract.md`.
+
 Use scoped wording such as "the videos returned for these queries accumulated more views" rather than "this audience has more demand". Scoped wording changes how a ranking is phrased, not whether you give one. Inspect relevant examples before selecting a creative treatment. If a prerequisite is missing, explain the narrow gap and continue with supported work; do not repeatedly run the same failing operation or fabricate a substitute statistic.

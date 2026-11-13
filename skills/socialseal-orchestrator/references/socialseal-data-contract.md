@@ -24,9 +24,9 @@ Cite the **query** as the keyword plus its market and platform:
 
 - `"best hotel in NYC" [US, TikTok]` — not "search row 23" or "tracking_item_id 5417".
 
-Cite the **video** by its title or URL and the creator handle:
+Cite the **video** by its title, linked to its public URL, and the creator handle:
 
-- `"3 mistakes first-timers make in Tokyo" by @creator` or the `video_url` — not `video_uid abc...` or `search_result_id 8842`.
+- `["3 mistakes first-timers make in Tokyo"](<video_url>) by [@creator](<creator_profile_url>)` (when the tool returns no video link: `"3 mistakes first-timers make in Tokyo" by [@creator](<creator_profile_url>) (source: workspace data, no public link)`; with no profile link either, `"3 mistakes first-timers make in Tokyo" by @creator (source: workspace data, no public link)`) — not `video_uid abc...` or `search_result_id 8842`.
 
 Cite the **group/scope** by its name:
 
@@ -37,8 +37,8 @@ These map directly to enriched export columns:
 | Display this | From column | Notes |
 | --- | --- | --- |
 | the query | `keyword` + `region` + platform | platform from the group/scope; in raw rows `platform_id` 1=TikTok, 2=Instagram, 3=YouTube |
-| the video | `title` (fallback `video_url`) | prefer the human title; use the URL when no title |
-| the creator | `author_handle` | render with a leading `@` |
+| the video | `title` linked to `video_url` | use the URL as the text when there is no title |
+| the creator | `author_handle` linked to the creator's profile URL | render with a leading `@` |
 | watch link | `video_url` | constructed when not stored directly |
 | the group | `tracking_group_names` / `tracking_item_name` | human names, not numeric ids |
 | where it ranked | `rank` / `best_rank` / `latest_rank` | "ranked #3 for ..." |
@@ -75,9 +75,18 @@ Attribution rule: when `published_at` is blank, do NOT make platform-age or rece
 
 `export-group-evidence` routes social groups and Google AI groups to the correct CSV shape automatically. Prefer it when you need a single safe evidence export across mixed group types, or when enriched search rows are missing identifiers.
 
+## Public links for every example
+
+Every claim about a specific video, creator or competitor account carries the public URL the tool returns for it (`video_url`, the profile or account URL, the Study's source URL). A reader opens the link and sees the same video or account.
+
+- Put the link beside the claim: inline in a sentence, one link per row in a table or matrix. Each video, creator or account named in an example table has a link in that row.
+- Use the URL exactly as the tool returned it.
+- When the data for an item carries no URL, write the source in that spot, for example `source: workspace data, no public link`, and keep the claim at the level the data supports. A named item with neither a link nor a source note is incomplete.
+- Link each video or account where its claim is made; a summary line that restates a claim already cited needs no second link.
+
 ## Citing evidence
 
-- Default display: the human-readable citation (`"keyword" [market, platform]`, video title/URL, `@handle`, group name, rank).
+- Default display: the human-readable citation (`"keyword" [market, platform]`, video title linked to its URL, `@handle` linked to the profile, group name, rank).
 - State the denominator and scope (platform, market, language, keyword set, date range) alongside any percentage.
 - Keep `video_uid`/`search_result_id` as an internal traceability note for follow-up tool calls, not as the quote.
 - Label evidence as metadata-only when you have titles/captions but no viewed analysis.

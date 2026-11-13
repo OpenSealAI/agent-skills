@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Check, wait for and read every search, Study and collection started in the turn before writing the final answer; name any still pending with what the answer is missing and how to pick it up later (agent-skills#11). Added to the shared MCP reference (`Before the final answer`), carried by the research skills, with a pointer in the orchestrator. No plugin version bump: sibling PRs change the same files, and the version moves once at release.
+- Cite a public URL for every video, creator or competitor claim (agent-skills#9): the shared data contract gains "Public links for every example" (link beside each claim, one link per example-table row, `source: workspace data, no public link` when the data has no URL). The orchestrator, evidence reference, competitor analysis, reference video analysis, performance readout, opportunity analysis, management reporting, creator discovery and creator evaluation skills, and the measurement readout template, apply it. Plugin version unchanged; the release PR sets it.
 
 ## Claude plugin 0.10.0
 

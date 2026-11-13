@@ -72,7 +72,7 @@ Evidence tiers: discoverability, coverage, and share of voice are hard observati
 5. **Find gaps.** A strong opportunity usually has search intent, relevant surfaced content, weak/absent owned presence, and a content job the brand can answer.
 6. **Classify content jobs.** Use practical tags such as teach, walkthrough, compare, plan, reassure, show mood, show detail, or answer first-timer questions.
 7. **Prioritize.** Rank by relevance, demand signals (Google volume and trend, platform autocomplete, surfaced-result response and engagement; see "Relative demand" in `references/evidence-and-confidence.md`), competitive/creator activity, expected business usefulness, and production feasibility. Always return an order; label each item Strong / Indicative / Untested instead of declining to rank.
-8. **Select evidence.** For each recommendation, include metrics plus 1-3 examples that show what currently surfaces, cited by video title/URL and `@handle`. Label each recommendation's confidence basis (measured / scoped statistic / indicative pattern).
+8. **Select evidence.** For each recommendation, include metrics plus 1-3 examples that show what currently surfaces, cited by video title linked to its public URL and `@handle`. Label each recommendation's confidence basis (measured / scoped statistic / indicative pattern).
 9. **Run the demand decision gate.** Present 3-5 prioritized query/topic options with
    the audience job, evidence, brand fit, and production feasibility. Ask the user to
    select or adjust the production priority before concepting; do not silently choose
@@ -89,7 +89,7 @@ Create an opportunity table with:
 - content job
 - why this matters
 - recommended content direction
-- evidence examples (video title/URL, `@handle`, `"keyword" [market, platform]`)
+- evidence examples (video title linked to its public URL, `@handle`, `"keyword" [market, platform]`)
 - caveat/confidence (measured / scoped statistic / indicative pattern)
 
 Also include a short action summary: what to brief, what to track, what to inspect further, and what not to pursue.
@@ -103,7 +103,7 @@ Do:
 
 - use percentages and denominators
 - distinguish “no brand presence” from “no demand signal”, and “no Google volume” from “no demand”
-- cite examples by video title/URL, `@handle`, and `"keyword" [market, platform]`
+- cite examples by video title linked to its public URL, `@handle`, and `"keyword" [market, platform]`; write `source: workspace data, no public link` where the data has no URL
 - keep recommendations shootable or operationally actionable
 
 Don't:

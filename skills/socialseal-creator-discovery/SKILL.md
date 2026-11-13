@@ -27,7 +27,7 @@ Read `references/mcp-and-cli-usage.md` for current direct-action schemas and com
 Within the requested population:
 
 - Filter wrong markets, languages, unrelated queries, duplicate rows, and brand-owned/non-creator accounts. Flag uncertain account classification. If language is derived from the query or group, say so.
-- Calculate keyword coverage with its denominator, best/median rank, top-three placements, and breadth across queries. Attach concrete post URLs and the queries/markets where each creator surfaced.
+- Calculate keyword coverage with its denominator, best/median rank, top-three placements, and breadth across queries. Give each creator's profile URL and the post URLs the tool returns for the queries/markets where they surfaced; the shortlist has one profile link per row. Write `source: workspace data, no public link` where an item has none.
 - Rank by scoped search authority when that is the requested criterion. Preserve other requested criteria and report available engagement/views separately; search rows do not represent an account's latest posts.
 - Distinguish measured ranks from partnership-fit inference. State selection bias, coverage gaps, and the evidence window. Public views do not establish private audience demographics, unique reach, or guaranteed performance.
 

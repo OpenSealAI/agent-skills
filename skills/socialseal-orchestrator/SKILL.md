@@ -29,7 +29,7 @@ Agree the requested delivery state: plan, brief, draft, externally edited rough 
 - Keep one `opportunityKey` across the brief and handoff, and cite the Study revision behind them. SocialSeal does not assemble generated videos or export FCPXML; deliver source clips and briefs to the user's editor.
 - Apply demand, benchmark, asset, prototype, and final-QA gates only to the creative artifacts they protect. Present material creative choices, not routine execution questions.
 - New collection and external effects retain the operation's quote, approval, budget, and idempotency requirements. Reuse authorization already given for the same scope.
-- Cite source URLs and scoped evidence; distinguish observations, sampled statistics, and creative inference. Do not substitute unverified location imagery without the user's choice and a caveat.
+- Cite scoped evidence and distinguish observations, sampled statistics, and creative inference. Every claim about a specific video, creator or competitor account, and every row of an example table, carries the public URL the tool returns for it; mark data without a URL as `source: workspace data, no public link`. See "Public links for every example" in `references/socialseal-data-contract.md`. Do not substitute unverified location imagery without the user's choice and a caveat.
 
 Before the final answer, check, wait for and read every search, Study and collection started in the turn, and name any still pending with what the answer lacks (`references/mcp-and-cli-usage.md`, "Before the final answer").
 
